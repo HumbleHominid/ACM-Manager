@@ -78,7 +78,7 @@ CREATE TABLE Debtor_Fees (
 CREATE TABLE Events (
   event_id int NOT NULL AUTO_INCREMENT,
   coordinator int NOT NULL,
-  EventType tinyint NOT NULL,
+  eventType tinyint NOT NULL,
   name varchar(30) NOT NULL,
   additionalInfo text,
   location varchar(50),
