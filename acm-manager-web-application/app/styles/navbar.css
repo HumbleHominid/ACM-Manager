@@ -1,0 +1,36 @@
+.upcoming-events__type {
+  position: absolute;
+
+  right: 1%;
+
+  width: 200px;
+  height: 500px;
+
+  overflow-x: wrap;
+  overflow-y: hidden;
+
+  background-color: red;
+}
+
+.tab__right {
+  position: absolute;
+
+  right: 1%;
+}
+
+.navbar__container {
+  margin-bottom: 5px;
+}
+
+.footer__container {
+  position: absolute;
+
+  bottom: 1%;
+
+  text-align: center;
+  width: 100%
+}
+
+.footer__text {
+  margin: auto;
+}
