@@ -1,63 +1,7 @@
-<nav class="navbar navbar-default navbar-static-top container-fluid">
-  <div class="navbar-header">
-    <p class="navbar-brand">MTA</p>
-  </div>
-  <ul class="nav nav-pills">
-    <li class={{if (is-active-route model.routeName 'home') "active" ""}} role="presentation">
-      <a href="./home">Home</a>
-    </li>
-    <li class={{if (is-active-route model.routeName 'events') "active" ""}} role="presentation">
-      <a href="./events">Events</a>
-    </li>
-    <li class="pull-right" role="presentation">
-      <button type="button" class="btn btn-default btn-sm navbar-btn">Contact Us</button>
-    </li>
+{{nav-bar routeName=model.routeName}}
 
-    {{#if model.user.type}}
-      <li class={{if (is-active-route model.routeName 'files') "active" ""}} role="presentation">
-        <a href="./files">Files</a>
-      </li>
-      <li class={{if (is-active-route model.routeName 'officers') "active" ""}} role="presentation">
-        <a href="./officers">Officers</a>
-      </li>
-      <li class="pull-right" role="presentation">
-        <button type="button" class="btn btn-default btn-sm navbar-btn">Log Out</button>
-      </li>
-      <li class="pull-right" role="presentation">
-        <p class="navbar-text">Logged in as <a href="./account">{{model.user.fName}} {{model.user.lName}}</a></p>
-      </li>
-    {{else}}
-      <li class="pull-right" role="presentation">
-        <button {{action "renderLogIn"}} type="button" class="btn btn-default btn-sm navbar-btn">Log In</button>
-      </li>
-    {{/if}}
-
-    {{#if (is-admin model.user.type)}}
-      <li class={{if (is-active-route model.routeName 'fees') "active" ""}} role="presentation">
-        <a href="./fees">Fees</a>
-      </li>
-      <li role="presentation">
-        <button type="button" class="btn btn-default btn-sm navbar-btn">Add User</button>
-      </li>
-      <li role="presentation">
-        <button type="button" class="btn btn-default btn-sm navbar-btn">Remove User</button>
-      </li>
-    {{/if}}
-
-  </ul>
-</nav>
-
-<div class="upcoming-events__type upcoming-events--round">
-  <h3>Upcomming Events</h3>
-</div>
+{{event-side-bar}}
 
 {{outlet}}
-{{outlet "logInOverlay"}}
-{{outlet "logOutOverlay"}}
-{{outlet "createAccountOverlay"}}
-{{outlet "addUserOverlay"}}
-{{outlet "removeUserOverlay"}}
 
-<div class="footer__container">
-  <p class="footer__text">&copy; Michael Fryer and Trevor Brooks</p>
-</div>
+{{page-footer}}

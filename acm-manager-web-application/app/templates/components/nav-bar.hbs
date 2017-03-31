@@ -1,0 +1,54 @@
+<nav class="navbar navbar-default navbar-static-top container-fluid">
+  <div class="navbar-header">
+    <p class="navbar-brand">MTA</p>
+  </div>
+  <ul class="nav nav-pills">
+    <li class={{if (is-active-route routeName 'home') "active" ""}} role="presentation">
+      <a href="./home">Home</a>
+    </li>
+    <li class={{if (is-active-route routeName 'events') "active" ""}} role="presentation">
+      <a href="./events">Events</a>
+    </li>
+    <li class="pull-right" role="presentation">
+      <button type="button" class="btn btn-default btn-sm navbar-btn">Contact Us</button>
+    </li>
+
+    {{#if user.type}}
+      <li class={{if (is-active-route routeName 'files') "active" ""}} role="presentation">
+        <a href="./files">Files</a>
+      </li>
+      <li class={{if (is-active-route routeName 'officers') "active" ""}} role="presentation">
+        <a href="./officers">Officers</a>
+      </li>
+      <li class="pull-right" role="presentation">
+        <button type="button" class="btn btn-default btn-sm navbar-btn">Log Out</button>
+      </li>
+      <li class="pull-right" role="presentation">
+        <p class="navbar-text">Logged in as <a href="./account">{{user.fName}} {{user.lName}}</a></p>
+      </li>
+    {{else}}
+      <li class="pull-right" role="presentation">
+        <button {{action "showLogIn"}} type="button" class="btn btn-default btn-sm navbar-btn">Log In</button>
+      </li>
+    {{/if}}
+
+    {{#if (is-admin user.type)}}
+      <li class={{if (is-active-route routeName 'fees') "active" ""}} role="presentation">
+        <a href="./fees">Fees</a>
+      </li>
+      <li role="presentation">
+        <button type="button" class="btn btn-default btn-sm navbar-btn">Add User</button>
+      </li>
+      <li role="presentation">
+        <button type="button" class="btn btn-default btn-sm navbar-btn">Remove User</button>
+      </li>
+    {{/if}}
+
+  </ul>
+</nav>
+
+{{#if displayLogIn}}
+  {{log-in-overlay}}
+{{/if}}
+
+{{yield}}
