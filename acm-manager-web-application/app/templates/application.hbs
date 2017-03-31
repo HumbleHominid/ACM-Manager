@@ -1,6 +1,9 @@
-<div class="navbar__container">
-  <ul class="nav nav-tabs">
-    <li role="presentation">
+<nav class="navbar navbar-default navbar-static-top container-fluid">
+ <div class="navbar-header">
+  <p class="navbar-brand">MTA</p>
+ </div>
+  <ul class="nav nav-pills">
+    <li class="active" role="presentation">
       <a href="./home">Home</a>
     </li>
     <li role="presentation">
@@ -12,18 +15,27 @@
     <li role="presentation">
       <a href="./officers">Officers</a>
     </li>
-    <li class="pull-right" role="presentation">
-      <a href="./account">Account</a>
-    </li>
+    {{#if model.fName}}
+      <li class="pull-right" role="presentation">
+        <button type="button" class="btn btn-default btn-sm navbar-btn">Log Out</button>
+      </li>
+      <li class="pull-right" role="presentation">
+        <p class="navbar-text">Logged in as <a href="./account">{{model.fName}} {{model.Name}}</a></p>
+      </li>
+    {{else}}
+      <li class="pull-right" role="presentation">
+        <button type="button" class="btn btn-default btn-sm navbar-btn">Log In</button>
+      </li>
+    {{/if}}
   </ul>
-</div>
+</nav>
 
-<div class="upcoming-events__type">
+<div class="upcoming-events__type upcoming-events--round">
 <p>There is stuff over here</p>
 </div>
 
 {{outlet}}
 
 <div class="footer__container">
-  <p class="footer__text">&copy;Michael Fryer and Trevor Brooks</p>
+  <p class="footer__text">&copy; Michael Fryer and Trevor Brooks</p>
 </div>

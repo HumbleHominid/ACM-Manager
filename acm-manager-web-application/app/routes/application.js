@@ -2,6 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model() {
-    return {thing: 'butts'};
+    return {
+      fName: 'Michael',
+      lName: 'Fryer',
+    };
   }
 });

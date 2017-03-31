@@ -12,6 +12,12 @@
   background-color: red;
 }
 
+.upcoming-events--round {
+  border-radius: 5px;
+
+  padding: 4px;
+}
+
 .tab__right {
   position: absolute;
 
@@ -33,4 +39,8 @@
 
 .footer__text {
   margin: auto;
+}
+
+.btn__right {
+  float: right;
 }
