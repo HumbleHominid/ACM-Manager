@@ -4,7 +4,7 @@ export default Ember.Route.extend({
   model() {
     return {
       user: {
-        type: 2,
+        type: 1,
         fName: 'Michael',
         lName: 'Fryer'
       },

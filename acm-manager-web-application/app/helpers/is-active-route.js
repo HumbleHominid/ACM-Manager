@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
-export function isActiveRoute(params) {
-  return params[0].toLowerCase() === params[1].toLowerCase();
+export function isActiveRoute([arg1, arg2]) {
+  return arg1 === arg2;
 }
 
 export default Ember.Helper.helper(isActiveRoute);

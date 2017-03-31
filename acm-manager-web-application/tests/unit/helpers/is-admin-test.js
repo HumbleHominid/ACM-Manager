@@ -5,8 +5,18 @@ import { module, test } from 'qunit';
 module('Unit | Helper | is admin');
 
 // Replace this with your real tests.
-test('it works', function(assert) {
-  let result = isAdmin([42]);
+test('0', function(assert) {
+  let result = isAdmin([0]);
+  assert.ok(!result);
+});
+
+test('1', function(assert) {
+  let result = isAdmin([1]);
+  assert.ok(!result);
+});
+
+test('2', function(assert) {
+  let result = isAdmin([2]);
   assert.ok(result);
 });
 
