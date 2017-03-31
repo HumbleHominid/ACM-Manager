@@ -1,4 +1,9 @@
 .upcoming-events__type {
+  z-index: 1;
+
+  background: #fff;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.5);
+
   position: absolute;
 
   right: 1%;
@@ -7,9 +12,7 @@
   height: 500px;
 
   overflow-x: wrap;
-  overflow-y: hidden;
-
-  background-color: red;
+  overflow-y: scroll;
 }
 
 .upcoming-events--round {
