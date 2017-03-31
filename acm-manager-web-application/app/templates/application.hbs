@@ -28,7 +28,7 @@
       </li>
     {{else}}
       <li class="pull-right" role="presentation">
-        <button type="button" class="btn btn-default btn-sm navbar-btn">Log In</button>
+        <button {{action "renderLogIn"}} type="button" class="btn btn-default btn-sm navbar-btn">Log In</button>
       </li>
     {{/if}}
 
@@ -52,6 +52,11 @@
 </div>
 
 {{outlet}}
+{{outlet "logInOverlay"}}
+{{outlet "logOutOverlay"}}
+{{outlet "createAccountOverlay"}}
+{{outlet "addUserOverlay"}}
+{{outlet "removeUserOverlay"}}
 
 <div class="footer__container">
   <p class="footer__text">&copy; Michael Fryer and Trevor Brooks</p>
