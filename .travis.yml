@@ -8,15 +8,8 @@ node_js:
 env:
   matrix:
     - EMBER_VERSION=default
-    - EMBER_VERSION=release
-    - EMBER_VERSION=beta
-    - EMBER_VERSION=canary
 matrix:
   fast_finish: true
-  allow_failures:
-    - env: EMBER_VERSION=release
-    - env: EMBER_VERSION=beta
-    - env: EMBER_VERSION=canary
     
 cache:
   directories:
