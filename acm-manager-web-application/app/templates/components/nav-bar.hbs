@@ -10,10 +10,10 @@
       <a href="./events">Events</a>
     </li>
     <li class="pull-right" role="presentation">
-      <button type="button" class="btn btn-default btn-sm navbar-btn">Contact Us</button>
+      <button {{action "showContactUs"}} type="button" class="btn btn-info btn-sm navbar-btn">Contact Us</button>
     </li>
 
-    {{#if user.type}}
+    {{#if loggedIn}}
       <li class={{if (is-active-route routeName 'files') "active" ""}} role="presentation">
         <a href="./files">Files</a>
       </li>
@@ -37,10 +37,10 @@
         <a href="./fees">Fees</a>
       </li>
       <li role="presentation">
-        <button type="button" class="btn btn-default btn-sm navbar-btn">Add User</button>
+        <button {{action "showAddUser"}} type="button" class="btn btn-default btn-sm navbar-btn">Add User</button>
       </li>
       <li role="presentation">
-        <button type="button" class="btn btn-default btn-sm navbar-btn">Remove User</button>
+        <button {{action "showRemoveUser"}} type="button" class="btn btn-default btn-sm navbar-btn">Remove User</button>
       </li>
     {{/if}}
 
@@ -48,7 +48,19 @@
 </nav>
 
 {{#if displayLogIn}}
-  {{log-in-overlay}}
+  {{log-in-overlay cancelCallback=(action 'hideLogIn')}}
+{{/if}}
+
+{{#if displayContactUs}}
+  {{contact-us-overlay cancelCallback=(action 'hideContactUs')}}
+{{/if}}
+
+{{#if displayAddUser}}
+  {{add-user-overlay cancelCallback=(action 'hideAddUser')}}
+{{/if}}
+
+{{#if displayRemoveUser}}
+  {{remove-user-overlay cancelCallback=(action 'hideRemoveUser')}}
 {{/if}}
 
 {{yield}}

@@ -12,7 +12,7 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{event-side-bar}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim(), 'Upcomming Events');
 
   // Template block usage:
   this.render(hbs`
@@ -21,5 +21,5 @@ test('it renders', function(assert) {
     {{/event-side-bar}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim(), 'Upcomming Events\n\n\n      template block text');
 });

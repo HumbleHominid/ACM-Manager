@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('log-in-overlay', 'Integration | Component | log in overlay', {
+moduleForComponent('contact-us-overlay', 'Integration | Component | contact us overlay', {
   integration: true
 });
 
@@ -10,16 +10,16 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{log-in-overlay}}`);
+  this.render(hbs`{{contact-us-overlay}}`);
 
-  assert.equal(this.$().text().trim(), 'Log In Overlay\n\n\nSubmit\n\nCancel');
+  assert.equal(this.$().text().trim(), 'Contact Us Overlay\n\n\nSubmit\n\nCancel');
 
   // Template block usage:
   this.render(hbs`
-    {{#log-in-overlay}}
+    {{#contact-us-overlay}}
       template block text
-    {{/log-in-overlay}}
+    {{/contact-us-overlay}}
   `);
 
-  assert.equal(this.$().text().trim(), 'Log In Overlay\n\n\nSubmit\n\nCancel');
+  assert.equal(this.$().text().trim(), 'Contact Us Overlay\n\n\nSubmit\n\nCancel');
 });
