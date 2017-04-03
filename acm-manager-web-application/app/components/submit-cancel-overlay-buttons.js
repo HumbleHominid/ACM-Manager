@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  classNames: ['submit-cancel-buttons'],
-  
+export default Ember.Component.extend({  
   actions: {
     onCancelButtonPress() {
       this.get('cancelCallback') ();
