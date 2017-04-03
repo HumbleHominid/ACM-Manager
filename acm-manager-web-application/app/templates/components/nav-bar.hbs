@@ -4,43 +4,43 @@
   </div>
   <ul class="nav nav-pills">
     <li class={{if (is-active-route routeName 'home') "active" ""}} role="presentation">
-      <a href="./home">Home</a>
+      <a href="./home"><span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span></a>
     </li>
     <li class={{if (is-active-route routeName 'events') "active" ""}} role="presentation">
-      <a href="./events">Events</a>
+      <a href="./events"><span class="glyphicon glyphicon-calendar" aria-hidden="true"> Events</span></a>
     </li>
     <li class="pull-right" role="presentation">
-      <button {{action "showContactUs"}} type="button" class="btn btn-info btn-sm navbar-btn">Contact Us</button>
+      <button {{action "showContactUs"}} type="button" class="btn btn-info btn-sm navbar-btn"><span class="glyphicon glyphicon-envelope" aria-hidden="true"/> Contact Us</button>
     </li>
 
     {{#if loggedIn}}
       <li class={{if (is-active-route routeName 'files') "active" ""}} role="presentation">
-        <a href="./files">Files</a>
+        <a href="./files"><span class="glyphicon glyphicon-file" aria-hidden="true"> Files</span></a>
       </li>
       <li class={{if (is-active-route routeName 'officers') "active" ""}} role="presentation">
-        <a href="./officers">Officers</a>
+        <a href="./officers"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"> Officers</span></a>
       </li>
       <li class="pull-right" role="presentation">
-        <button type="button" class="btn btn-default btn-sm navbar-btn">Log Out</button>
+        <button type="button" class="btn btn-warning btn-sm navbar-btn"><span class="glyphicon glyphicon-log-out" aria-hidden="true"/> Log Out</button>
       </li>
       <li class="pull-right" role="presentation">
-        <p class="navbar-text">Logged in as <a href="./account">{{user.fName}} {{user.lName}}</a></p>
+        <p class="navbar-text">Logged in as <a href="./account">{{user.fName}} {{user.lName}} <span class="glyphicon glyphicon-user" aria-hidden="true"/></a></p>
       </li>
     {{else}}
       <li class="pull-right" role="presentation">
-        <button {{action "showLogIn"}} type="button" class="btn btn-default btn-sm navbar-btn">Log In</button>
+        <button {{action "showLogIn"}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-log-in" aria-hidden="true"/> Log In</button>
       </li>
     {{/if}}
 
     {{#if (is-admin user.type)}}
       <li class={{if (is-active-route routeName 'fees') "active" ""}} role="presentation">
-        <a href="./fees">Fees</a>
+        <a href="./fees"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span></a>
       </li>
       <li role="presentation">
-        <button {{action "showAddUser"}} type="button" class="btn btn-default btn-sm navbar-btn">Add User</button>
+        <button {{action "showAddUser"}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"/>Add User</button>
       </li>
       <li role="presentation">
-        <button {{action "showRemoveUser"}} type="button" class="btn btn-default btn-sm navbar-btn">Remove User</button>
+        <button {{action "showRemoveUser"}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-minus" aria-hidden="true"/> Remove User</button>
       </li>
     {{/if}}
 
@@ -48,7 +48,7 @@
 </nav>
 
 {{#if displayLogIn}}
-  {{log-in-overlay cancelCallback=(action 'hideLogIn')}}
+  {{log-in-overlay cancelCallback=(action 'hideLogIn') createAccountCallback=(action 'showCreateAccount')}}
 {{/if}}
 
 {{#if displayContactUs}}
@@ -56,11 +56,15 @@
 {{/if}}
 
 {{#if displayAddUser}}
-  {{add-user-overlay cancelCallback=(action 'hideAddUser')}}
+  {{add-user-overlay formData=formData cancelCallback=(action 'hideAddUser')}}
 {{/if}}
 
 {{#if displayRemoveUser}}
   {{remove-user-overlay cancelCallback=(action 'hideRemoveUser')}}
+{{/if}}
+
+{{#if displayCreateAccount}}
+  {{create-account-overlay cancelCallback=(action 'hideCreateAccount')}}
 {{/if}}
 
 {{yield}}

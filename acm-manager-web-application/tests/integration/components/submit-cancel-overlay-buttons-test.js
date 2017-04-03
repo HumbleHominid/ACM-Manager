@@ -21,5 +21,5 @@ test('it renders', function(assert) {
     {{/submit-cancel-overlay-buttons}}
   `);
 
-  assert.equal(this.$().text().trim(), 'Submit\n\nCancel');
+  assert.equal(this.$().text().trim(), 'Submit\n      template block text\n\nCancel');
 });

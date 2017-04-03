@@ -12,8 +12,6 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{nav-bar}}`);
 
-  assert.equal(this.$().text().trim(), 'MTA\n\n\n\n      Home\n\n\n      Events\n\n\n      Contact Us\n\n\n\n        Files\n\n\n        Officers\n\n\n        Log Out\n\n\n        Logged in as Michael Fryer\n\n\n\n        Fees\n\n\n        Add User\n\n\n        Remove User');
-
   // Template block usage:
   this.render(hbs`
     {{#nav-bar}}
@@ -21,5 +19,6 @@ test('it renders', function(assert) {
     {{/nav-bar}}
   `);
 
-  assert.equal(this.$().text().trim(), 'MTA\n\n\n\n      Home\n\n\n      Events\n\n\n      Contact Us\n\n\n\n        Files\n\n\n        Officers\n\n\n        Log Out\n\n\n        Logged in as Michael Fryer\n\n\n\n        Fees\n\n\n        Add User\n\n\n        Remove User');
+  assert.equal(!this.$().text().trim(), '');
 });
+

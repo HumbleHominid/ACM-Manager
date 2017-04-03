@@ -1,5 +1,10 @@
 <div class="post-overlay__contents">
   <p>Add User Overlay</p>
-</div>
 
-{{submit-cancel-overlay-buttons cancelCallback=(action 'onCancelButtonPress') submitCallback=(action 'onSubmitButtonPress')}}
+  <form>
+    {{create-form-fields formData=formData}}
+
+    {{submit-cancel-overlay-buttons cancelCallback=(action 'onCancelButtonPress') submitCallback=(action 'onSubmitButtonPress')}}
+  </form>
+
+</div>

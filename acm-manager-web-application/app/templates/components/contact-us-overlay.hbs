@@ -2,4 +2,5 @@
   <p>Contact Us Overlay</p>
 </div>
 
-{{submit-cancel-overlay-buttons cancelCallback=(action 'onCancelButtonPress') submitCallback=(action 'onSubmitButtonPress')}}
+<button {{action "onSubmitButtonPress"}} type="submit" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-send" aria-hidden="true"/> Send</button>
+<button {{action "onCancelButtonPress"}} type="button" class="btn btn-danger btn-xs pull-right"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"/> Cancel</button>
