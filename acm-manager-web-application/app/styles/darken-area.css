@@ -1,0 +1,14 @@
+.darken-container {
+  position: absolute;
+
+  z-index: 2;
+
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.darken-container__darken {
+  opacity: 0.4;
+}

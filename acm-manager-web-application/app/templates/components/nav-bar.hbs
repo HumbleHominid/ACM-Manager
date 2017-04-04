@@ -10,7 +10,7 @@
       <a href="./events"><span class="glyphicon glyphicon-calendar" aria-hidden="true"> Events</span></a>
     </li>
     <li class="pull-right" role="presentation">
-      <button {{action "showContactUs"}} type="button" class="btn btn-info btn-sm navbar-btn"><span class="glyphicon glyphicon-envelope" aria-hidden="true"/> Contact Us</button>
+      <button {{action "showContactUs" bubbles=false}} type="button" class="btn btn-info btn-sm navbar-btn"><span class="glyphicon glyphicon-envelope" aria-hidden="true"/> Contact Us</button>
     </li>
 
     {{#if loggedIn}}
@@ -28,7 +28,7 @@
       </li>
     {{else}}
       <li class="pull-right" role="presentation">
-        <button {{action "showLogIn"}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-log-in" aria-hidden="true"/> Log In</button>
+        <button {{action "showLogIn" bubbles=false}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-log-in" aria-hidden="true"/> Log In</button>
       </li>
     {{/if}}
 
@@ -37,34 +37,36 @@
         <a href="./fees"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span></a>
       </li>
       <li role="presentation">
-        <button {{action "showAddUser"}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"/>Add User</button>
+        <button {{action "showAddUser" bubbles=false}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"/>Add User</button>
       </li>
       <li role="presentation">
-        <button {{action "showRemoveUser"}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-minus" aria-hidden="true"/> Remove User</button>
+        <button {{action "showRemoveUser" bubbles=false}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-minus" aria-hidden="true"/> Remove User</button>
       </li>
     {{/if}}
 
   </ul>
 </nav>
 
-{{#if displayLogIn}}
-  {{log-in-overlay cancelCallback=(action 'hideLogIn') createAccountCallback=(action 'showCreateAccount')}}
-{{/if}}
+{{#if isOverlayActive}}
+  {{#if displayLogIn}}
+    {{log-in-overlay cancelCallback=(action 'hideLogIn') createAccountCallback=(action 'showCreateAccount')}}
+  {{/if}}
 
-{{#if displayContactUs}}
-  {{contact-us-overlay cancelCallback=(action 'hideContactUs')}}
-{{/if}}
+  {{#if displayContactUs}}
+    {{contact-us-overlay cancelCallback=(action 'hideContactUs')}}
+  {{/if}}
 
-{{#if displayAddUser}}
-  {{add-user-overlay formData=formData cancelCallback=(action 'hideAddUser')}}
-{{/if}}
+  {{#if displayAddUser}}
+    {{add-user-overlay formData=formData cancelCallback=(action 'hideAddUser')}}
+  {{/if}}
 
-{{#if displayRemoveUser}}
-  {{remove-user-overlay cancelCallback=(action 'hideRemoveUser')}}
-{{/if}}
+  {{#if displayRemoveUser}}
+    {{remove-user-overlay cancelCallback=(action 'hideRemoveUser')}}
+  {{/if}}
 
-{{#if displayCreateAccount}}
-  {{create-account-overlay cancelCallback=(action 'hideCreateAccount')}}
+  {{#if displayCreateAccount}}
+    {{create-account-overlay cancelCallback=(action 'hideCreateAccount')}}
+  {{/if}}
 {{/if}}
 
 {{yield}}

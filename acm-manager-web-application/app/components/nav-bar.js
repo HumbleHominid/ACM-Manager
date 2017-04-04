@@ -21,54 +21,53 @@ export default Ember.Component.extend({
   },
   actions: {
     showLogIn() {
+      this.send('hideOverlays');
+
       this.set('displayLogIn', true);
-      this.set('displayContactUs', false);
-      this.set('displayAddUser', false);
-      this.set('displayRemoveUser', false);
-      this.set('displayCreateAccount', false);
     },
     hideLogIn() {
       this.set('displayLogIn', false);
     },
     showContactUs() {
+      this.send('hideOverlays');
+
       this.set('displayContactUs', true);
-      this.set('displayLogIn', false);
-      this.set('displayAddUser', false);
-      this.set('displayRemoveUser', false);
-      this.set('displayCreateAccount', false);
     },
     hideContactUs() {
       this.set('displayContactUs', false);
     },
     showAddUser() {
+      this.send('hideOverlays');
+
       this.set('displayAddUser', true);
-      this.set('displayLogIn', false);
-      this.set('displayContactUs', false);
-      this.set('displayRemoveUser', false);
-      this.set('displayCreateAccount', false);
     },
     hideAddUser() {
+      this.send('hideOverlays');
+
       this.set('displayAddUser', false);
     },
     showRemoveUser() {
       this.set('displayRemoveUser', true);
-      this.set('displayLogIn', false);
-      this.set('displayContactUs', false);
-      this.set('displayAddUser', false);
-      this.set('displayCreateAccount', false);
     },
     hideRemoveUser() {
       this.set('displayRemoveUser', false);
     },
     showCreateAccount() {
+      this.send('hideOverlays');
+
       this.set('displayCreateAccount', true);
+    },
+    hideCreateAccount() {
+      this.set('displayCreateAccount', false);
+    },
+    hideOverlays() {
+      this.set('displayCreateAccount', false);
       this.set('displayRemoveUser', false);
       this.set('displayLogIn', false);
       this.set('displayContactUs', false);
       this.set('displayAddUser', false);
-    },
-    hideCreateAccount() {
-      this.set('displayCreateAccount', false);
+
+      this.sendAction('darkenBackground');
     }
   }
 });
