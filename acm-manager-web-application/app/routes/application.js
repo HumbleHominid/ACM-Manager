@@ -8,7 +8,7 @@ export default Ember.Route.extend({
   },
   actions: {
     haha() {
-      document.getElementById('page-container').className = 'page-container__darken';
+      //document.getElementById('page-container').className = 'page-container__darken';
 
       console.log(this.get('overlayActive'));
     },
