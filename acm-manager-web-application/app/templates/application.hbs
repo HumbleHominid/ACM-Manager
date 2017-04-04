@@ -1,7 +1,9 @@
-{{nav-bar routeName=model.routeName}}
+<div id='page-container' class='page-container' {{action 'haha' this on='click'}}>
+  {{nav-bar routeName=model.routeName}}
 
-{{event-side-bar}}
+  {{event-side-bar}}
 
-{{outlet}}
+  {{outlet}}
 
-{{page-footer}}
+  {{page-footer}}
+</div>
