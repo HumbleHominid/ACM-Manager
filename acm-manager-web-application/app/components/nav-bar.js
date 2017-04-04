@@ -25,40 +25,25 @@ export default Ember.Component.extend({
 
       this.set('displayLogIn', true);
     },
-    hideLogIn() {
-      this.set('displayLogIn', false);
-    },
     showContactUs() {
       this.send('hideOverlays');
 
       this.set('displayContactUs', true);
-    },
-    hideContactUs() {
-      this.set('displayContactUs', false);
     },
     showAddUser() {
       this.send('hideOverlays');
 
       this.set('displayAddUser', true);
     },
-    hideAddUser() {
+    showRemoveUser() {
       this.send('hideOverlays');
 
-      this.set('displayAddUser', false);
-    },
-    showRemoveUser() {
       this.set('displayRemoveUser', true);
-    },
-    hideRemoveUser() {
-      this.set('displayRemoveUser', false);
     },
     showCreateAccount() {
       this.send('hideOverlays');
 
       this.set('displayCreateAccount', true);
-    },
-    hideCreateAccount() {
-      this.set('displayCreateAccount', false);
     },
     hideOverlays() {
       this.set('displayCreateAccount', false);

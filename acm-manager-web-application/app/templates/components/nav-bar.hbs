@@ -40,7 +40,7 @@
         <button {{action "showAddUser" bubbles=false}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"/>Add User</button>
       </li>
       <li role="presentation">
-        <button {{action "showRemoveUser" bubbles=false}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-minus" aria-hidden="true"/> Remove User</button>
+        <button {{action "showRemoveUser" bubbles=false}} type="button" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-minus" aria-hidden="true"/>Remove User</button>
       </li>
     {{/if}}
 
@@ -49,23 +49,23 @@
 
 {{#if isOverlayActive}}
   {{#if displayLogIn}}
-    {{log-in-overlay cancelCallback=(action 'hideLogIn') createAccountCallback=(action 'showCreateAccount')}}
+    {{log-in-overlay cancelCallback=(action 'hideOverlays') createAccountCallback=(action 'showCreateAccount')}}
   {{/if}}
 
   {{#if displayContactUs}}
-    {{contact-us-overlay cancelCallback=(action 'hideContactUs')}}
+    {{contact-us-overlay cancelCallback=(action 'hideOverlays')}}
   {{/if}}
 
   {{#if displayAddUser}}
-    {{add-user-overlay formData=formData cancelCallback=(action 'hideAddUser')}}
+    {{add-user-overlay formData=formData cancelCallback=(action 'hideOverlays')}}
   {{/if}}
 
   {{#if displayRemoveUser}}
-    {{remove-user-overlay cancelCallback=(action 'hideRemoveUser')}}
+    {{remove-user-overlay cancelCallback=(action 'hideOverlays')}}
   {{/if}}
 
   {{#if displayCreateAccount}}
-    {{create-account-overlay cancelCallback=(action 'hideCreateAccount')}}
+    {{create-account-overlay cancelCallback=(action 'hideOverlays')}}
   {{/if}}
 {{/if}}
 

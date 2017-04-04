@@ -1,9 +1,9 @@
-{{#darken-area isOverlayActive=isOverlayActive brightenBackground=(action 'setOverlayInactive')}}
-  {{nav-bar isOverlayActive=isOverlayActive routeName=data.routeName darkenBackground=(action 'setOverlayActive')}}
+{{darken-area isOverlayActive=isOverlayActive brightenBackground=(action 'setOverlayInactive')}}
 
-  {{event-side-bar}}
+{{nav-bar isOverlayActive=isOverlayActive routeName=data.routeName darkenBackground=(action 'setOverlayActive')}}
 
-  {{yield}}
+{{event-side-bar}}
 
-  {{page-footer}}
-{{/darken-area}}
+{{yield}}
+
+{{page-footer}}

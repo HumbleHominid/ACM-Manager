@@ -7,7 +7,7 @@
     {{password-form-field id='password' placeholder='Password'}}
 
     {{#submit-cancel-overlay-buttons cancelCallback=(action "onCancelButtonPress") submitCallback=(action "onSubmitButtonPress")}}
-      <button {{action "onCreateAccountButtonPress"}} type="button" class="btn btn-warning btn-xs">Create Account</button>
+      <button {{action "onCreateAccountButtonPress"  bubbles=false}} type="button" class="btn btn-warning btn-xs">Create Account</button>
     {{/submit-cancel-overlay-buttons}}
   </form>
 </div>
