@@ -49,7 +49,7 @@
 
 {{#if isOverlayActive}}
   {{#if displayLogIn}}
-    {{log-in-overlay cancelCallback=(action 'closeOverlay') createAccountCallback=(action 'showCreateAccount')}}
+    {{log-in-overlay submitCallback=(action 'logIn') cancelCallback=(action 'closeOverlay') createAccountCallback=(action 'showCreateAccount')}}
   {{/if}}
 
   {{#if displayContactUs}}

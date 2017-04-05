@@ -12,14 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{contact-us-overlay}}`);
 
-  assert.equal(this.$().text().trim(), 'Contact Us Overlay\n\n\nSubmit\n\nCancel');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#contact-us-overlay}}
-      template block text
-    {{/contact-us-overlay}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'Contact Us Overlay\n\n\nSubmit\n\nCancel');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Contact Us First Name Last Name Sender Email Message Send Cancel');
 });

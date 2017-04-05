@@ -12,14 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{create-account-overlay}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#create-account-overlay}}
-      template block text
-    {{/create-account-overlay}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Create Account First Name Last Name Email Confirm Email Password Confirm Password Submit Cancel');
 });

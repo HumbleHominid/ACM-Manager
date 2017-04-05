@@ -12,7 +12,7 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{content-area}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'MTA Home Events Contact Us Log In Fees Add User Remove User Upcomming Events © Michael Fryer and Trevor Brooks');
 
   // Template block usage:
   this.render(hbs`
@@ -21,5 +21,6 @@ test('it renders', function(assert) {
     {{/content-area}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'MTA Home Events Contact Us Log In Fees Add User Remove User Upcomming Events template block text © Michael Fryer and Trevor Brooks');
+
 });

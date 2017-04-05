@@ -12,14 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{remove-user-overlay}}`);
 
-  assert.equal(this.$().text().trim(), 'Remove User Overlay\n\n\nSubmit\n\nCancel');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#remove-user-overlay}}
-      template block text
-    {{/remove-user-overlay}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'Remove User Overlay\n\n\nSubmit\n\nCancel');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Remove User Submit Cancel');
 });

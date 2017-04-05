@@ -13,13 +13,4 @@ test('it renders', function(assert) {
   this.render(hbs`{{text-form-field}}`);
 
   assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#text-form-field}}
-      template block text
-    {{/text-form-field}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
 });

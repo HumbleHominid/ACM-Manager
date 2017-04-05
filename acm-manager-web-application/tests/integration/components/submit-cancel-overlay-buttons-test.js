@@ -12,7 +12,7 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{submit-cancel-overlay-buttons}}`);
 
-  assert.equal(this.$().text().trim(), 'Submit\n\nCancel');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Submit Cancel');
 
   // Template block usage:
   this.render(hbs`
@@ -21,5 +21,5 @@ test('it renders', function(assert) {
     {{/submit-cancel-overlay-buttons}}
   `);
 
-  assert.equal(this.$().text().trim(), 'Submit\n      template block text\n\nCancel');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Submit template block text Cancel');
 });

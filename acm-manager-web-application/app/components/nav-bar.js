@@ -13,12 +13,6 @@ export default Ember.Component.extend({
     fName: 'Michael',
     lName: 'Fryer'
   },
-  formData: {
-    email: null,
-    confirm_email: null,
-    password: null,
-    confirm_password: null
-  },
   actions: {
     showLogIn() {
       this.send('hideOverlays');
@@ -66,6 +60,11 @@ export default Ember.Component.extend({
       this.send('hideOverlays');
 
       this.sendAction('brightenBackground');
+    },
+    logIn() {
+      this.set('loggedIn', true);
+
+      this.send('closeOverlay');
     }
   }
 });

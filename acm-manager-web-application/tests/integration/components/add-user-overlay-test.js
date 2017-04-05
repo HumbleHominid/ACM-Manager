@@ -12,14 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{add-user-overlay}}`);
 
-  assert.equal(this.$().text().trim(), 'Add User Overlay\n\n\nSubmit\n\nCancel');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#add-user-overlay}}
-      template block text
-    {{/add-user-overlay}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'Add User Overlay\n\n\nSubmit\n\nCancel');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Add User First Name Last Name Email Confirm Email Submit Cancel');
 });

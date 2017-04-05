@@ -8,7 +8,7 @@ export default Ember.Component.extend({
       this.sendAction('cancelCallback');
     },
     onSubmitButtonPress() {
-      console.log('onSubmitButtonPress() needs to be implemented in subcomponent.');
+      this.sendAction('submitCallback');
     }
   }
 });
