@@ -1,0 +1,16 @@
+.post-overlay {
+  position: fixed;
+
+  z-index: 100;
+  top: 15%;
+  left: 30%;
+  right: 30%;
+
+  background: #fff;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.5);
+} /* post overlay-component class */
+
+.post-overlay__contents {
+  display: block;
+  margin: 24px;
+} /* main contents of post overlay */

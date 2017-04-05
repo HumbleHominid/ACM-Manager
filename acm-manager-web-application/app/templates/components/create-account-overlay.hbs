@@ -1,0 +1,17 @@
+<div class="post-overlay__contents">
+  <h3>Create Account</h3>
+
+  <form class="form-horizontal">
+    {{f-name-form-field}}
+
+    {{l-name-form-field}}
+
+    {{email-form-field id='inputEmail' placeholder='Email'}}
+    {{email-form-field id='confirmEmail' placeholder='Confirm Email'}}
+
+    {{password-form-field id='password' placeholder='Password'}}
+    {{password-form-field id='confirmPassword' placeholder='Confirm Password'}}
+
+    {{submit-cancel-overlay-buttons cancelCallback=(action "onCancelButtonPress") submitCallback=(action "onSubmitButtonPress")}}
+  </form>
+</div>
