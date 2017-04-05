@@ -49,23 +49,23 @@
 
 {{#if isOverlayActive}}
   {{#if displayLogIn}}
-    {{log-in-overlay cancelCallback=(action 'hideOverlays') createAccountCallback=(action 'showCreateAccount')}}
+    {{log-in-overlay cancelCallback=(action 'closeOverlay') createAccountCallback=(action 'showCreateAccount')}}
   {{/if}}
 
   {{#if displayContactUs}}
-    {{contact-us-overlay cancelCallback=(action 'hideOverlays')}}
+    {{contact-us-overlay cancelCallback=(action 'closeOverlay')}}
   {{/if}}
 
   {{#if displayAddUser}}
-    {{add-user-overlay formData=formData cancelCallback=(action 'hideOverlays')}}
+    {{add-user-overlay formData=formData cancelCallback=(action 'closeOverlay')}}
   {{/if}}
 
   {{#if displayRemoveUser}}
-    {{remove-user-overlay cancelCallback=(action 'hideOverlays')}}
+    {{remove-user-overlay cancelCallback=(action 'closeOverlay')}}
   {{/if}}
 
   {{#if displayCreateAccount}}
-    {{create-account-overlay cancelCallback=(action 'hideOverlays')}}
+    {{create-account-overlay cancelCallback=(action 'closeOverlay')}}
   {{/if}}
 {{/if}}
 

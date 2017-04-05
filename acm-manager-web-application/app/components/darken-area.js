@@ -6,7 +6,7 @@ export default Ember.Component.extend({
 
   click() {
     if (this.get('isOverlayActive')) {
-      this.sendAction('brightenBackground')
+      this.sendAction('brightenBackground');
     }
   }
 });
