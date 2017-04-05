@@ -44,6 +44,23 @@
   margin: auto;
 }
 
-.btn__right {
-  float: right;
+.navbar__brand__image {
+  height: 40px;
+  width: 50px;
+}
+
+.navbar__brand {
+  float: left;
+  padding: 5px 15px 5px 5px;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.pills__margin-top {
+  margin-top: 5px;
+}
+
+.navbar-btn__small {
+  margin-top: 2px;
+  margin-bottom: 10px;
 }
