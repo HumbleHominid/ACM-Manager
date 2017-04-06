@@ -5,10 +5,10 @@
     </a>
   </div>
   <ul class="nav nav-pills pills__margin-top">
-    <li class={{if (is-active-route routeName 'home') "active" ""}} role="presentation">
+    <li class={{if (is-active-route currentPath 'home') "active" ""}} role="presentation">
       {{#link-to "home"}}<span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>{{/link-to}}
     </li>
-    <li class={{if (is-active-route routeName 'events') "active" ""}} role="presentation">
+    <li class={{if (is-active-route currentPath 'events') "active" ""}} role="presentation">
       {{#link-to "events"}}<span class="glyphicon glyphicon-calendar" aria-hidden="true"> Events</span>{{/link-to}}
     </li>
     <li class="pull-right" role="presentation">
@@ -16,10 +16,10 @@
     </li>
 
     {{#if loggedIn}}
-      <li class={{if (is-active-route routeName 'files') "active" ""}} role="presentation">
+      <li class={{if (is-active-route currentPath 'files') "active" ""}} role="presentation">
         {{#link-to "files"}}<span class="glyphicon glyphicon-file" aria-hidden="true"> Files</span>{{/link-to}}
       </li>
-      <li class={{if (is-active-route routeName 'officers') "active" ""}} role="presentation">
+      <li class={{if (is-active-route currentPath 'officers') "active" ""}} role="presentation">
         {{#link-to "officers"}}<span class="glyphicon glyphicon-sunglasses" aria-hidden="true"> Officers</span>{{/link-to}}
       </li>
       <li class="pull-right" role="presentation">
@@ -35,7 +35,7 @@
     {{/if}}
 
     {{#if (is-admin user.type)}}
-      <li class={{if (is-active-route routeName 'fees') "active" ""}} role="presentation">
+      <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
         {{#link-to "fees"}}<span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>{{/link-to}}
       </li>
       <li role="presentation">
