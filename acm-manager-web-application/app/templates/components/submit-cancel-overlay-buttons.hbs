@@ -1,5 +1,5 @@
-<div class="form-group">
-  <button {{action "onSubmitButtonPress"}} type="submit" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"/> Submit</button>
+<div class="form-group submit-cancel-btn__container">
+  <button {{action "onSubmitButtonPress"}} type="submit" class="btn btn-success btn-xs pull-left"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"/>Submit</button>
   {{yield}}
-  <button {{action "onCancelButtonPress"}} type="button" class="btn btn-danger btn-xs pull-right"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"/> Cancel</button>
+  <button {{action "onCancelButtonPress"}} type="button" class="btn btn-danger btn-xs pull-right"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"/>Cancel</button>
 </div>

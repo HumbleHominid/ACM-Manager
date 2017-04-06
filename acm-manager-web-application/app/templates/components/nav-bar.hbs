@@ -6,10 +6,10 @@
   </div>
   <ul class="nav nav-pills pills__margin-top">
     <li class={{if (is-active-route routeName 'home') "active" ""}} role="presentation">
-      <a href="./home"><span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span></a>
+      {{#link-to "home"}}<span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>{{/link-to}}
     </li>
     <li class={{if (is-active-route routeName 'events') "active" ""}} role="presentation">
-      <a href="./events"><span class="glyphicon glyphicon-calendar" aria-hidden="true"> Events</span></a>
+      {{#link-to "events"}}<span class="glyphicon glyphicon-calendar" aria-hidden="true"> Events</span>{{/link-to}}
     </li>
     <li class="pull-right" role="presentation">
       <button {{action "showContactUs" bubbles=false}} type="button" class="btn btn-info navbar-btn__small"><span class="glyphicon glyphicon-envelope" aria-hidden="true"/> Contact Us</button>
@@ -17,16 +17,16 @@
 
     {{#if loggedIn}}
       <li class={{if (is-active-route routeName 'files') "active" ""}} role="presentation">
-        <a href="./files"><span class="glyphicon glyphicon-file" aria-hidden="true"> Files</span></a>
+        {{#link-to "files"}}<span class="glyphicon glyphicon-file" aria-hidden="true"> Files</span>{{/link-to}}
       </li>
       <li class={{if (is-active-route routeName 'officers') "active" ""}} role="presentation">
-        <a href="./officers"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"> Officers</span></a>
+        {{#link-to "officers"}}<span class="glyphicon glyphicon-sunglasses" aria-hidden="true"> Officers</span>{{/link-to}}
       </li>
       <li class="pull-right" role="presentation">
         <button type="button" class="btn btn-warning navbar-btn__small"><span class="glyphicon glyphicon-log-out" aria-hidden="true"/> Log Out</button>
       </li>
       <li class="pull-right" role="presentation">
-        <p class="navbar-text">Logged in as <a href="./account">{{user.fName}} {{user.lName}} <span class="glyphicon glyphicon-user" aria-hidden="true"/></a></p>
+        <p class="navbar-text">Logged in as {{#link-to "account"}}{{user.fName}} {{user.lName}} <span class="glyphicon glyphicon-user" aria-hidden="true"/>{{/link-to}}</p>
       </li>
     {{else}}
       <li class="pull-right" role="presentation">
@@ -36,13 +36,13 @@
 
     {{#if (is-admin user.type)}}
       <li class={{if (is-active-route routeName 'fees') "active" ""}} role="presentation">
-        <a href="./fees"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span></a>
+        {{#link-to "fees"}}<span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>{{/link-to}}
       </li>
       <li role="presentation">
-        <button {{action "showAddUser" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-plus" aria-hidden="true"/>Add User</button>
+        <button {{action "showAddUser" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-plus" aria-hidden="true"/> Add User</button>
       </li>
       <li role="presentation">
-        <button {{action "showRemoveUser" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-minus" aria-hidden="true"/>Remove User</button>
+        <button {{action "showRemoveUser" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-minus" aria-hidden="true"/> Remove User</button>
       </li>
     {{/if}}
 
@@ -51,7 +51,7 @@
 
 {{#if isOverlayActive}}
   {{#if displayLogIn}}
-    {{log-in-overlay submitCallback=(action 'logIn') cancelCallback=(action 'closeOverlay') createAccountCallback=(action 'showCreateAccount')}}
+    {{log-in-overlay submitCallback=(action 'logIn') cancelCallback=(action 'closeOverlay') createAccountCallback=(action 'showCreateAccount') resetPasswordCallback=(action 'showResetPassword')}}
   {{/if}}
 
   {{#if displayContactUs}}
@@ -69,6 +69,8 @@
   {{#if displayCreateAccount}}
     {{create-account-overlay cancelCallback=(action 'closeOverlay')}}
   {{/if}}
-{{/if}}
 
-{{yield}}
+  {{#if displayResetPassword}}
+    {{reset-password-overlay cancelCallback=(action 'closeOverlay')}}
+  {{/if}}
+{{/if}}
