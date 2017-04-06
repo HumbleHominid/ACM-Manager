@@ -7,7 +7,10 @@
     {{password-form-field id='password' placeholder='Password'}}
 
     {{#submit-cancel-overlay-buttons cancelCallback=(action "onCancelButtonPress") submitCallback=(action "onSubmitButtonPress")}}
-      <button {{action "onCreateAccountButtonPress"  bubbles=false}} type="button" class="btn btn-warning btn-xs">Create Account</button>
+      <div class="btn-group" role="group" aria-label="...">
+        <button {{action "onCreateAccountButtonPress"  bubbles=false}} type="button" class="btn btn-warning btn-xs">Create Account</button>
+        <button {{action "onResetPasswordButtonPress"  bubbles=false}} type="button" class="btn btn-warning btn-xs">Reset Password</button>
+      </div>
     {{/submit-cancel-overlay-buttons}}
   </form>
 </div>

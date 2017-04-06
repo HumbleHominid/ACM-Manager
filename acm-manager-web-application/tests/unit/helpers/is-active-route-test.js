@@ -15,7 +15,13 @@ test('Apple apple', function(assert) {
   assert.ok(!result);
 });
 
-test('1 1', function(assert) {
-  let result = isActiveRoute([1, 1]);
+test('apple Apple', function(assert) {
+  let result = isActiveRoute(['apple', 'Apple']);
+  assert.ok(!result);
+});
+
+test('Apple Apple', function(assert) {
+  let result = isActiveRoute(['Apple', 'Apple']);
   assert.ok(result);
 });
+
