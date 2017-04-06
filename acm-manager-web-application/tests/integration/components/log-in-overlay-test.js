@@ -12,14 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{log-in-overlay}}`);
 
-  assert.equal(this.$().text().trim(), 'Log In Overlay\n\n\nSubmit\n  Create Account\n\nCancel');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#log-in-overlay}}
-      template block text
-    {{/log-in-overlay}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'Log In Overlay\n\n\nSubmit\n  Create Account\n\nCancel');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Log In Email Password Submit Create Account Cancel');
 });
