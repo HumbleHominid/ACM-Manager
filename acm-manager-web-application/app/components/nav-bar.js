@@ -10,7 +10,7 @@ export default Ember.Component.extend({
 
   loggedIn: false,
   user: {
-    type: 2,
+    type: 0,
     fName: 'Michael',
     lName: 'Fryer'
   },
