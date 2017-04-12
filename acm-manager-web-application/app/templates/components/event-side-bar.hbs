@@ -1,5 +1,25 @@
-<div class="upcoming-events__type upcoming-events--round">
-  <h3>Upcomming Events</h3>
+<div class="upcoming-events__type upcoming-events--round panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Upcomming Events</h3>
+  </div>
+
+  <div class="panel-body">
+  </div>
+
+  <div class="list-group">
+    {{#each-in eventData as |event|}}
+      {{#link-to "event"}}
+        <div class="list-group-item>
+          <h4 class="list-group-item-heading">{{event.title}}</h4>
+          <p class="list-group-item-text">
+            <b>Type: </b>{{event.type}}<br>
+            <b>Location: </b>{{event.location}}<br>
+            <b>Time: </b>{{event.time}}<br>
+          </p>
+        </div>
+      {{/link-to}}
+    {{/each-in}}
+  </div>
 </div>
 
 {{yield}}
