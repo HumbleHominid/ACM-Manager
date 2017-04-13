@@ -1,8 +1,8 @@
 {{darken-area isOverlayActive=isOverlayActive brightenBackground=(action 'setOverlayInactive')}}
 
-{{nav-bar isOverlayActive=isOverlayActive routeName=data.routeName darkenBackground=(action 'setOverlayActive') brightenBackground=(action 'setOverlayInactive')}}
+{{nav-bar isOverlayActive=isOverlayActive currentPath=currentPath darkenBackground=(action 'setOverlayActive') brightenBackground=(action 'setOverlayInactive')}}
 
-{{event-side-bar}}
+{{event-side-bar eventData=data.evets}}
 
 {{yield}}
 

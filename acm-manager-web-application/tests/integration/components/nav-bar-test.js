@@ -12,13 +12,6 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{nav-bar}}`);
 
-  // Template block usage:
-  this.render(hbs`
-    {{#nav-bar}}
-      template block text
-    {{/nav-bar}}
-  `);
-
-  assert.equal(!this.$().text().trim(), '');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Home Events Contact Us Log In Fees Add User Remove User');
 });
 

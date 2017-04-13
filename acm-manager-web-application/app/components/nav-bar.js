@@ -6,10 +6,11 @@ export default Ember.Component.extend({
   displayAddUser: false,
   displayRemoveUser: false,
   displayCreateAccount: false,
+  displayResetPassword: false,
 
   loggedIn: false,
   user: {
-    type: 2,
+    type: 0,
     fName: 'Michael',
     lName: 'Fryer'
   },
@@ -49,12 +50,20 @@ export default Ember.Component.extend({
 
       this.sendAction('darkenBackground');
     },
+    showResetPassword() {
+      this.send('hideOverlays');
+
+      this.set('displayResetPassword', true);
+
+      this.sendAction('darkenBackground');
+    },
     hideOverlays() {
       this.set('displayCreateAccount', false);
       this.set('displayRemoveUser', false);
       this.set('displayLogIn', false);
       this.set('displayContactUs', false);
       this.set('displayAddUser', false);
+      this.set('displayResetPassword', false);
     },
     closeOverlay() {
       this.send('hideOverlays');
