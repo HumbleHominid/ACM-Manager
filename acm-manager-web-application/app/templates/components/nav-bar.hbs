@@ -31,21 +31,21 @@
       <li class="pull-right" role="presentation">
         <p class="navbar-text">Logged in as {{#link-to "account"}}{{user.fName}} {{user.lName}} <span class="glyphicon glyphicon-user" aria-hidden="true"/>{{/link-to}}</p>
       </li>
+
+      {{#if (is-admin user.type)}}
+        <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
+          {{#link-to "fees"}}<span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>{{/link-to}}
+        </li>
+        <li role="presentation">
+          <button {{action "showAddUser" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-plus" aria-hidden="true"/> Add User</button>
+        </li>
+        <li role="presentation">
+          <button {{action "showRemoveUser" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-minus" aria-hidden="true"/> Remove User</button>
+        </li>
+      {{/if}}
     {{else}}
       <li class="pull-right" role="presentation">
         <button {{action "showLogIn" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-log-in" aria-hidden="true"/> Log In</button>
-      </li>
-    {{/if}}
-
-    {{#if (is-admin user.type)}}
-      <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
-        {{#link-to "fees"}}<span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>{{/link-to}}
-      </li>
-      <li role="presentation">
-        <button {{action "showAddUser" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-plus" aria-hidden="true"/> Add User</button>
-      </li>
-      <li role="presentation">
-        <button {{action "showRemoveUser" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-minus" aria-hidden="true"/> Remove User</button>
       </li>
     {{/if}}
 
