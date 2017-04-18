@@ -1,5 +1,22 @@
-<div class="upcoming-events__type upcoming-events--round">
-  <h3>Upcomming Events</h3>
+<div class="upcoming-events__type upcoming-events--round panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Upcomming Events</h3>
+  </div>
+
+  <div class="panel-body">
+    Sort event preview by:<br>
+
+    <div class="btn-group" role="group" aria-label="">
+      <button disabled="disabled" type="button" class="btn btn-xs btn-default">Time</button>
+      <button type="button" class="btn btn-xs btn-default">Type</button>
+    </div>
+  </div>
+
+  <div class="list-group">
+    {{#each-in eventData as |key value|}}
+      {{list-item-event data=value}}
+    {{/each-in}}
+  </div>
 </div>
 
 {{yield}}

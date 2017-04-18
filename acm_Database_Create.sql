@@ -28,12 +28,12 @@ DROP TABLE IF EXISTS Passwords;
 CREATE TABLE Passwords (
   password_id int NOT NULL AUTO_INCREMENT,
   password varchar(255) NOT NULL,
-  pjsalt varchar(113) NOT NULL,
+  password_timeout datetime NOT NULL,
   PRIMARY KEY(password_id)
 );
 
 CREATE TABLE User_Type (
-  user_type_id tinyint NOT NULL AUTO_INCREMENT,
+  user_type_id bit NOT NULL AUTO_INCREMENT,
   name varchar(20) NOT NULL,
   description varchar(50),
   PRIMARY KEY(user_type_id)
@@ -49,7 +49,7 @@ CREATE TABLE Event_Type (
 CREATE TABLE Users (
   user_id int NOT NULL AUTO_INCREMENT,
   password_id int NOT NULL,
-  user_type tinyint NOT NULL,
+  user_type bit NOT NULL,
   fName varchar(20) NOT NULL,
   lName varchar(20) NOT NULL,
   email varchar(30) NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE Events (
 CREATE TABLE Files (
   file_id int NOT NULL AUTO_INCREMENT,
   uploader int NOT NULL,
-  audience tinyint NOT NULL,
+  audience bit NOT NULL,
   fileName varchar(30) NOT NULL,
   description varchar(255),
   FOREIGN KEY(uploader) REFERENCES Users(user_id),
