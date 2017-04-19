@@ -43,7 +43,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.rootURL = '/~mfryer/ACM-Manager/';
+    ENV.rootURL = '/~acmuser/';
   }
 
   return ENV;
