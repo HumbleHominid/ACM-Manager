@@ -27,22 +27,22 @@ class Server{
     
     switch($object){
       case 'events':
-        events($method, $id); 
+        $this->events($method, $id); 
         break;
       case 'members':
-        members($method, $id);
+        $this->members($method, $id);
         break;
       case 'login':
-        login($method, $id);
+        $this->login($method, $id);
         break;
       case 'fees':
-        fees($method, $id);
+        $this->fees($method, $id);
         break;
       case 'files':
-        files($method, $id);
+        $this->files($method, $id);
         break;
       case 'officers':
-        officers($method, $id);
+        $this->officers($method, $id);
         break;
       default:
         header('HTTP/1.1 400 Bad Request');
@@ -54,8 +54,13 @@ class Server{
   private function events($method, $id){
     $item = NULL;
     switch($method){
-      case 'GET':
-        
+      case 'GET': 
+        if(!isset($id) || strlen($id) === 0){
+          include('model/events.php');
+          $events = new Events; 
+          $list = $events->sidebar();
+          echo $this->response($list);
+        }        
         break;
       case 'PUT':
         if($id === ''){
@@ -78,7 +83,7 @@ class Server{
 
         break;
     }
-    response($item);
+    $this->response($item);
   }
  
   private function members($method, $id){
@@ -170,9 +175,7 @@ class Server{
     } 
   }
   
-  private function officers($method, $id){
-    header('HTTP/1.1 200 OK');
-    echo "asdf"; 
+  private function officers($method, $id){ 
     switch($method){
       case 'GET':
         break;
