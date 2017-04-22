@@ -44,6 +44,12 @@ class Server{
       case 'officers':
         $this->officers($method, $id);
         break;
+      case 'pass':
+        echo password_hash($id, PASSWORD_BCRYPT);
+      case 'testValidate':
+        include('model/login.php');
+        $login = new Login();
+        $login->validateToken();
       default:
         header('HTTP/1.1 400 Bad Request');
         break;
@@ -115,6 +121,17 @@ class Server{
   private function login($method, $id){
     switch($method){
       case 'POST':
+        include('model/login.php');
+        $login = new Login;
+        $user = $_POST['username'];
+        $pass = $_POST['password'];
+        $result = $login->attemptLogin($user, $pass);
+        $json = $this->response($result);
+        if($json !== 'false'){
+          echo $json;
+        }else{
+          echo 'INVALID CREDENTIALS';
+        }
         break;  
     } 
   }
