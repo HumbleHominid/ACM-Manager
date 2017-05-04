@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  store: Ember.inject.service(),
+  
   displayLogIn: false,
   displayContactUs: false,
   displayAddUser: false,
@@ -8,11 +10,13 @@ export default Ember.Component.extend({
   displayCreateAccount: false,
   displayResetPassword: false,
 
-  loggedIn: false,
   user: {
-    type: 2,
-    fName: 'Michael',
-    lName: 'Fryer'
+    fName: '',
+    lName: '',
+    email: '',
+    userID: '',
+    user_type: 0,
+    jwt: null
   },
   actions: {
     showLogIn() {
@@ -70,10 +74,23 @@ export default Ember.Component.extend({
 
       this.sendAction('brightenBackground');
     },
-    logIn() {
-      this.set('loggedIn', true);
+    logIn(params) {
+      this.set('user', params);
+      console.log(this.get('store'));
 
       this.send('closeOverlay');
+    },
+    logOut() {
+      let user = {
+                  fName: '',
+                  lName: '',
+                  email: '',
+                  userID: '',
+                  user_type: 0,
+                  jwt: null
+                };
+
+      this.set('user', user);
     }
   }
 });

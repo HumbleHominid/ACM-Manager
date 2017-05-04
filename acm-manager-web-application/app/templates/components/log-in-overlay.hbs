@@ -1,7 +1,7 @@
 <div class="post-overlay__contents">
   <h3>Log In</h3>
   
-  <form class="form-horizontal" {{action 'authenticate' on='submit'}}>
+  <form class="form-horizontal" {{action 'authenticate' on='submit'}} {{action cancelCallback on='submit'}}>
     <div class="form-group">
       <label for="email" class="col-sm-2 control-label">Email</label>
       <div class="col-sm-10">

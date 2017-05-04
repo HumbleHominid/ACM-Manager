@@ -3,33 +3,30 @@ import Ember from 'ember';
 
 export default AbstractOverlay.extend({
   session: Ember.inject.service(),
+  store: Ember.inject.service(),
 
   actions: {
     onCreateAccountButtonPress() {
       this.get('createAccountCallback')();
     },
-    onResetPasswordButtonPress() {
-      this.get('resetPasswordCallback')();
-    },
     authenticate() {
       let user = { };
+      let obj = this;
 
+      //this is not the best way. infact this is dumb way
       user.username = document.getElementById('email').value;
       user.password = document.getElementById('password').value;
 
+      user = JSON.stringify(user);
+
       Ember.$.ajax({
         type: 'POST',
-        dataType: 'json',
+        contentType: 'application/json',
         url: 'https://katie.mtech.edu/~acmuser/backend/login',
-        data: user,
-        success: function(data) {
-          //console.log(data);
-        },
-        error: function(req, err) {
-          console.log(req.responseText);
-        }
+        data: user
       }).done(function(data) {
-        console.log(data);
+        this.get('store').pushPayload(data);
+        obj.get('submitCallback')(data);
       });
     }
   }

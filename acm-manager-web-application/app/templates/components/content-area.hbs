@@ -1,6 +1,6 @@
 {{darken-area isOverlayActive=isOverlayActive brightenBackground=(action 'setOverlayInactive')}}
 
-{{nav-bar isOverlayActive=isOverlayActive currentPath=currentPath darkenBackground=(action 'setOverlayActive') brightenBackground=(action 'setOverlayInactive')}}
+{{nav-bar isOverlayActive=isOverlayActive currentPath=currentPath darkenBackground=(action 'setOverlayActive') brightenBackground=(action 'setOverlayInactive') invalidate=invalidate auth=auth}}
 
 {{event-side-bar eventData=data.events}}
 
