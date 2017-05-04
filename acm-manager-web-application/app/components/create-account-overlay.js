@@ -13,8 +13,15 @@ export default AbstractOverlay.extend({
 
       Ember.$.ajax({
         type: 'PUT',
+        dataType: 'json',
         url: 'https://katie.mtech.edu/~acmuser/backend/login',
-        data: user
+        data: user,
+        success: function(data) {
+          console.log(data);
+        },
+        error: function(req, err) {
+          console.log(req.responseText);
+        }
       });
     }
   }

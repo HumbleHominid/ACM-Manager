@@ -12,11 +12,22 @@ export default AbstractOverlay.extend({
       this.get('resetPasswordCallback')();
     },
     authenticate() {
-      let email = document.getElementById('email').value;
-      let pass = document.getElementById('password').value;
+      let user = { };
 
-      this.get('session').authenticate('authenticator:oauth2', email, pass).catch((reason) => {
-        this.set('errorMessage', reason.error || reason);
+      user.username = document.getElementById('email').value;
+      user.password = document.getElementById('password').value;
+
+      Ember.$.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: 'https://katie.mtech.edu/~acmuser/backend/login',
+        data: user,
+        success: function(data) {
+          console.log(data);
+        },
+        error: function(req, err) {
+          console.log(req.responseText);
+        }
       });
     }
   }
