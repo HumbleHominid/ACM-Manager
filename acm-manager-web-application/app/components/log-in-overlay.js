@@ -3,7 +3,6 @@ import Ember from 'ember';
 
 export default AbstractOverlay.extend({
   session: Ember.inject.service(),
-  store: Ember.inject.service(),
 
   actions: {
     onCreateAccountButtonPress() {
@@ -25,7 +24,6 @@ export default AbstractOverlay.extend({
         url: 'https://katie.mtech.edu/~acmuser/backend/login',
         data: user
       }).done(function(data) {
-        this.get('store').pushPayload(data);
         obj.get('submitCallback')(data);
       });
     }

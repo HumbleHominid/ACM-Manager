@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  store: Ember.inject.service(),
-  
   displayLogIn: false,
   displayContactUs: false,
   displayAddUser: false,
@@ -76,7 +74,6 @@ export default Ember.Component.extend({
     },
     logIn(params) {
       this.set('user', params);
-      console.log(this.get('store'));
 
       this.send('closeOverlay');
     },
