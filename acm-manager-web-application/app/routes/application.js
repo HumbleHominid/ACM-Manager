@@ -17,7 +17,7 @@ export default Ember.Route.extend({
           date: "April 21, 2017",
           time: "7:00 p.m.",
           type: "lan"
-        },
+        }
       ]
     };
   }

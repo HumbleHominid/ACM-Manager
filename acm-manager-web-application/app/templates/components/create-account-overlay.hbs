@@ -1,17 +1,42 @@
 <div class="post-overlay__contents">
   <h3>Create Account</h3>
 
-  <form class="form-horizontal">
-    {{f-name-form-field}}
+  <form class="form-horizontal" {{action 'createAccount' on='submit'}}>
+    <div class="form-group">
+      <label for="fName" class="col-sm-2 control-label">First Name</label>
+      <div class="col-xs-5">
+        <input required type="text" class="form-control" id="fName" placeholder="Ken">
+      </div>
+    </div>
 
-    {{l-name-form-field}}
+    <div class="form-group">
+      <label for="lfName" class="col-sm-2 control-label">Last Name</label>
+      <div class="col-xs-5">
+        <input required type="text" class="form-control" id="lName" placeholder="Bone">
+      </div>
+    </div>
 
-    {{email-form-field id='inputEmail' placeholder='Email'}}
-    {{email-form-field id='confirmEmail' placeholder='Confirm Email'}}
+    <div class="form-group">
+      <label for="email" class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-10">
+        <input required type="email" class="form-control" id="email" placeholder="Email">
+      </div>
+    </div>
 
-    {{password-form-field id='password' placeholder='Password'}}
-    {{password-form-field id='confirmPassword' placeholder='Confirm Password'}}
+    <div class="form-group">
+      <label for="password" class="col-sm-2 control-label">Password</label>
+      <div class="col-sm-10">
+        <input required type="password" class="form-control" id="password" placeholder="Password">
+      </div>
+    </div>
 
-    {{submit-cancel-overlay-buttons cancelCallback=(action "onCancelButtonPress") submitCallback=(action "onSubmitButtonPress")}}
+    <div class="form-group submit-cancel-btn__container">
+      <button type="submit" class="btn btn-success btn-xs pull-left">
+        <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"/>Submit
+      </button>
+    </div>
+    {{#if errorMessage}}
+      <p>{{errorMessage}}</p>
+    {{/if}}
   </form>
 </div>
