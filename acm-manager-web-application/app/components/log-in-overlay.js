@@ -23,12 +23,15 @@ export default AbstractOverlay.extend({
         url: 'https://katie.mtech.edu/~acmuser/backend/login',
         data: user,
         success: function(data) {
-          console.log(data);
+          //console.log(data);
         },
         error: function(req, err) {
           console.log(req.responseText);
         }
+      }).done(function(data) {
+        console.log(data);
       });
     }
   }
 });
+  
