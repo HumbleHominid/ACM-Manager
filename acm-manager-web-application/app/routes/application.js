@@ -20,5 +20,9 @@ export default Ember.Route.extend({
         },
       ]
     };
+  },
+  afterModel() {
+    console.log(this.get('sesison'));
+    console.log(this.store.adapterFor('application').get('service:session'));
   }
 });

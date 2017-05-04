@@ -1,4 +1,4 @@
-import Ember from 'ember';
+timport Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['post-overlay'],
