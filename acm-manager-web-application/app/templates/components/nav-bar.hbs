@@ -12,7 +12,7 @@
       {{#link-to "events"}}<span class="glyphicon glyphicon-calendar" aria-hidden="true"> Events</span>{{/link-to}}
     </li>
     <li class="pull-right" role="presentation">
-      <button {{action "showContactUs" bubbles=false}} type="button" class="btn btn-info navbar-btn__small"><span class="glyphicon glyphicon-envelope" aria-hidden="true"/> Contact Us</button>
+      <button type="button" class="btn btn-info navbar-btn__small" data-toggle="modal" data-target="#contact-us-modal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"/> Contact Us</button>
     </li>
 
     {{#if user.jwt}}
@@ -37,43 +37,22 @@
           {{#link-to "fees"}}<span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>{{/link-to}}
         </li>
         <li role="presentation">
-          <button {{action "showAddUser" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-plus" aria-hidden="true"/> Add User</button>
+          <button type="button" class="btn btn-default navbar-btn__small"data-toggle="modal" data-target="#add-user-modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"/> Add User</button>
         </li>
         <li role="presentation">
-          <button {{action "showRemoveUser" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-minus" aria-hidden="true"/> Remove User</button>
+          <button type="button" class="btn btn-default navbar-btn__small" data-toggle="modal" data-target="#remove-user-modal"><span class="glyphicon glyphicon-minus" aria-hidden="true"/> Remove User</button>
         </li>
       {{/if}}
     {{else}}
       <li class="pull-right" role="presentation">
-        <button {{action "showLogIn" bubbles=false}} type="button" class="btn btn-default navbar-btn__small"><span class="glyphicon glyphicon-log-in" aria-hidden="true"/> Log In</button>
+        <button type="button" class="btn btn-default navbar-btn__small" data-toggle="modal" data-target="#log-in-modal"><span class="glyphicon glyphicon-log-in" aria-hidden="true"/> Log In</button>
       </li>
     {{/if}}
-
   </ul>
 </nav>
 
-{{#if isOverlayActive}}
-  {{#if displayLogIn}}
-    {{log-in-overlay submitCallback=(action 'logIn') cancelCallback=(action 'closeOverlay') createAccountCallback=(action 'showCreateAccount') resetPasswordCallback=(action 'showResetPassword')}}
-  {{/if}}
-
-  {{#if displayContactUs}}
-    {{contact-us-overlay cancelCallback=(action 'closeOverlay')}}
-  {{/if}}
-
-  {{#if displayAddUser}}
-    {{add-user-overlay formData=formData cancelCallback=(action 'closeOverlay')}}
-  {{/if}}
-
-  {{#if displayRemoveUser}}
-    {{remove-user-overlay cancelCallback=(action 'closeOverlay')}}
-  {{/if}}
-
-  {{#if displayCreateAccount}}
-    {{create-account-overlay cancelCallback=(action 'closeOverlay')}}
-  {{/if}}
-
-  {{#if displayResetPassword}}
-    {{reset-password-overlay cancelCallback=(action 'closeOverlay')}}
-  {{/if}}
-{{/if}}
+{{log-in-modal}}
+{{create-account-modal}}
+{{contact-us-modal}}
+{{add-user-modal}}
+{{remove-user-modal}}

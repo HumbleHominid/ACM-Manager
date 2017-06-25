@@ -1,6 +1,5 @@
-<div class="form-group">
-  <label for="lName" class="col-sm-2 control-label">Last Name</label>
-  <div class="col-xs-5">
-    <input type="text" class="form-control" id="lName" placeholder="Bone">
-  </div>
+<label for="{{idPrefix}}-last-name" class="col-sm-2 control-label">Last Name</label>
+<div class="col-sm-10">
+  {{input class="form-control" id=(string-append idPrefix "-last-name") placeholder="Doe" value=value required="required"}}
+  <span id="{{idPrefix}}-last-name_span" class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
 </div>

@@ -1,3 +1,7 @@
-{{#content-area data=model currentPath=currentPath invalidate=(action 'invalidateSession') auth=session.isAuthenticated}}
-  {{outlet}}
-{{/content-area}}
+{{nav-bar isOverlayActive=isOverlayActive currentPath=currentPath auth=session.isAuthenticated}}
+
+{{event-side-bar eventData=model.events}}
+
+{{outlet}}
+
+{{page-footer}}

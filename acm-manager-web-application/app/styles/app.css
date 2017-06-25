@@ -3,6 +3,12 @@
 
 /* Components */
 @import 'navbar.css';
-@import 'post-overlay.css';
 @import 'darken-area.css';
-@import 'submit-button-cancel.css';
+
+.form-margin {
+  margin: calc(5px + 1%);
+}
+
+.resize-vertical {
+  resize: vertical;
+}
