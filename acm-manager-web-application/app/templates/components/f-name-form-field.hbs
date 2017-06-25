@@ -1,5 +1,6 @@
-<label for="{{idPrefix}}-first-name" class="col-sm-2 control-label">First Name</label>
+<label for="{{idPrefix}}-{{formName}}" class="col-sm-2 control-label">First Name</label>
 <div class="col-sm-10">
-  {{input class="form-control" id=(string-append idPrefix "-first-name") placeholder="John" value=value required="required"}}
-  <span id="{{idPrefix}}-first-name_span" class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+  {{input class="form-control" id=(string-append idPrefix "-" formName) placeholder="John" value=value required=(if required "required" "") pattern=pattern}}
+  <span id="{{idPrefix}}-{{formName}}_span" class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+  <span class="help-block">{{help}}</span>
 </div>

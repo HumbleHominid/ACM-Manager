@@ -7,10 +7,10 @@
       </div>
     
       <form class="form-horizontal form-margin">
-        {{f-name-form-field idPrefix="contact-us"}}
-        {{l-name-form-field idPrefix="contact-us"}}
+        {{f-name-form-field required=false idPrefix="contact-us"}}
+        {{l-name-form-field required=false idPrefix="contact-us"}}
       
-        {{email-form-field idPrefix="contact-us" placeholder="Your Email"}}
+        {{email-form-field idPrefix="contact-us" placeholder="Your Email" pattern="^.+@.+\..+$"}}
         
         {{textarea-form-field idPrefix="contact-us" placeholder="Your Message"}}
         
