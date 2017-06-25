@@ -1,0 +1,25 @@
+<div id="log-in-modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Log In</h4>
+      </div>
+    
+      <form class="form-horizontal form-margin" onsubmit={{action 'authenticate'}}>
+        {{email-form-field idPrefix="log-in"}}
+        
+        {{password-form-field idPrefix="log-in"}}
+        
+        {{#if errorMessage}}
+          <p>{{errorMessage}}</p>
+        {{/if}}
+      </form>
+      <div class="modal-footer">
+        {{#modal-buttons}}
+          <button type="button" class="btn btn-primary pull-left" data-dismiss="modal" data-toggle="modal" data-target="#create-account-modal">Create Account</button>
+        {{/modal-buttons}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,14 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{page-footer}}`);
 
-  assert.equal(this.$().text().trim(), '© Michael Fryer and Trevor Brooks');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#page-footer}}
-      template block text
-    {{/page-footer}}
-  `);
-
-  assert.equal(this.$().text().trim(), '© Michael Fryer and Trevor Brooks\n\n\n      template block text');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Michael Fryer and Trevor Brooks');
 });

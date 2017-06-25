@@ -13,8 +13,8 @@ export default Ember.Component.extend({
     lName: 'Guy',
     email: '',
     userID: '',
-    user_type: 2,
-    jwt: "ioansthion"
+    user_type: 0,
+    jwt: null
   },
   actions: {
     logIn(params) {

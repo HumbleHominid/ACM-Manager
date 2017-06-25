@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('password-form-field', 'Integration | Component | password form field', {
+moduleForComponent('add-user-modal', 'Integration | Component | add user modal', {
   integration: true
 });
 
@@ -10,7 +10,7 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{password-form-field}}`);
+  this.render(hbs`{{add-user-modal}}`);
 
-  assert.equal(this.$().text().trim(), 'Password');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Add User First Name Last Name Email Confirm Email Submit Close');
 });

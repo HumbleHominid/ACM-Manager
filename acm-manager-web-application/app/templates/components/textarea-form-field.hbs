@@ -1,0 +1,5 @@
+<label for="{{idPrefix}}-textarea" class="col-sm-2 control-label">{{placeholder}}</label>
+<div class="col-sm-10">
+  {{textarea class="form-control resize-vertical" id=(string-append idPrefix "-textarea") placeholder=placeholder value=value required="required"}}
+  <span id="{{idPrefix}}-password_span" class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+</div>

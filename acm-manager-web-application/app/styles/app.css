@@ -3,7 +3,6 @@
 
 /* Components */
 @import 'navbar.css';
-@import 'darken-area.css';
 
 .form-margin {
   margin: calc(5px + 1%);
