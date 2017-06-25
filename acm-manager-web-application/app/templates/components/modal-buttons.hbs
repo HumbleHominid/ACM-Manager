@@ -1,3 +1,9 @@
-<button type="submit" class="btn btn-success pull-left" data-dismiss="modal">{{submit}}</button>
-{{yield}}
-<button type="button" class="btn btn-danger" data-dismiss="modal">{{close}}</button>
+<div class="btn-group pull-left" role="group" aria-label="...">
+  <button type="submit" class="btn btn-success">{{submit}}</button>
+  <button type="reset" class="btn btn-info">{{reset}}</button>
+  {{yield}}
+</div>
+
+<div class="btn-group pull-right" role="group" aria-label="...">
+  <button type="button" class="btn btn-danger" data-dismiss="modal">{{close}}</button>
+</div>

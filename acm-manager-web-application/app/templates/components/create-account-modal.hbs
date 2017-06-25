@@ -6,23 +6,24 @@
         <h4 class="modal-title">Create Account</h4>
       </div>
     
-      <form class="form-horizontal form-margin" onsubmit={{action 'createAccount'}}>
+      <form class="form-margin" onsubmit={{action 'createAccount'}}>
         {{f-name-form-field idPrefix="create-account"}}
         {{l-name-form-field idPrefix="create-account"}}
-      
+
         {{email-form-field idPrefix="create-account"}}
         {{email-form-field idPrefix="create-account-confirm" placeholder="Confirm Email"}}
-        
+
         {{password-form-field idPrefix="create-account"}}
         {{password-form-field idPrefix="create-account-confirm" placeholder="Confirm Password"}}
-        
+
         {{#if errorMessage}}
           <p>{{errorMessage}}</p>
         {{/if}}
+
+        <div class="modal-footer">
+          {{modal-buttons}}
+        </div>
       </form>
-      <div class="modal-footer">
-        {{modal-buttons}}
-      </div>
     </div>
   </div>
 </div>

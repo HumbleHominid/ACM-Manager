@@ -6,7 +6,7 @@
         <h4 class="modal-title">Add User</h4>
       </div>
 
-      <form class="form-horizontal form-margin" onsubmit={{action 'createAccount'}}>
+      <form class="form-margin" onsubmit={{action 'createAccount'}}>
         {{f-name-form-field idPrefix="add-user"}}
         {{l-name-form-field idPrefix="add-user"}}
       
@@ -16,10 +16,11 @@
         {{#if errorMessage}}
           <p>{{errorMessage}}</p>
         {{/if}}
+        
+        <div class="modal-footer">
+          {{modal-buttons}}
+        </div>
       </form>
-      <div class="modal-footer">
-        {{modal-buttons}}
-      </div>
     </div>
   </div>
 </div>

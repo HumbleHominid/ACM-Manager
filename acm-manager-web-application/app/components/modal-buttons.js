@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  tagName: '',
+  classNames: ["btn-toolbar"],
+  role: "toolbar",
   submit: "Submit",
-  close: "Close"
+  close: "Close",
+  reset: "Reset"
 });

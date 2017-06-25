@@ -11,8 +11,8 @@ export default Ember.Component.extend({
       let user = { };
       let obj = this;
 
-      user.username = this.$('#email').value;
-      user.password = this.$('#password').value;
+      user.username = this.$('#log-in-email').value;
+      user.password = this.$('#log-in-password').value;
 
       user = JSON.stringify(user);
 

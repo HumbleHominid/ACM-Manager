@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{remove-user-modal}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Remove User Submit Close');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Remove User Submit Reset Close');
 });

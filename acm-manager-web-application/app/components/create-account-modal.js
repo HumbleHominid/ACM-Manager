@@ -5,13 +5,13 @@ export default Ember.Component.extend({
     createAccount() {
       let user = { };
 
-      user.first = this.$("#" + "fName").value;
-      user.last = this.$("#" + "lName").value;
-      user.username = this.$("#" + "email").value;
-      user.password = this.$("#" + "password").value;
+      user.first = this.$("#create-account-first-name").value;
+      user.last = this.$("#create-account-last-name").value;
+      user.username = this.$("#create-account-email").value;
+      user.password = this.$("#create-account-password").value;
 
-      let samePass = user.password === this.$("#" + "confirmPassword").value;
-      let sameEmail = user.username === this.$("#" + "confirmEmail").value;
+      let sameEmail = user.username === this.$("#create-account-email").value;
+      let samePass = user.password === this.$("#create-account-confirm-password").value;
 
       if (!samePass || !sameEmail) {
         alert('Emails or passwords do not match');

@@ -6,7 +6,7 @@
         <h4 class="modal-title">Contact Us</h4>
       </div>
     
-      <form class="form-horizontal form-margin">
+      <form class="form-margin">
         {{f-name-form-field required=false idPrefix="contact-us"}}
         {{l-name-form-field required=false idPrefix="contact-us"}}
       
@@ -17,10 +17,11 @@
         {{#if errorMessage}}
           <p>{{errorMessage}}</p>
         {{/if}}
+        
+        <div class="modal-footer">
+          {{modal-buttons submit="Send"}}
+        </div>
       </form>
-      <div class="modal-footer">
-        {{modal-buttons submit="Send"}}
-      </div>
     </div>
   </div>
 </div>

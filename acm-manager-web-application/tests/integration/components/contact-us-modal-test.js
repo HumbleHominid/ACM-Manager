@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{contact-us-modal}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Contact Us First Name Last Name Your Email Your Message Send Close');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Contact Us First Name Last Name Your Email Your Message Send Reset Close');
 });

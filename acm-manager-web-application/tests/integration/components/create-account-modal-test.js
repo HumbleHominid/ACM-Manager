@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{create-account-modal}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Create Account First Name Last Name Email Confirm Email Password Confirm Password Submit Close');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Create Account First Name Last Name Email Confirm Email Password Confirm Password Submit Reset Close');
 });

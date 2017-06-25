@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{modal-buttons}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Submit Close');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Submit Reset Close');
 });

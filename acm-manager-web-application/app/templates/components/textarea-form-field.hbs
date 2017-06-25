@@ -1,6 +1,7 @@
-<label for="{{idPrefix}}-{{formName}}" class="col-sm-2 control-label">{{placeholder}}</label>
-<div class="col-sm-10">
-  {{textarea class="form-control resize-vertical" id=(string-append idPrefix "-" formName) placeholder=placeholder value=value required=(if required "required" "") pattern=pattern}}
-  <span id="{{idPrefix}}-{{formName}}_span" class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-  <span class="help-block">{{help}}</span>
-</div>
+<label for="{{idPrefix}}-{{formName}}" class="control-label">{{placeholder}}</label>
+{{textarea class="form-control resize-vertical" id=(string-append idPrefix "-" formName) placeholder=placeholder value=value required=(if required "required" "") pattern=pattern}}
+{{#if hasFeedback}}
+  <span id="{{idPrefix}}-{{formName}}_span" class="glyphicon form-control-feedback" aria-hidden="true" />
+{{/if}}
+<span class="help-block">{{help}}</span>
+  

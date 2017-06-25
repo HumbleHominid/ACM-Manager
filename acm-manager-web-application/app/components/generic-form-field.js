@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ["form-group", "has-feedback"],
+  classNames: ["form-group"],
+  classNameBindings: ["hasFeedback:has-feedback"],
   idPrefix: "generic",
   placeholder: "",
   value: "",
@@ -9,6 +10,7 @@ export default Ember.Component.extend({
   help: "",
   pattern: ".+",
   formName: "",
+  hasFeedback: true,
   
   makeValid: function(div, span) {
     div.removeClass("has-warning has-error").addClass("has-success");
@@ -22,7 +24,12 @@ export default Ember.Component.extend({
     div.removeClass("has-warning has-success").addClass("has-error");
     span.removeClass("glyphicon-warning-sign glyphicon-ok").addClass("glyphicon-remove");
   },
+  
   didRender() {
+    if (!this.get('hasFeedback')) {
+      return;
+    }
+    
     let el = this.$("#" + this.get('idPrefix') + "-" + this.get('formName'))[0];
     let div = Ember.$("#" + this.elementId);
     let span = this.$("#" + this.get('idPrefix') + "-" + this.get('formName') + "_span");

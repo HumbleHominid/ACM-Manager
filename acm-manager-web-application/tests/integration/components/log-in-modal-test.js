@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{log-in-modal}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Log In Email Password Submit Create Account Close');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Log In Email Password Submit Reset Create Account Close');
 });
