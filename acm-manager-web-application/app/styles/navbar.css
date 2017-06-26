@@ -31,19 +31,6 @@
   margin-bottom: 5px;
 }
 
-.footer__container {
-  position: absolute;
-
-  bottom: 1%;
-
-  text-align: center;
-  width: 100%
-}
-
-.footer__text {
-  margin: auto;
-}
-
 .navbar__brand__image {
   height: 40px;
   width: 50px;

@@ -11,3 +11,16 @@
 .resize-vertical {
   resize: vertical;
 }
+
+.footer__container {
+  position: absolute;
+
+  bottom: 1%;
+
+  text-align: center;
+  width: 100%
+}
+
+.footer__text {
+  margin: auto;
+}

@@ -14,11 +14,11 @@ export default Ember.Component.extend({
       let samePass = user.password === this.$("#create-account-confirm-password")[0].value;
 
       if (!samePass || !sameEmail) {
-        if (!this.$("#create-account-alert-text")[0]) {
-          this.$("form").prepend('<div class="alert alert-danger alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="create-account-alert-text">Emails or Passwords do not match</span></div>');
+        if (!this.$("#create-account-error-alert-text")[0]) {
+          this.$("form").prepend('<div id="create-account-error-alert" class="alert alert-danger alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="create-account-error-alert-text">Emails or Passwords do not match</span></div>');
         }
         else {
-          let alertTextSpan = this.$("#create-account-alert-text")[0];
+          let alertTextSpan = this.$("#create-account-error-alert-text")[0];
           
           if (alertTextSpan.innerHTML.indexOf("again") !== -1) {
             alertTextSpan.innerHTML = alertTextSpan.innerHTML + ", and again";
@@ -40,7 +40,21 @@ export default Ember.Component.extend({
           url: 'https://katie.mtech.edu/~acmuser/backend/login',
           data: user
         }).then(function() {
+          component.$("form").prepend('<div id="create-account-success-alert" class="alert alert-success alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="create-account-success-text"><strong>Account Created.</strong></span></div>');
+          
+          component.$("#create-account-first-name")[0].value = "";
+          component.$("#create-account-last-name")[0].value = "";
+          component.$("#create-account-email")[0].value = "";
+          component.$("#create-account-confirm-email")[0].value = "";
+          component.$("#create-account-password")[0].value = "";
+          component.$("#create-account-confirm-password")[0].value = "";
+          
+          setTimeout(function() {
             component.$("#create-account-modal").modal('hide');
+            
+            component.$("#create-account-success-alert")[0].remove();
+            component.$("#create-account-error-alert")[0].remove();
+          }, 500);
         }).fail(function() {
           
         });
