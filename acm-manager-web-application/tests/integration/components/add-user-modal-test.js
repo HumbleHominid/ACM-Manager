@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{add-user-modal}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Add User First Name Last Name Email Confirm Email Submit Reset Close');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Add User First Name Last Name Email Confirm Email User\'s Password Make Password Please write down this password as it is unrecoverable after submit. Submit Reset Close');
 });

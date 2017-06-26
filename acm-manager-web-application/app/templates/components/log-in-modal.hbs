@@ -5,15 +5,11 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Log In</h4>
       </div>
-    
+      
       <form class="form-margin" onsubmit={{action 'authenticate'}}>
         {{email-form-field hasFeedback=false idPrefix="log-in"}}
         
         {{password-form-field hasFeedback=false idPrefix="log-in" pattern=".+"}}
-        
-        {{#if errorMessage}}
-          <p>{{errorMessage}}</p>
-        {{/if}}
         
         <div class="modal-footer">
           {{#modal-buttons}}

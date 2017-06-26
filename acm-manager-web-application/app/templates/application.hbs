@@ -1,4 +1,4 @@
-{{nav-bar isOverlayActive=isOverlayActive currentPath=currentPath auth=session.isAuthenticated}}
+{{nav-bar user=user loginCallback=(action 'login') logoutCallback=(action 'logout') currentPath=currentPath}}
 
 {{event-side-bar eventData=model.events}}
 

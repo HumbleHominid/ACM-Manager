@@ -1,11 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  session: Ember.inject.service(),
-
+  user: { },
   actions: {
-    invalidateSession() {
-      this.get('session').invalidate();
+    login(user) {
+      this.set('user', user);
+    },
+    logout() {
+      this.set('user', null);
     }
   }
 });

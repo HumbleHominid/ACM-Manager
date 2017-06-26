@@ -23,16 +23,16 @@
         {{#link-to "officers"}}<span class="glyphicon glyphicon-sunglasses" aria-hidden="true"> Officers</span>{{/link-to}}
       </li>
       <li class="pull-right" role="presentation">
+        <button {{action logoutCallback}} type="button" class="btn btn-warning navbar-btn__small"><span class="glyphicon glyphicon-log-out" aria-hidden="true"/> Log Out</button>
+      </li>
+{{!--       <li class="pull-right" role="presentation">
         <iframe class="discord-wigit" src="https://discordapp.com/widget?id=221463858068324354&theme=dark" allowtransparency="true" frameborder="0"></iframe>
-      </li>
-      <li class="pull-right" role="presentation">
-        <button {{action 'logOut'}} type="button" class="btn btn-warning navbar-btn__small"><span class="glyphicon glyphicon-log-out" aria-hidden="true"/> Log Out</button>
-      </li>
+      </li> --}}
       <li class="pull-right" role="presentation">
         <p class="navbar-text">Logged in as {{#link-to "account"}}{{user.fName}} {{user.lName}} <span class="glyphicon glyphicon-user" aria-hidden="true"/>{{/link-to}}</p>
       </li>
 
-      {{#if (is-admin user.user_type)}}
+      {{#if (is-admin user.user_type.user_type_id)}}
         <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
           {{#link-to "fees"}}<span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>{{/link-to}}
         </li>
@@ -51,7 +51,7 @@
   </ul>
 </nav>
 
-{{log-in-modal}}
+{{log-in-modal submitCallback=loginCallback}}
 {{create-account-modal}}
 {{contact-us-modal}}
 {{add-user-modal}}
