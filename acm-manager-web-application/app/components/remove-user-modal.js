@@ -1,4 +1,5 @@
-import Ember from 'ember';
+// import Ember from 'ember';
+import GenericModal from './generic-modal';
 
-export default Ember.Component.extend({
+export default GenericModal.extend({  
 });

@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import GenericModal from './generic-modal';
 
-export default Ember.Component.extend({
+export default GenericModal.extend({  
   actions: {
     createAccount() {
       let user = { };
@@ -49,12 +50,15 @@ export default Ember.Component.extend({
           component.$("#create-account-password")[0].value = "";
           component.$("#create-account-confirm-password")[0].value = "";
           
-          setTimeout(function() {
-            component.$("#create-account-modal").modal('hide');
-            
-            component.$("#create-account-success-alert")[0].remove();
+          component.$("#create-account-modal").modal('hide');
+          
+          if (component.$("#create-account-error-alert")) {
             component.$("#create-account-error-alert")[0].remove();
-          }, 500);
+          }
+          
+          component.get('notify').success("Account created! You can now log in!", {
+            closeAfter: 3000
+          });
         }).fail(function() {
           
         });

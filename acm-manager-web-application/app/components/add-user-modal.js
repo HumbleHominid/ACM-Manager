@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import generator from 'npm:generate-password';
+import GenericModal from './generic-modal';
 
-export default Ember.Component.extend({
+export default GenericModal.extend({  
   password: "",
   
   actions: {
@@ -50,12 +51,15 @@ export default Ember.Component.extend({
           component.$("#add-user-password")[0].value = "";
           component.$("#add-user-confirm-password")[0].value = "";
           
-          setTimeout(function() {
-            component.$("#add-user-modal").modal('hide');
-            
-            component.$("#add-user-success-alert")[0].remove();
+          component.$("#add-user-modal").modal('hide');
+          
+          if (component.$("#add-user-error-alert")) {
             component.$("#add-user-error-alert")[0].remove();
-          }, 500);
+          }
+          
+          component.get('notify').success("Account created! User can now login.", {
+            closeAfter: 3000
+          });
         });
       })(this);
       
