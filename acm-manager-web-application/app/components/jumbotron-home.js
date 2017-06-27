@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   title: "",
   
   didRender() {
-    let el = Ember.$("#" + this.elementId)
+    let el = Ember.$("#" + this.elementId);
     let sidebar = Ember.$("#upcoming-events");
     
     el.css("marginTop", Ember.$("#navbar").outerHeight(true));
