@@ -11,6 +11,10 @@
         
         {{password-form-field hasFeedback=false idPrefix="log-in" pattern=".+"}}
         
+        <div class="form-group">
+          {{input type="checkbox" class="pointer" id="log-in-checkbox"}} Remember Me
+        </div>
+        
         <div class="modal-footer">
           {{#modal-buttons}}
             <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#create-account-modal">Create Account</button>
@@ -20,5 +24,3 @@
     </div>
   </div>
 </div>
-
-{{ember-notify messageStyle='bootstrap'}}

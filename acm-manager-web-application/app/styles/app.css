@@ -3,6 +3,8 @@
 
 /* Components */
 @import 'navbar.css';
+@import 'events-sidebar.css';
+@import 'jumbotron.css';
 
 .form-margin {
   margin: calc(5px + 1%);
@@ -13,7 +15,7 @@
 }
 
 .footer__container {
-  position: absolute;
+  position: fixed;
 
   bottom: 1%;
 
@@ -23,4 +25,12 @@
 
 .footer__text {
   margin: auto;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+
+.no-scroll-bar::-webkit-scrollbar {
+  display: none;
 }

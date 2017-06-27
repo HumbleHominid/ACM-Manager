@@ -1,0 +1,23 @@
+.upcoming-events__expanded {
+  z-index: 1;
+  
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.5);
+
+  position: fixed;
+
+  right: 1%;
+
+  width: calc(100px + 5%);
+  height: calc(150px + 25%);
+
+  overflow-y: hidden;
+}
+
+.upcoming-events-list {
+  overflow-y: scroll;
+  
+  position: relative;
+  
+  height: 100%;
+  width: 100%;
+}

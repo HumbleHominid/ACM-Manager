@@ -57,7 +57,8 @@ export default GenericModal.extend({
           }
           
           component.get('notify').success("Account created! You can now log in!", {
-            closeAfter: 3000
+            closeAfter: 3000,
+            radius: true
           });
         }).fail(function() {
           

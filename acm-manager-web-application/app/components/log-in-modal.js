@@ -11,6 +11,7 @@ export default GenericModal.extend({
       
       user.username = this.$('#log-in-email')[0].value;
       user.password = this.$('#log-in-password')[0].value;
+      user.rememberMe = this.$("#log-in-checkbox")[0].checked;
 
       user = JSON.stringify(user);
 
@@ -21,10 +22,15 @@ export default GenericModal.extend({
           url: 'https://katie.mtech.edu/~acmuser/backend/login',
           data: user
         }).done(function(data) {
-          component.get('submitCallback') (data.user);
+          let user = data.user;
+
+          user.rememberMe = component.$("#log-in-checkbox")[0].checked;
+          
+          component.get('submitCallback') (user);
           
           component.$('#log-in-email')[0].value = "";
           component.$('#log-in-password')[0].value = "";
+          component.$("#log-in-checkbox")[0].checked = false;
           
           component.$("#log-in-modal").modal('hide');
           
@@ -33,7 +39,8 @@ export default GenericModal.extend({
           }
           
           component.get('notify').success("Welcome back!", {
-            closeAfter: 3000
+            closeAfter: 3000,
+            radius: true
           });
         }).fail(function() {
           if (!component.$("#log-in-error-alert-text")[0]) {
