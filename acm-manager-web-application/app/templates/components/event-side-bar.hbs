@@ -1,9 +1,9 @@
 <div class="panel-group" role="tablist">
-  <div id="upcoming-events" class="panel panel-info upcoming-events__expanded">
-    <div class="panel-heading" href="#upcoming-events-collapsable" role="button" data-toggle="collapse">
+  <div id="upcoming-events" class="panel panel-info upcoming-events">
+    <div class="panel-heading" href="#upcoming-events-collapsable" role="button" data-toggle="collapse" class="unselectable">
       <h3 class="panel-title">Upcoming Events</h3>
     </div>
-
+    
     <div class="panel-collapse collapse in" role="tabpanel" id="upcoming-events-collapsable" aria-expanded="true">
       <div class="panel-body">
         Sort event preview by:<br>
@@ -13,11 +13,11 @@
         </div>
       </div>
 
-  <div class="list-group upcoming-events-list no-scroll-bar" data-spy="scroll">
-    {{#each-in eventData as |key value|}}
-      {{list-item-event data=value}}
-    {{/each-in}}
-  </div>
+      <div class="list-group upcoming-events-list no-scroll-bar" data-spy="scroll">
+        {{#each-in eventData as |key value|}}
+          {{list-item-event data=value}}
+        {{/each-in}}
+      </div>
     </div>
   </div>
 </div>

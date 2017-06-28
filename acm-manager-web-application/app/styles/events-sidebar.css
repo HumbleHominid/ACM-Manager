@@ -1,4 +1,4 @@
-.upcoming-events__expanded {
+.upcoming-events {
   z-index: 1;
   
   box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.5);
@@ -8,9 +8,23 @@
   right: 1%;
 
   width: calc(100px + 5%);
-  max-height: calc(150px + 25%);
 
   overflow-y: hidden;
+}
+
+@media only screen
+and (min-device-width: 320px) 
+and (max-device-width: 800px) {
+  .upcoming-events__mobile {
+    height: calc(150px + 50%);
+  }
+}
+
+@media only screen
+and (min-device-width: 800px) {
+  .upcoming-events__desktop {
+    height: calc(150px + 25%);
+  }
 }
 
 .upcoming-events-list {

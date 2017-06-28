@@ -7,9 +7,8 @@ export default Ember.Route.extend({
         {
           name: "April Meeting",
           location: "Museum",
-          date: "April 20, 2017",
-          time: "6:00 p.m.",
-          eventType:{
+          eventTime: "2017-04-20T18:00:00",
+          eventType: {
             name: "Meeting",
             description: ""
           }
@@ -17,9 +16,8 @@ export default Ember.Route.extend({
         {
           name: "April LAN Party",
           location: "Museum",
-          date: "April 21, 2017",
-          time: "7:00 p.m.",
-          eventType:{
+          eventTime: "2017-04-21T19:00:00",
+          eventType: {
             name: "LAN",
             description: ""
           }
@@ -27,9 +25,8 @@ export default Ember.Route.extend({
         {
           name: "Trevor Fix It",
           location: "Anywhere",
-          date: "Now",
-          time: "All day",
-          eventType:{
+          eventTime: "2017-06-26T17:00:00",
+          eventType: {
             name: "Crying",
             description: ""
           }
@@ -37,9 +34,8 @@ export default Ember.Route.extend({
         {
           name: "Research",
           location: "Museum",
-          date: "April 420, 2017",
-          time: "7:00 p.m.",
-          eventType:{
+          eventTime: "2017-06-27T18:00:00",
+          eventType: {
             name: "Google",
             description: ""
           }

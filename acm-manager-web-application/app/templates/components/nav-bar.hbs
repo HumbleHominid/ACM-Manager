@@ -1,54 +1,13 @@
 <nav id="navbar" class="navbar navbar-default navbar-fixed-top container-fluid">
-  <div class="navbar-header">
-    <a class="navbar__brand" >
-      <img class="navbar__brand__image" alt="MTA Brand" src="./MTA.png">
-    </a>
-  </div>
-  <ul class="nav nav-pills pills__margin-top">
-    <li class={{if (is-active-route currentPath 'home') "active" ""}} role="presentation">
-      {{#link-to "home"}}<span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>{{/link-to}}
-    </li>
-    <li class={{if (is-active-route currentPath 'events') "active" ""}} role="presentation">
-      {{#link-to "events"}}<span class="glyphicon glyphicon-calendar" aria-hidden="true"> Events</span>{{/link-to}}
-    </li>
-    <li class="pull-right" role="presentation">
-      <button type="button" class="btn btn-info navbar-btn__small" data-toggle="modal" data-target="#contact-us-modal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"/> Contact Us</button>
-    </li>
-
-    {{#if user.jwt}}
-      <li class={{if (is-active-route currentPath 'files') "active" ""}} role="presentation">
-        {{#link-to "files"}}<span class="glyphicon glyphicon-file" aria-hidden="true"> Files</span>{{/link-to}}
-      </li>
-      <li class={{if (is-active-route currentPath 'officers') "active" ""}} role="presentation">
-        {{#link-to "officers"}}<span class="glyphicon glyphicon-sunglasses" aria-hidden="true"> Officers</span>{{/link-to}}
-      </li>
-      <li class="pull-right" role="presentation">
-        <button {{action logoutCallback}} type="button" class="btn btn-warning navbar-btn__small"><span class="glyphicon glyphicon-log-out" aria-hidden="true"/> Log Out</button>
-      </li>
-{{!--       <li class="pull-right" role="presentation">
-        <iframe class="discord-wigit" src="https://discordapp.com/widget?id=221463858068324354&theme=dark" allowtransparency="true" frameborder="0"></iframe>
-      </li> --}}
-      <li class="pull-right" role="presentation">
-        <p class="navbar-text">Logged in as {{#link-to "account"}}{{user.fName}} {{user.lName}} <span class="glyphicon glyphicon-user" aria-hidden="true"/>{{/link-to}}</p>
-      </li>
-
-      {{#if (is-admin user.user_type.user_type_id)}}
-        <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
-          {{#link-to "fees"}}<span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>{{/link-to}}
-        </li>
-        <li role="presentation">
-          <button type="button" class="btn btn-default navbar-btn__small"data-toggle="modal" data-target="#add-user-modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"/> Add User</button>
-        </li>
-        <li role="presentation">
-          <button type="button" class="btn btn-default navbar-btn__small" data-toggle="modal" data-target="#remove-user-modal"><span class="glyphicon glyphicon-minus" aria-hidden="true"/> Remove User</button>
-        </li>
-      {{/if}}
-    {{else}}
-      <li class="pull-right" role="presentation">
-        <button type="button" class="btn btn-default navbar-btn__small" data-toggle="modal" data-target="#log-in-modal"><span class="glyphicon glyphicon-log-in" aria-hidden="true"/> Log In</button>
-      </li>
-    {{/if}}
-  </ul>
+  {{#link-to "home" class="navbar-brand navbar__brand"}}
+    <img class="navbar__brand__image" alt="MTA Brand" src="./MTA.png">
+  {{/link-to}}
+  
+  {{#if smallScreen}}
+    {{navbar-small logoutCallback=logoutCallback currentPath=currentPath user=user}}
+  {{else}}
+    {{navbar-big logoutCallback=logoutCallback currentPath=currentPath user=user}}
+  {{/if}}
 </nav>
 
 {{log-in-modal submitCallback=loginCallback}}

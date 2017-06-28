@@ -1,0 +1,65 @@
+<ul class="nav nav-pills pills__margin-top">
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Change Page <span class="caret"></span></a>
+    
+    <ul class="dropdown-menu">
+      <li class={{if (is-active-route currentPath 'home') "active" ""}} role="presentation">
+        {{#link-to "home"}}
+          <span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>
+        {{/link-to}}
+      </li>
+      <li role="seperator" class="divider"></li>
+      <li class={{if (is-active-route currentPath 'events') "active" ""}} role="presentation">
+        {{#link-to "events"}}
+          <span class="glyphicon glyphicon-calendar" aria-hidden="true"> Events</span>
+        {{/link-to}}
+      </li>
+      {{#if user.jwt}}
+        <li role="seperator" class="divider"></li>
+        <li class={{if (is-active-route currentPath 'files') "active" ""}} role="presentation">
+          {{#link-to "files"}}
+            <span class="glyphicon glyphicon-file" aria-hidden="true"> Files</span>
+          {{/link-to}}
+        </li>
+        <li role="seperator" class="divider"></li>
+        <li class={{if (is-active-route currentPath 'officers') "active" ""}} role="presentation">
+          {{#link-to "officers"}}
+            <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"> Officers</span>
+          {{/link-to}}
+        </li>
+        {{#if (is-admin user.user_type.user_type_id)}}
+          <li role="seperator" class="divider"></li>
+          <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
+            {{#link-to "fees"}}
+              <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>
+            {{/link-to}}
+          </li>
+          <li role="seperator" class="divider"></li>
+          <li role="presentation">
+            <a href="#" type="button" data-toggle="modal" data-target="#add-user-modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"/> Add User</a>
+          </li>
+          <li role="seperator" class="divider"></li>
+          <li role="presentation">
+            <a type="button" data-toggle="modal" data-target="#remove-user-modal"><span class="glyphicon glyphicon-minus" aria-hidden="true"/> Remove User</a>
+          </li>
+        {{/if}}
+      {{/if}}
+    </ul>
+  </li>
+  
+  <li class="btn-group pull-right navbar-btn__small" role="group">
+    {{#if user.jwt}}
+      <button {{action logoutCallback}} type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-log-out" aria-hidden="true"/></button>
+    {{else}}
+      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#log-in-modal"><span class="glyphicon glyphicon-log-in" aria-hidden="true"/></button>
+    {{/if}}
+    
+    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#contact-us-modal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"/></button>
+  </li>
+  
+  {{#if user.jwt}}
+    <li class="pull-right" role="presentation">
+      <p class="navbar-text">{{#link-to "account"}}{{user.fName}} {{user.lName}} <span class="glyphicon glyphicon-user" aria-hidden="true"/>{{/link-to}}</p>
+    </li>
+  {{/if}}
+</ul>
