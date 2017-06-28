@@ -41,8 +41,6 @@ export default GenericModal.extend({
           url: 'https://katie.mtech.edu/~acmuser/backend/login',
           data: user
         }).then(function() {
-          component.$("form").prepend('<div id="create-account-success-alert" class="alert alert-success alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="create-account-success-text"><strong>Account Created.</strong></span></div>');
-          
           component.$("#create-account-first-name")[0].value = "";
           component.$("#create-account-last-name")[0].value = "";
           component.$("#create-account-email")[0].value = "";
