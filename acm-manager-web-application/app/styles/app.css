@@ -40,3 +40,7 @@
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
 }
+
+body {
+  padding-top: 50px;
+}

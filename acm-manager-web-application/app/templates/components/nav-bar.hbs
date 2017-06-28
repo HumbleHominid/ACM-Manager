@@ -1,13 +1,110 @@
-<nav id="navbar" class="navbar navbar-default navbar-fixed-top container-fluid">
-  {{#link-to "home" class="navbar-brand navbar__brand"}}
-    <img class="navbar__brand__image" alt="MTA Brand" src="./MTA.png">
-  {{/link-to}}
-  
-  {{#if smallScreen}}
-    {{navbar-small logoutCallback=logoutCallback currentPath=currentPath user=user}}
-  {{else}}
-    {{navbar-big logoutCallback=logoutCallback currentPath=currentPath user=user}}
-  {{/if}}
+<nav id="navbar" class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      {{#if user.jwt}}
+      {{/if}}
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mta-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      {{#link-to "home" class="navbar-brand navbar__brand"}}
+        <img class="navbar__brand__image" alt="MTA Brand" src="./MTA.png">
+      {{/link-to}}
+      {{#if user.jwt}}
+        <div data-toggle="collapse" data-target="#mta-navbar">
+          <p type="presentation" class="navbar-text" aria-expanded="false">{{#link-to "account"}}{{user.fName}} {{user.lName}} <span class="glyphicon glyphicon-user" aria-hidden="true"/>{{/link-to}}</p>
+        </div>
+      {{/if}}
+    </div>
+    
+    <div class="collapse navbar-collapse" id="mta-navbar">
+      <ul class="nav navbar-nav">
+        <li class={{if (is-active-route currentPath 'home') "active" ""}} role="presentation">
+          {{#link-to "home"}}
+            <div data-toggle="collapse" data-target="#mta-navbar">
+              <span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>
+            </div>
+            {{/link-to}}
+        </li>
+        <li class={{if (is-active-route currentPath 'events') "active" ""}} role="presentation">
+          {{#link-to "events"}}
+            <div data-toggle="collapse" data-target="#mta-navbar">
+              <span class="glyphicon glyphicon-calendar" aria-hidden="true"> Events</span>
+            </div>
+          {{/link-to}}
+        </li>
+
+        {{#if user.jwt}}
+          <li class={{if (is-active-route currentPath 'files') "active" ""}} role="presentation">
+            {{#link-to "files"}}
+              <div data-toggle="collapse" data-target="#mta-navbar">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"> Files</span>
+              </div>
+            {{/link-to}}
+          </li>
+          <li class={{if (is-active-route currentPath 'officers') "active" ""}} role="presentation">
+            {{#link-to "officers"}}
+              <div data-toggle="collapse" data-target="#mta-navbar">
+                <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"> Officers</span>
+              </div>
+            {{/link-to}}
+          </li>
+
+          {{#if (is-admin user.user_type.user_type_id)}}
+            <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
+              {{#link-to "fees"}}
+                <div data-toggle="collapse" data-target="#mta-navbar">
+                  <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>
+                </div>
+              {{/link-to}}
+            </li>
+            <li role="presentation" data-toggle="modal" data-target="#add-user-modal" >
+              {{#link-to currentPath}}
+                <div data-toggle="collapse" data-target="#mta-navbar">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"> Add User</span>
+                </div>
+              {{/link-to}}
+            </li>
+            <li role="presentation" data-toggle="modal" data-target="#remove-user-modal">
+              {{#link-to currentPath}}
+                <div data-toggle="collapse" data-target="#mta-navbar">
+                  <span class="glyphicon glyphicon-minus" aria-hidden="true"> Remove User</span>
+                </div>
+              {{/link-to}}
+            </li>
+          {{/if}}
+        {{/if}}
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {{#if user.jwt}}
+          <li role="presentation" {{action logoutCallback}}>
+            {{#link-to currentPath}}
+              <div data-toggle="collapse" data-target="#mta-navbar">
+                <span class="glyphicon glyphicon-log-out" aria-hidden="true"> Log Out</span>
+              </div>
+            {{/link-to}}
+          </li>
+        {{else}}
+          <li role="presentation" data-toggle="modal" data-target="#log-in-modal">
+            {{#link-to currentPath}}
+              <div data-toggle="collapse" data-target="#mta-navbar">
+                <span class="glyphicon glyphicon-log-in" aria-hidden="true"> Log In</span>
+              </div>
+            {{/link-to}}
+          </li>
+        {{/if}}
+        <li role="presentation" data-toggle="modal" data-target="#contact-us-modal">
+          {{#link-to currentPath}}
+            <div data-toggle="collapse" data-target="#mta-navbar">
+              <span class="glyphicon glyphicon-envelope" aria-hidden="true"> Contact Us</span>
+            </div>
+          {{/link-to}}
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
 {{log-in-modal submitCallback=loginCallback}}

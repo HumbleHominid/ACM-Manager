@@ -17,7 +17,5 @@ export default Ember.Component.extend({
     
     
     this.$(".upcoming-events-list").css("height", eventsHeight - (panelBodyHeight + panelHeadingHeight));
-    
-    el.css("top", Ember.$("#navbar").outerHeight(true));
   }
 });
