@@ -8,7 +8,7 @@ export default Ember.Component.extend({
     let panelHeadingHeight = this.$(".panel-heading").outerHeight(true);
     
     
-    this.$(".list-group").css("height", eventsHeight - (panelBodyHeight + panelHeadingHeight));
+    this.$(".upcoming-events-list").css("height", eventsHeight - (panelBodyHeight + panelHeadingHeight));
     
     el.css("top", Ember.$("#navbar").outerHeight(true));
   }

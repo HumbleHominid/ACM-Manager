@@ -1,20 +1,23 @@
-<div id="upcoming-events" class="upcoming-events__expanded panel panel-info">
-  <div class="panel-heading">
-    <h3 class="panel-title">Upcoming Events</h3>
-  </div>
-
-  <div class="panel-body">
-    Sort event preview by:<br>
-    <div class="btn-group" role="group" aria-label="">
-      <button disabled="disabled" type="button" class="btn btn-xs btn-default">Time</button>
-      <button type="button" class="btn btn-xs btn-default">Type</button>
+<div class="panel-group" role="tablist">
+  <div id="upcoming-events" class="panel panel-info upcoming-events__expanded">
+    <div class="panel-heading" href="#upcoming-events-collapsable" role="button" data-toggle="collapse">
+      <h3 class="panel-title">Upcoming Events</h3>
     </div>
-  </div>
 
-  <div class="list-group upcoming-events-list no-scroll-bar" data-spy="scroll">  {{#each-in eventData as |key value|}}
+    <div class="panel-collapse collapse in" role="tabpanel" id="upcoming-events-collapsable" aria-expanded="true">
+      <div class="panel-body">
+        Sort event preview by:<br>
+        <div class="btn-group" role="group" aria-label="">
+          <button disabled="disabled" type="button" class="btn btn-xs btn-default">Time</button>
+          <button type="button" class="btn btn-xs btn-default">Type</button>
+        </div>
+      </div>
+
+  <div class="list-group upcoming-events-list no-scroll-bar" data-spy="scroll">
+    {{#each-in eventData as |key value|}}
       {{list-item-event data=value}}
     {{/each-in}}
   </div>
+    </div>
+  </div>
 </div>
-
-{{yield}}
