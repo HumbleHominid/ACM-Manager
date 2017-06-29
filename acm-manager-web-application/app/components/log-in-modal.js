@@ -28,9 +28,7 @@ export default GenericModal.extend({
           
           component.get('submitCallback') (user);
           
-          component.$('#log-in-email')[0].value = "";
-          component.$('#log-in-password')[0].value = "";
-          component.$("#log-in-checkbox")[0].checked = false;
+          component.$('#log-in-form')[0].reset();
           
           component.$("#log-in-modal").modal('hide');
           

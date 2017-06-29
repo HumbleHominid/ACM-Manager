@@ -41,12 +41,7 @@ export default GenericModal.extend({
           url: 'https://katie.mtech.edu/~acmuser/backend/login',
           data: user
         }).then(function() {
-          component.$("#create-account-first-name")[0].value = "";
-          component.$("#create-account-last-name")[0].value = "";
-          component.$("#create-account-email")[0].value = "";
-          component.$("#create-account-confirm-email")[0].value = "";
-          component.$("#create-account-password")[0].value = "";
-          component.$("#create-account-confirm-password")[0].value = "";
+          component.$("#create-account-form").reset();
           
           component.$("#create-account-modal").modal('hide');
           

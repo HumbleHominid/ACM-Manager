@@ -44,12 +44,7 @@ export default GenericModal.extend({
         }).then(function() {
           this.$("form").prepend('<div id="add-user-success-alert" class="alert alert-danger alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="add-user-success-alert-text"><strong>User Added</strong></span></div>');
           
-          component.$("#add-user-first-name")[0].value = "";
-          component.$("#add-user-last-name")[0].value = "";
-          component.$("#add-user-email")[0].value = "";
-          component.$("#add-user-confirm-email")[0].value = "";
-          component.$("#add-user-password")[0].value = "";
-          component.$("#add-user-confirm-password")[0].value = "";
+          component.$("#add-user-form")[0].reset();
           
           component.$("#add-user-modal").modal('hide');
           
