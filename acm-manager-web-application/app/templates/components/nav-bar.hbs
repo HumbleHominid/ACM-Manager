@@ -13,9 +13,9 @@
         <img class="navbar__brand__image" alt="MTA Brand" src="./MTA.png">
       {{/link-to}}
       {{#if user.jwt}}
-        <div data-toggle="collapse" data-target="#mta-navbar">
-          <p type="presentation" class="navbar-text" aria-expanded="false">{{#link-to "account"}}{{user.fName}} {{user.lName}} <span class="glyphicon glyphicon-user" aria-hidden="true"/>{{/link-to}}</p>
-        </div>
+        {{#link-to "account"}}
+          <p type="presentation" class="navbar-text" aria-expanded="false">{{user.fName}} {{user.lName}} <span class="glyphicon glyphicon-user" aria-hidden="true"/></p>
+        {{/link-to}}
       {{/if}}
     </div>
     

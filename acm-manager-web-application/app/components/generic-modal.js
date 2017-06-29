@@ -1,5 +1,5 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  notify: Ember.inject.service(),
+  notify: Ember.inject.service()
 });
