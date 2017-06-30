@@ -14,64 +14,50 @@
       {{/link-to}}
       {{#if user.jwt}}
         {{#link-to "account"}}
-          <p type="presentation" class="navbar-text" aria-expanded="false">{{user.fName}} {{user.lName}} <span class="glyphicon glyphicon-user" aria-hidden="true"/></p>
+          <span class="glyphicon glyphicon-user navbar-text" aria-hidden="true"> {{user.fName}} {{user.lName}}</span>
         {{/link-to}}
       {{/if}}
     </div>
     
-    <div class="collapse navbar-collapse no-scrollbar" id="mta-navbar" aria-expanded="true">
+    <div class="collapse navbar-collapse no-scrollbar" id="mta-navbar" aria-expanded="true" data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
       <ul class="nav navbar-nav">
         <li class={{if (is-active-route currentPath 'home') "active" ""}} role="presentation">
           {{#link-to "home"}}
-            <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
               <span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>
-            </div>
             {{/link-to}}
         </li>
         <li class={{if (is-active-route currentPath 'events') "active" ""}} role="presentation">
           {{#link-to "events"}}
-            <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
               <span class="glyphicon glyphicon-calendar" aria-hidden="true"> Events</span>
-            </div>
           {{/link-to}}
         </li>
 
         {{#if user.jwt}}
           <li class={{if (is-active-route currentPath 'files') "active" ""}} role="presentation">
             {{#link-to "files"}}
-              <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
                 <span class="glyphicon glyphicon-file" aria-hidden="true"> Files</span>
-              </div>
             {{/link-to}}
           </li>
           <li class={{if (is-active-route currentPath 'officers') "active" ""}} role="presentation">
             {{#link-to "officers"}}
-              <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
                 <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"> Officers</span>
-              </div>
             {{/link-to}}
           </li>
 
           {{#if (is-admin user.user_type.user_type_id)}}
             <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
               {{#link-to "fees"}}
-                <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
                   <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>
-                </div>
               {{/link-to}}
             </li>
             <li role="presentation" data-toggle="modal" data-target="#add-user-modal" >
               {{#link-to currentPath}}
-                <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
                   <span class="glyphicon glyphicon-plus" aria-hidden="true"> Add User</span>
-                </div>
               {{/link-to}}
             </li>
             <li role="presentation" data-toggle="modal" data-target="#remove-user-modal">
               {{#link-to currentPath}}
-                <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
                   <span class="glyphicon glyphicon-minus" aria-hidden="true"> Remove User</span>
-                </div>
               {{/link-to}}
             </li>
           {{/if}}
@@ -89,24 +75,18 @@
         {{else}}
           <li role="presentation" data-toggle="modal" data-target="#log-in-modal">
             {{#link-to currentPath}}
-              <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
                 <span class="glyphicon glyphicon-log-in" aria-hidden="true"> Log In</span>
-              </div>
             {{/link-to}}
           </li>
           <li role="presentation" data-toggle="modal" data-target="#create-account-modal">
             {{#link-to currentPath}}
-              <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"> Create Account</span>
-              </div>
             {{/link-to}}
           </li>
         {{/if}}
         <li role="presentation" data-toggle="modal" data-target="#contact-us-modal">
           {{#link-to currentPath}}
-            <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
               <span class="glyphicon glyphicon-envelope" aria-hidden="true"> Contact Us</span>
-            </div>
           {{/link-to}}
         </li>
       </ul>
