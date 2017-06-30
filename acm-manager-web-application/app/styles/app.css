@@ -1,8 +1,49 @@
 /* Routes */
-@import 'home.css';
+
 
 /* Components */
 @import 'navbar.css';
-@import 'post-overlay.css';
-@import 'darken-area.css';
-@import 'submit-button-cancel.css';
+@import 'events-sidebar.css';
+@import 'jumbotron.css';
+
+.form-margin {
+  margin: calc(5px + 1%);
+}
+
+.resize-vertical {
+  resize: vertical;
+}
+
+.footer__container {
+  position: fixed;
+
+  bottom: 1%;
+
+  text-align: center;
+  width: 100%
+}
+
+.footer__text {
+  margin: auto;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.unselectable {
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+}
+
+body {
+  padding-top: 50px;
+  
+  background-color: #aaa;
+}
+

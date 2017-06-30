@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import GenericForm from './generic-form-field';
 
-export default Ember.Component.extend({
+export default GenericForm.extend({
+  placeholder: "Email",
+  pattern: "^.+@mtech\.edu$",
+  formName: "email"
 });

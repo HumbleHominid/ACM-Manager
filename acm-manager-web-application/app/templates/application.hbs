@@ -1,3 +1,9 @@
-{{#content-area data=model currentPath=currentPath}}
-  {{outlet}}
-{{/content-area}}
+{{nav-bar user=user loginCallback=(action 'login') logoutCallback=(action 'logout') currentPath=currentPath}}
+
+{{event-side-bar eventData=model.events}}
+
+{{outlet}}
+
+{{page-footer}}
+
+{{ember-notify messageStyle='bootstrap'}}

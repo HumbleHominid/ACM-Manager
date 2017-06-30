@@ -1,0 +1,12 @@
+.jumbotron--home {
+  border-radius: calc(5px + 0.25%);
+  
+  margin: 0px calc(5px + 0.5%);
+  
+  padding-left: calc(2px + 0.25%);
+  padding-right: calc(2px + 0.25%);
+}
+
+.about-acm {
+  text-indent: 15px;
+}

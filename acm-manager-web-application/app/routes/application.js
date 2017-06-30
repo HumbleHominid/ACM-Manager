@@ -5,19 +5,41 @@ export default Ember.Route.extend({
     return {
       events: [
         {
-          title: "April Meeting",
+          name: "April Meeting",
           location: "Museum",
-          date: "April 20, 2017",
-          time: "6:00 p.m.",
-          type: "meeting"
+          eventTime: "2017-04-20T18:00:00",
+          eventType: {
+            name: "Meeting",
+            description: ""
+          }
         },
         {
-          title: "April LAN Party",
+          name: "April LAN Party",
           location: "Museum",
-          date: "April 21, 2017",
-          time: "7:00 p.m.",
-          type: "lan"
+          eventTime: "2017-04-21T19:00:00",
+          eventType: {
+            name: "LAN",
+            description: ""
+          }
         },
+        {
+          name: "Trevor Fix It",
+          location: "Anywhere",
+          eventTime: "2017-06-26T17:00:00",
+          eventType: {
+            name: "Crying",
+            description: ""
+          }
+        },
+        {
+          name: "Research",
+          location: "Museum",
+          eventTime: "2017-06-27T18:00:00",
+          eventType: {
+            name: "Google",
+            description: ""
+          }
+        }
       ]
     };
   }

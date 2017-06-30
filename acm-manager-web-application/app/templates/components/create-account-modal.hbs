@@ -1,0 +1,25 @@
+<div id="create-account-modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create Account</h4>
+      </div>
+    
+      <form id="create-account-form" class="form-margin" onsubmit={{action 'createAccount'}}>
+        {{f-name-form-field idPrefix="create-account"}}
+        {{l-name-form-field idPrefix="create-account"}}
+
+        {{email-form-field idPrefix="create-account"}}
+        {{email-form-field idPrefix="create-account-confirm" placeholder="Confirm Email"}}
+
+        {{password-form-field idPrefix="create-account"}}
+        {{password-form-field idPrefix="create-account-confirm" placeholder="Confirm Password"}}
+
+        <div class="modal-footer">
+          {{modal-buttons}}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
