@@ -17,7 +17,7 @@ export default GenericModal.extend({
       let sameEmail = user.username === this.$("#add-user-confirm-email")[0].value;
 
       if (!sameEmail) {
-        if (!this.$("#add-user-error-alert-text")[0]) {
+        if (!this.$("#add-user-error-alert")[0]) {
           this.$("form").prepend('<div id="add-user-error-alert" class="alert alert-danger alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="add-user-error-alert-text">Emails do not match</span></div>');
         }
         else {
@@ -48,7 +48,7 @@ export default GenericModal.extend({
           
           component.$("#add-user-modal").modal('hide');
           
-          if (component.$("#add-user-error-alert")) {
+          if (component.$("#add-user-error-alert")[0]) {
             component.$("#add-user-error-alert")[0].remove();
           }
           

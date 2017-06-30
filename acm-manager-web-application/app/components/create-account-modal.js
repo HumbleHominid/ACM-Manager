@@ -15,7 +15,7 @@ export default GenericModal.extend({
       let samePass = user.password === this.$("#create-account-confirm-password")[0].value;
 
       if (!samePass || !sameEmail) {
-        if (!this.$("#create-account-error-alert-text")[0]) {
+        if (!this.$("#create-account-error-alert")[0]) {
           this.$("form").prepend('<div id="create-account-error-alert" class="alert alert-danger alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="create-account-error-alert-text">Emails or Passwords do not match</span></div>');
         }
         else {
@@ -45,7 +45,7 @@ export default GenericModal.extend({
           
           component.$("#create-account-modal").modal('hide');
           
-          if (component.$("#create-account-error-alert")) {
+          if (component.$("#create-account-error-alert")[0]) {
             component.$("#create-account-error-alert")[0].remove();
           }
           

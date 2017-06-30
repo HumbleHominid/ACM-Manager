@@ -41,7 +41,7 @@ export default GenericModal.extend({
             radius: true
           });
         }).fail(function() {
-          if (!component.$("#log-in-error-alert-text")[0]) {
+          if (!component.$("#log-in-error-alert")[0]) {
             component.$("form").prepend('<div id="log-in-error-alert" class="alert alert-danger alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="log-in-error-alert-text">Incorrect Email or Password</span></div>');
           }
           else {
