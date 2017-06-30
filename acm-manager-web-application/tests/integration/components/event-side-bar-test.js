@@ -12,14 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{event-side-bar}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Upcomming Events Sort event preview by: Time Type');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#event-side-bar}}
-      template block text
-    {{/event-side-bar}}
-  `);
-
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Upcomming Events Sort event preview by: Time Type template block text');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Upcoming Events Sort event preview by: Time Type');
 });

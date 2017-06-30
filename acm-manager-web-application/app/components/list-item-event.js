@@ -7,9 +7,13 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
     
-    let dateTime = new Date(this.get('data.eventTime'));
+    let eventTime = this.get('data.eventTime');
     
-    this.set('date', dateTime.toDateString());
-    this.set('time', dateTime.toTimeString().split(" ")[0]);
+    if (eventTime) {
+      let dateTime = new Date(this.get('data.eventTime'));
+      
+      this.set('date', dateTime.toDateString());
+      this.set('time', dateTime.toTimeString().split(" ")[0]);
+    }
   }
 });

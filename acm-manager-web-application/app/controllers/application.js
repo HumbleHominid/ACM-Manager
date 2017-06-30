@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   cookies: Ember.inject.service(),
-  user: {  },
+  user: { },
   actions: {
     login(user) {
       this.set('user', user);
