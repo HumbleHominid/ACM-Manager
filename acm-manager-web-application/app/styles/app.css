@@ -31,7 +31,7 @@
   cursor: pointer;
 }
 
-.no-scroll-bar::-webkit-scrollbar {
+.no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
@@ -44,3 +44,4 @@
 body {
   padding-top: 50px;
 }
+
