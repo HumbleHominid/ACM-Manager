@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 class Server{
 
-  private $relAddress = '/~tbrooks/ACM-Manager/backend/';
+  private $relAddress = '/~acmuser/backend/';
 
   //Main handler method
   public function serve(){
@@ -50,7 +50,20 @@ class Server{
         include('model/login.php');
         $login = new Login();
         $login->validateToken();
+      case 'testInfoPath':
+        include('model/login.php');
+        $login = new Login;
+
+        // $data = json_decode(file_get_contents('php://input'), true);
+        //  $jwt = $data['jwt'];     
+
+        $arr = $login->validateToken(file_get_contents('php://input'));
+        var_dump($arr);
+        //echo $login->getCurrentUser($arr); 
+        //header('HTTP/1.1 200 OK');
+        break;
       default:
+        echo $object;   
         header('HTTP/1.1 400 Bad Request');
         break;
     }
@@ -120,11 +133,14 @@ class Server{
 
   private function login($method, $id){
     switch($method){
-      case 'POST':
+      case 'POST': 
+        
         include('model/login.php');
         $login = new Login;
-        $user = $_POST['username'];
-        $pass = $_POST['password'];
+  	    $data = json_decode(file_get_contents('php://input'), true);
+        $user = $data['username'];
+      	$pass = $data['password']; 
+        
         $result = $login->attemptLogin($user, $pass);
         $json = $this->response($result);
         if($json !== 'false'){
@@ -132,7 +148,19 @@ class Server{
         }else{
           echo 'INVALID CREDENTIALS';
         }
-        break;  
+        break; 
+      case 'PUT':
+      	include('model/login.php');
+      	$login = new Login;
+      	$data = json_decode(file_get_contents('php://input'), true);
+
+        $user = $data['username'];
+      	$pass = password_hash($data['password'], PASSWORD_BCRYPT); 
+      	$first = $data['first'];
+      	$last = $data['last'];
+      	$result = $login->createUser($user, $pass, $first, $last); 
+        header('HTTP/1.1 200 OK');
+        break;
     } 
   }
 
