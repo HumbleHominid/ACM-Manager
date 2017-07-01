@@ -1,6 +1,6 @@
-<div class="form-group">
-  <label for="lName" class="col-sm-2 control-label">Last Name</label>
-  <div class="col-xs-5">
-    <input type="text" class="form-control" id="lName" placeholder="Bone">
-  </div>
-</div>
+<label for="{{idPrefix}}-{{formName}}" class="control-label">Last Name</label>
+{{input class="form-control" id=(string-append idPrefix "-" formName) placeholder="Doe" value=value required=(if required "required" "") pattern=pattern}}
+{{#if hasFeedback}}
+  <span id="{{idPrefix}}-{{formName}}_span" class="glyphicon form-control-feedback" aria-hidden="true" />
+{{/if}}
+<span class="help-block">{{help}}</span>

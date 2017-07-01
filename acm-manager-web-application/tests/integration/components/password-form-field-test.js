@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{password-form-field}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '');
+  assert.equal(this.$().text().trim(), 'Password');
 });

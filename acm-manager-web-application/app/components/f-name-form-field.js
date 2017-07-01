@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import GenericForm from './generic-form-field';
 
-export default Ember.Component.extend({
+export default GenericForm.extend({
+  formName: "first-name"
 });

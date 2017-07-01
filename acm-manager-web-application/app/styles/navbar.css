@@ -1,71 +1,50 @@
-.upcoming-events__type {
-  z-index: 1;
-
-  background: #fff;
-  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.5);
-
-  position: absolute;
-
-  right: 1%;
-
-  width: 200px;
-  height: 500px;
-
-  overflow-x: wrap;
-  overflow-y: scroll;
-}
-
-.upcoming-events--round {
-  border-radius: 5px;
-
-  padding: 4px;
-}
-
-.tab__right {
-  position: absolute;
-
-  right: 1%;
-}
-
-.navbar__container {
-  margin-bottom: 5px;
-}
-
-.footer__container {
-  position: absolute;
-
-  bottom: 1%;
-
-  text-align: center;
-  width: 100%
-}
-
-.footer__text {
-  margin: auto;
-}
-
 .navbar__brand__image {
   height: 40px;
   width: 50px;
 }
 
 .navbar__brand {
-  float: left;
   padding: 5px 15px 5px 5px;
-  font-size: 18px;
-  line-height: 20px;
-}
-
-.pills__margin-top {
-  margin-top: 5px;
-}
-
-.navbar-btn__small {
-  margin-top: 2px;
-  margin-bottom: 10px;
 }
 
 .discord-wigit {
   height: 70px;
   width: 100%;
+}
+
+@media (max-width: 1225px) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-fixed-top {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin-top: 7.5px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .collapse.in{
+        display:block !important;
+    }
 }

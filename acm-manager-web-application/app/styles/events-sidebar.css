@@ -1,0 +1,35 @@
+.upcoming-events.upcoming-events-localized {
+  z-index: 1;
+  
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.5);
+
+  position: fixed;
+
+  right: 1%;
+
+  width: calc(100px + 5%);
+
+  overflow-y: hidden;
+}
+
+@media only screen
+and (max-device-height: 400px) {
+  .upcoming-events-localized {
+    max-height: calc(150px + 25%);
+  }
+}
+
+@media only screen
+and (min-device-height: 400px) {
+  .upcoming-events-localized {
+    max-height: calc(125px + 50%);
+  }
+}
+
+.upcoming-events-list {
+  overflow-y: scroll;
+  
+  position: relative;
+  
+  width: 100%;
+}
