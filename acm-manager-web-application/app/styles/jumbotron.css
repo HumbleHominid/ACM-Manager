@@ -1,4 +1,4 @@
-.jumbotron--home {
+.jumbotron.jumbotron--home {
   border-radius: -webkit-calc(5px + 0.25%);
   border-radius: -moz-calc(5px + 0.25%);
   border-radius: calc(5px + 0.25%);
@@ -14,4 +14,20 @@
 
 .about-acm {
   text-indent: 15px;
+}
+
+@media only screen
+and (max-width: 1225px) {
+  .jumbotron--home {
+    width: 98%;
+  }
+}
+
+@media only screen
+and (min-width: 1225px) {
+  .jumbotron--home {
+    width: -moz-calc(100% - 125px - 5% - 1%);
+    width: -webkit-calc(100% - 125px - 5% - 1%);
+    width: calc(100% - 125px - 5% - 1%);
+  }
 }
