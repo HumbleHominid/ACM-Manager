@@ -7,6 +7,8 @@
 @import 'jumbotron.css';
 
 .form-margin {
+  margin: -webkit-calc(5px + 1%);
+  margin: -moz-calc(5px + 1%);
   margin: calc(5px + 1%);
 }
 
@@ -15,8 +17,6 @@
 }
 
 .footer__container {
-  position: fixed;
-
   bottom: 1%;
 
   text-align: center;

@@ -3,29 +3,40 @@
   
   box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.5);
 
-  position: fixed;
-
-  right: 1%;
-
-  width: calc(100px + 5%);
-
   overflow-y: hidden;
 }
 
 @media only screen
-and (max-device-height: 400px) {
+and (max-device-width: 1225px) {
   .upcoming-events-localized {
-    max-height: calc(150px + 25%);
+    position: relative;
+    
+    margin-top: 1%;
+    margin-left: 1%;
+
+    width: 98%;
+    
+    max-height: 300px;
   }
 }
 
 @media only screen
-and (min-device-height: 400px) {
+and (min-device-width: 1225px) {
   .upcoming-events-localized {
+    position: fixed;
+
+    right: 1%;
+
+    width: -moz-calc(100px + 5%);
+    width: -webkit-calc(100px + 5%);
+    width: calc(100px + 5%);
+  
+    max-height: -moz-calc(125px + 50%);
+    max-height: -webkit-calc(125px + 50%);
     max-height: calc(125px + 50%);
   }
 }
-
+  
 .upcoming-events-list {
   overflow-y: scroll;
   
