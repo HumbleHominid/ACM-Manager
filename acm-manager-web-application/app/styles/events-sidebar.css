@@ -7,7 +7,7 @@
 }
 
 @media only screen
-and (max-width: 1225px) {
+and (max-width: 1200px) {
   .upcoming-events-localized {
     position: relative;
     
@@ -21,7 +21,7 @@ and (max-width: 1225px) {
 }
 
 @media only screen
-and (min-width: 1225px) {
+and (min-width: 1200px) {
   .upcoming-events-localized {
     position: fixed;
 

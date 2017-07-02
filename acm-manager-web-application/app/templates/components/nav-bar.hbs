@@ -12,8 +12,8 @@
       {{#link-to "home" class="navbar-brand navbar__brand"}}
         <img class="navbar__brand__image" alt="MTA Brand" src="./MTA.png">
       {{/link-to}}
-      {{#if user.jwt}}
-        {{#link-to "account"}}
+      {{#if user.jwt}}{{log user user.user_id}}
+        {{#link-to "account" (query-params user_id=user.user_id)}}
           <span class="glyphicon glyphicon-user navbar-text" aria-hidden="true"> {{user.fName}} {{user.lName}}</span>
         {{/link-to}}
       {{/if}}
@@ -48,16 +48,6 @@
             <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
               {{#link-to "fees"}}
                   <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>
-              {{/link-to}}
-            </li>
-            <li role="presentation" data-toggle="modal" data-target="#add-user-modal" >
-              {{#link-to currentPath}}
-                  <span class="glyphicon glyphicon-plus" aria-hidden="true"> Add User</span>
-              {{/link-to}}
-            </li>
-            <li role="presentation" data-toggle="modal" data-target="#remove-user-modal">
-              {{#link-to currentPath}}
-                  <span class="glyphicon glyphicon-minus" aria-hidden="true"> Remove User</span>
               {{/link-to}}
             </li>
           {{/if}}

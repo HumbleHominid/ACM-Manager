@@ -7,20 +7,20 @@ export default GenericModal.extend({
       this.get('createAccountCallback') ();
     },
     authenticate() {
-      let user = { };
+      let data = { data: { } };
       
-      user.username = this.$('#log-in-email')[0].value;
-      user.password = this.$('#log-in-password')[0].value;
-      user.rememberMe = this.$("#log-in-checkbox")[0].checked;
+      data.task = "ATTEMPT_LOGIN";
+      data.data.username = this.$('#log-in-email')[0].value;
+      data.data.password = this.$('#log-in-password')[0].value;
 
-      user = JSON.stringify(user);
+      data = JSON.stringify(data);
 
       (function(component) {
         Ember.$.ajax({
           type: 'POST',
           contentType: 'application/json',
           url: 'https://katie.mtech.edu/~acmuser/backend/login',
-          data: user
+          data: data
         }).done(function(data) {
           let user = data.user;
 
@@ -55,7 +55,7 @@ export default GenericModal.extend({
             }
           }
         });
-      })(this);
+      }) (this);
       
       return false;
     }

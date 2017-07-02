@@ -1,10 +1,36 @@
-<div class="list-group-item">
-  <h4 class="list-group-item-heading">{{data.title}}</h4>
+<h4 class="list-group-item-heading">{{data.title}}</h4>
 
-  <p class="list-group-item-text">
-    <strong>Type: </strong>{{data.eventType.name}}<br>
-    <strong>Location: </strong>{{data.location}}<br>
-    <strong>Date: </strong>{{date}}<br>
-    <strong>Time: </strong>{{time}}<br>
+<dl class="list-group-item-text">
+  <dt>Type</dt><dd>{{data.eventType.name}}</dd>
+  <dt>Location</dt><dd>{{data.location}}</dd>
+  <dt>Date</dt><dd>{{date}}</dd>
+  <dt>Time</dt><dd>{{time}}</dd>
+  <dt>Points</dt><dd>{{data.points}}</dd>
+  
+  <p class="unselectable pointer bg-info" data-toggle="collapse" data-target="#{{key}}-list-item" aria-expanded="false">
+    <dt>Expand/Contract</dt>
   </p>
-</div>
+  
+  <dl id="{{key}}-list-item" class="collapse" aria-expanded="false">
+    <dt>Coordinator</dt><dd>{{data.coordinator.fName}} {{data.coordinator.lName}} ({{data.coordinator.email}})</dd>
+    <dt>Additional Info</dt><dd>{{data.additionalInfo}}</dd>
+    <dt>Files</dt>
+    <ul class="list-group">
+      {{#each-in data.files as |key value|}}
+        <li class="list-group-item">
+          <div class="media">
+            <div class="media-left">
+              <span class="glyphicon glyphicon-file" />
+            </div>
+            
+            <div class="media-body">
+              <h5 class="media-heading">{{value.description}}</h5>
+              
+              <strong><a href="#{{value.fName}}">Download</a></strong>
+            </div>
+          </div>
+        </li>
+      {{/each-in}}
+    </ul>
+  </dl>
+</dl>

@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
         secure: true
       });
         
-      this.get('cookies').write('userID', user.userID, {
+      this.get('cookies').write('user_id', user.user_id, {
         secure: true
       });
          

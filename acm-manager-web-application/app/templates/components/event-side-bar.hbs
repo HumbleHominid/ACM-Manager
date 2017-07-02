@@ -14,8 +14,8 @@
       </div>
 
       <div class="list-group upcoming-events-list no-scrollbar" data-spy="scroll">
-        {{#each-in eventData as |key value|}}
-          {{list-item-event data=value}}
+        {{#each-in eventData.future as |key value|}}
+          {{list-item-event data=value key=key}}
         {{/each-in}}
       </div>
     </div>
