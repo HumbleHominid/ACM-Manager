@@ -8,27 +8,57 @@
       <div class="panel-body">
         Sort event preview by:<br>
         <div class="btn-group" role="group" aria-label="">
-          <button disabled="disabled" type="button" class="btn btn-xs btn-default">Time</button>
-          <button type="button" class="btn btn-xs btn-default">Type</button>
+          <button disabled={{if filterTime "disabled" ""}} type="button" class="btn btn-xs btn-default" {{action 'filterTime'}}>Time</button>
+          <button disabled={{if filterType "disabled" ""}} type="button" class="btn btn-xs btn-default" {{action 'filterType'}}>Type</button>
         </div>
       </div>
 
       <div class="list-group upcoming-events-list no-scrollbar" data-spy="scroll">
-        <div class="list-group-item list-group-item-info unselectable pointer" data-toggle="collapse" data-target="#upcoming-events-past" aria-expaneded="false">
+        <div class="list-group-item active unselectable pointer" data-toggle="collapse" data-target="#upcoming-events-past" aria-expaneded="false">
           Past <span class="glyphicon glyphicon-menu-down" />
         </div>
         <div id="upcoming-events-past" class="collapse" aria-expanded="false">
-          {{#each-in past as |key value|}}
-            {{list-item-event data=value key=key}}
-          {{/each-in}}
+          {{#if filterTime}}
+            {{#each-in data.past as |key value|}}
+              {{list-item-event data=value}}
+            {{/each-in}}
+          {{/if}}
+          
+          {{#if filterType}}
+            {{#each-in data.past as |key value|}}
+              <div class="list-group-item list-group-item-info unselectable pointer" data-toggle="collapse" data-target="#upcoming-events-past-type-{{key}}" aria-expaneded="false">
+                {{value.name}} <span class="glyphicon glyphicon-menu-down" />
+              </div>
+              <div id="upcoming-events-past-type-{{key}}" class="collapse" aria-expanded="false">
+                {{#each-in value.events as |key value|}}
+                  {{list-item-event data=value}}
+                {{/each-in}}
+              </div>
+            {{/each-in}}
+          {{/if}}
         </div>
-        <div class="list-group-item list-group-item-info unselectable pointer" data-toggle="collapse" data-target="#upcoming-events-future" aria-expaneded="true">
+        <div class="list-group-item active unselectable pointer" data-toggle="collapse" data-target="#upcoming-events-future" aria-expaneded="true">
           Future <span class="glyphicon glyphicon-menu-down" />
         </div>
         <div id="upcoming-events-future" class="collapse in" aria-expanded="true">
-          {{#each-in future as |key value|}}
-            {{list-item-event data=value}}
-          {{/each-in}}
+          {{#if filterTime}}
+            {{#each-in data.future as |key value|}}
+              {{list-item-event data=value}}
+            {{/each-in}}
+          {{/if}}
+          
+          {{#if filterType}}
+            {{#each-in data.future as |key value|}}
+              <div class="list-group-item list-group-item-info unselectable pointer" data-toggle="collapse" data-target="#upcoming-events-future-type-{{key}}" aria-expaneded="false">
+                {{value.name}} <span class="glyphicon glyphicon-menu-down" />
+              </div>
+              <div id="upcoming-events-future-type-{{key}}" class="collapse" aria-expanded="false">
+                {{#each-in value.events as |key value|}}
+                  {{list-item-event data=value}}
+                {{/each-in}}
+              </div>
+            {{/each-in}}
+          {{/if}}
         </div>
       </div>
     </div>
