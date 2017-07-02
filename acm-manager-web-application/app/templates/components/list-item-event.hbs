@@ -7,11 +7,11 @@
   <dt>Time</dt><dd>{{time}}</dd>
   <dt>Points</dt><dd>{{data.points}}</dd>
   
-  <p class="unselectable pointer bg-info" data-toggle="collapse" data-target="#{{key}}-list-item" aria-expanded="false">
+  <p class="unselectable pointer bg-info" data-toggle="collapse" data-target="#{{data.event_id}}-list-item" aria-expanded="false">
     <dt>Expand/Contract</dt>
   </p>
   
-  <dl id="{{key}}-list-item" class="collapse" aria-expanded="false">
+  <dl id="{{data.event_id}}-list-item" class="collapse" aria-expanded="false">
     <dt>Coordinator</dt><dd>{{data.coordinator.fName}} {{data.coordinator.lName}} ({{data.coordinator.email}})</dd>
     <dt>Additional Info</dt><dd>{{data.additionalInfo}}</dd>
     <dt>Files</dt>

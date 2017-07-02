@@ -21,7 +21,7 @@ export default GenericModal.extend({
           contentType: 'application/json',
           url: 'https://katie.mtech.edu/~acmuser/backend/login',
           data: data
-        }).done(function(data) {
+        }).success(function(data) {
           let user = data.user;
 
           user.rememberMe = component.$("#log-in-checkbox")[0].checked;
@@ -36,11 +36,11 @@ export default GenericModal.extend({
             component.$("#log-in-error-alert")[0].remove();
           }
           
-          component.get('notify').success("Welcome back!", {
+          component.get('notify').success("Welcome back" + user.fName + " " + user.lName + "!", {
             closeAfter: 3000,
             radius: true
           });
-        }).fail(function() {
+        }).error(function(/* jqXHW, textStatus, err */) {
           if (!component.$("#log-in-error-alert")[0]) {
             component.$("form").prepend('<div id="log-in-error-alert" class="alert alert-danger alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="log-in-error-alert-text">Incorrect Email or Password</span></div>');
           }

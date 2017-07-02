@@ -30,11 +30,64 @@ export default Ember.Route.extend({
         }
       ],
       past: [
-      
+        {
+          event_id: 0,
+          coordinator: {
+            fName: "Michael",
+            lName: "Fryer",
+            email: "mfryer@mtech.edu",
+            userType: {
+              user_type_id: 3,
+              name: "Secretary",
+              description: "Does secretary things."
+            } 
+          },
+          eventType: {
+            event_type_id: 0,
+            name: "Meeting",
+            description: "General ACM Meeting",
+            defaultPoints: 1
+          },
+          name: "Meeting",
+          additionalInfo: "",
+          location: "Museum Building",
+          eventTime: "2017-04-20T18:00:00",
+          points: 1,
+          attendance: [ ],
+          fileDescription: "",
+          files: [ ]
+        },
+        {
+          event_id: 1,
+          coordinator: {
+            fName: "Michael",
+            lName: "Fryer",
+            email: "mfryer@mtech.edu",
+            userType: {
+              user_type_id: 3,
+              name: "Secretary",
+              description: "Does secretary things."
+            } 
+          },
+          eventType: {
+            event_type_id: 0,
+            name: "Meeting",
+            description: "General ACM Meeting",
+            defaultPoints: 1
+          },
+          name: "Meeting",
+          additionalInfo: "",
+          location: "Museum Building",
+          eventTime: "2017-05-18T18:00:00",
+          points: 1,
+          attendance: [ ],
+          fileDescription: "",
+          files: [ ]
+        }
       ],
       future: [
         {
-          event_id: 1,
+          event_id: 2,
           coordinator: {
             fName: "Michael",
             lName: "Fryer",
@@ -94,7 +147,7 @@ export default Ember.Route.extend({
           ]
         },
         {
-          event_id: 0,
+          event_id: 3,
           coordinator: {
             fName: "Michael",
             lName: "Fryer",
@@ -121,7 +174,7 @@ export default Ember.Route.extend({
           files: [ ]
         },
         {
-          event_id: 2,
+          event_id: 4,
           coordinator: {
             fName: "Michael",
             lName: "Fryer",
@@ -148,7 +201,7 @@ export default Ember.Route.extend({
           files: [ ]
         },
         {
-          event_id: 3,
+          event_id: 5,
           coordinator: {
             fName: "Michael",
             lName: "Fryer",

@@ -14,9 +14,22 @@
       </div>
 
       <div class="list-group upcoming-events-list no-scrollbar" data-spy="scroll">
-        {{#each-in eventData.future as |key value|}}
-          {{list-item-event data=value key=key}}
-        {{/each-in}}
+        <div class="list-group-item list-group-item-info unselectable pointer" data-toggle="collapse" data-target="#upcoming-events-past" aria-expaneded="false">
+          Past <span class="glyphicon glyphicon-menu-down" />
+        </div>
+        <div id="upcoming-events-past" class="collapse" aria-expanded="false">
+          {{#each-in past as |key value|}}
+            {{list-item-event data=value key=key}}
+          {{/each-in}}
+        </div>
+        <div class="list-group-item list-group-item-info unselectable pointer" data-toggle="collapse" data-target="#upcoming-events-future" aria-expaneded="true">
+          Future <span class="glyphicon glyphicon-menu-down" />
+        </div>
+        <div id="upcoming-events-future" class="collapse in" aria-expanded="true">
+          {{#each-in future as |key value|}}
+            {{list-item-event data=value}}
+          {{/each-in}}
+        </div>
       </div>
     </div>
   </div>
