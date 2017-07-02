@@ -46,12 +46,12 @@ class Login{
             $typeResults = $statement->fetchAll(PDO::FETCH_ASSOC);
             $statement->closeCursor();
 
-
+            $this->validatedUser = $results[0]['user_id'];
             $this->fName = $results[0]['fName'];
             $this->lName = $results[0]['lName'];
             $this->email = $results[0]['email'];
             $this->user_type_id = $typeId;
-            $this->name = $typeResults[0]['name'];
+            $this->type_name = $typeResults[0]['name'];
 
             return TRUE;
          }
@@ -73,7 +73,7 @@ class Login{
          $this->email = $decodedToken['data']['email'];
          $this->validatedUser = $decodedToken['data']['user_id'];
          $this->user_type_id = $decodedToken['data']['user_type']['user_type_id'];
-         $this->name = $decodedToken['data']['user_type']['name'];
+         $this->type_name = $decodedToken['data']['user_type']['name'];
 
          return true;
       } catch (Exception $e) {
@@ -89,7 +89,7 @@ class Login{
 
       try{
          $statement = $db->prepare($query);
-         $statement->bindValue(':pass', $pass);
+         $statement->bindValue(':pass', password_hash($pass, PASSWORD_BCRYPT));
          $statement->execute();
 
          $statement2 = $db->prepare($query2);
@@ -99,7 +99,7 @@ class Login{
          $statement2->bindValue(':id', $db->lastInsertId());
          $statement2->execute();
 
-         return attemptLogin($user, $pass);
+         return $this->attemptLogin($user, $pass);
       }catch(Exception $e){
          echo $e->getMessage();
          die();
@@ -108,12 +108,12 @@ class Login{
 
 
    public function getToken(){
-      if($validatedUser > -1){
+      if($this->validatedUser > -1){
          include('dbStartup.php');
          $query = 'SELECT * FROM Users
          WHERE user_id = :user;';
          $statement = $db->prepare($query);
-         $statement->bindValue(':user', $validatedUser);
+         $statement->bindValue(':user', $this->validatedUser);
          $statement->execute();
          $results = $statement->fetchAll(PDO::FETCH_ASSOC);
          $statement->closeCursor();
@@ -157,7 +157,6 @@ class Login{
                ALGORITHM
             );
             $token = array(
-               'user' => [
                   'jwt' => $jwt,
                   'fName' => $results[0]['fName'],
                   'lName' => $results[0]['lName'],
@@ -167,8 +166,7 @@ class Login{
                      'user_type_id' => $typeId,
                      'name' => $typeResults[0]['name'],
                      'description' => $typeResults[0]['description']
-                  )
-                  ]
+                  ) 
                );
                return $token;
 

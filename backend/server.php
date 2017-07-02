@@ -28,12 +28,12 @@ class Server{
          $id = $explArr[1];
       }
 
-      $data = json_decode(file_get_contents('php://input'), true);
+      $this->data = json_decode(file_get_contents('php://input'), true);
 
       require_once('model/login.php');
       $this->login = new Login;
-      if(!empty($data['token'])){
-         $login->validateToken($data['token']);
+      if(!empty($this->data['token'])){
+         $login->validateToken($this->data['token']);
       }
 
       switch($object){
@@ -44,7 +44,7 @@ class Server{
          $this->members($id);
          break;
          case 'login':
-         $this->login($id);
+           $this->login($id);
          break;
          case 'fees':
          $this->fees($id);
@@ -143,9 +143,10 @@ class Server{
 
    private function login($id){
       $task = $this->data['task'];
+      
       switch($task){
          case 'ATTEMPT_LOGIN':
-
+          
          $user = $this->data['data']['username'];
          $pass = $this->data['data']['password'];
 
@@ -157,10 +158,10 @@ class Server{
             echo 'INVALID CREDENTIALS';
          }
          break;
-         case 'CREATE':
+         case 'CREATE_ACCOUNT':
 
          $user = $this->data['data']['username'];
-         $pass = password_hash($this->data['data']['password'], PASSWORD_BCRYPT);
+         $pass = $this->data['data']['password'];
          $first = $this->data['data']['first'];
          $last = $this->data['data']['last'];
          $result = $this->login->createUser($user, $pass, $first, $last);
@@ -267,7 +268,7 @@ class Server{
    private function response($builtArr){
       $token = $this->login->getToken();
       if(!empty($token)){
-         array_push($builtArr, $token);
+        $builtArr['user'] = $token; 
       }
       $json = json_encode($builtArr);
 
