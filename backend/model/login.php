@@ -26,7 +26,7 @@ class Login{
       include('dbStartup.php');
       $query = 'SELECT * FROM Users
       JOIN Passwords ON Users.password_id = Passwords.password_id
-      WHERE (password_timeout >= NOW() OR password_timeout IS NULL)
+      WHERE (passwordTimeout >= NOW() OR passwordTimeout IS NULL)
       AND email = :user;';
       $statement = $db->prepare($query);
       $statement->bindValue(':user', $user);
@@ -83,7 +83,7 @@ class Login{
 
    public function createUser($user, $pass, $first, $last){
       include('dbStartup.php');
-      $query = 'INSERT INTO Passwords(password,password_timeout) VALUES (:pass, NULL);';
+      $query = 'INSERT INTO Passwords(password,passwordTimeout) VALUES (:pass, NULL);';
 
       $query2 = 'INSERT INTO Users(password_id, user_type, fName, lName, email) VALUES (:id, 1,:first, :last, :user);';
 

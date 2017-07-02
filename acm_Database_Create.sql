@@ -34,8 +34,8 @@ DROP TABLE IF EXISTS Passwords;
 CREATE TABLE Passwords (
   password_id int NOT NULL AUTO_INCREMENT,
   password varchar(255) NOT NULL,
-  passwordTimeout datetime NOT NULL,
-  verificationCode varchar(8) NOT NULL,
+  passwordTimeout datetime,
+  verificationCode varchar(8),
   PRIMARY KEY(password_id)
 );
 

@@ -11,6 +11,16 @@
       $results = $statement->fetchAll(PDO::FETCH_ASSOC);
       $statement->closeCursor();
 
+
+      $typeId = $results[0]['user_type'];
+      $userType = "SELECT * FROM User_Type WHERE user_type_id = :typeId";
+      $statement = $db->prepare($userType);
+      $statement->bindValue(':typeId', $typeId);
+      $statement->execute();
+      $typeResults = $statement->fetchAll(PDO::FETCH_ASSOC);
+      $statement->closeCursor();
+
+
       if(count($results)){
         $data = array(
           'fName'=> $results[0]['fName'],
@@ -18,8 +28,8 @@
           'email'=> $results[0]['email'],
           'user_type' => array(
             'user_type_id' => $typeId,
-            'name' => $typeResults['name'],
-            'description' => $typeResults['description']
+            'name' => $typeResults[0]['name'],
+            'description' => $typeResults[0]['description']
           )
         );
         return $data;

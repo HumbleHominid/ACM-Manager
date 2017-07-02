@@ -38,22 +38,22 @@ class Server{
 
       switch($object){
          case 'events':
-         $this->events($id);
+         $this->events();
          break;
          case 'members':
-         $this->members($id);
+         $this->members();
          break;
          case 'login':
-           $this->login($id);
+           $this->login();
          break;
          case 'fees':
-         $this->fees($id);
+         $this->fees();
          break;
          case 'files':
-         $this->files($id);
+         $this->files();
          break;
          case 'officers':
-         $this->officers($id);
+         $this->officers();
          break;
          case 'testValidate':
          include('model/login.php');
@@ -78,7 +78,7 @@ class Server{
       }
    }
 
-   private function events($id){
+   private function events(){
       $item = NULL;
       $task = $this->data['task'];
       switch($task){
@@ -114,34 +114,22 @@ class Server{
       $this->response($item);
    }
 
-   private function members($id){
+   private function members(){
       $task = $this->data['task'];
+      include('model/members.php');
+      $member = new Members;
       switch($task){
-         case 'GET':
-         break;
-         case 'PUT':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-         break;
-         case 'POST':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-         break;
-         case 'DELETE':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-
+      case 'GET_MEMBER_BY_ID':
+        $id = $this->data['data']['id'];
+        $info = $member->getMember($id);
+        $json = $this->response($info);
+        echo $json;
+  
          break;
       }
    }
 
-   private function login($id){
+   private function login(){
       $task = $this->data['task'];
       
       switch($task){
@@ -176,7 +164,7 @@ class Server{
       }
    }
 
-   private function fees($id){
+   private function fees(){
       $task = $this->data['task'];
       switch($task){
          case 'GET':
@@ -205,7 +193,7 @@ class Server{
       }
    }
 
-   private function files($id){
+   private function files(){
       $task = $this->data['task'];
       switch($task){
          case 'GET':
@@ -234,32 +222,19 @@ class Server{
       }
    }
 
-   private function officers($id){
-      $task = $this->data['task'];
+   private function officers(){
+     $task = $this->data['task'];
+      include('model/members.php');
+      $members = new Members;
+      include('model/officers.php');
+      $officers = new Officers($this->login, $members);
       switch($task){
-         case 'GET':
+         case 'GET_OFFICERS':
+           $info = $officers->getOfficers();
+          $json = $this->response($info);
+           echo $json;
          break;
-         case 'PUT':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-
-         break;
-         case 'POST':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-
-         break;
-         case 'DELETE':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-
-         break;
+      
       }
    }
 

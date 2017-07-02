@@ -34,4 +34,18 @@
 /* Remaining Data*/
 }
 
+//Get member info by id
+//Send to katie.mtech.edu/~acmuser/members
+{
+	"task": "GET_MEMBER_BY_ID",
+	"data": {
+		"id": "5"
+	}
+}
 
+//Get list of officers
+//end to katie.mtech.edu/~acmuser/officers
+
+{
+	"task": "GET_OFFICERS"
+}
