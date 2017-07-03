@@ -129,7 +129,7 @@ var feeObj = {
   fee_id: 0,
   name: "",
   description: "",
-  duedate: "",
+  dueDate: "",
   fee: 0,
   feeType: feeTypeObj
 }
