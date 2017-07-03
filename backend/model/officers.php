@@ -13,7 +13,6 @@ class Officers{
   function getOfficers(){
     include('dbStartup.php');
     $data = array(
-      'user' => '', // Need to create login method.
       'president' => $this->getOfficer('President'),
       'vicePresident' => $this->getOfficer('Vice President'),
       'secretary' => $this->getOfficer('Secretary'),
