@@ -41,7 +41,7 @@ export default GenericModal.extend({
           contentType: 'application/json',
           url: 'https://katie.mtech.edu/~acmuser/backend/login',
           data: obj
-        }).success(function() {
+        }).done(function() {
           component.$("#create-account-form")[0].reset();
           
           component.$("#create-account-modal").modal('hide');
@@ -54,7 +54,7 @@ export default GenericModal.extend({
             closeAfter: 3000,
             radius: true
           });
-        }).error(function(/* jqXHW, textStatus, err */) {
+        }).fail(function(/* jqXHW, textStatus, err */) {
           if (!component.$("#create-account-submit-error-alert")[0]) {
             component.$("form").prepend('<div id="create-account-submit-error-alert" class="alert alert-danger alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="create-account-submit-error-alert-text">There was an error creating your account at this time.</span></div>');
           }
