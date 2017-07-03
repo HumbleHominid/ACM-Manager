@@ -74,9 +74,12 @@ var eventObj = {
         location: "",
         eventTime: "",
         points: 0,
-        attendance: [
-          userObj
-        ],
+        attendance: {
+          amount: 0,
+          attendees: [
+            userObj
+          ]
+        },
         
         //Only return files that the user can see.
         files: [
@@ -101,9 +104,12 @@ var eventObj = {
         location: "",
         eventTime: "",
         points: 0,
-        attendance: [
-          userObj
-        ],
+        attendance: {
+          amount: 0,
+          attendees: [
+            userObj
+          ]
+        },
         
         //Only return files that the user can see.
         files: [
