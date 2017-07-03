@@ -44,7 +44,7 @@ class Server{
          $this->members();
          break;
          case 'login':
-           $this->login();
+         $this->login();
          break;
          case 'fees':
          $this->fees();
@@ -55,25 +55,11 @@ class Server{
          case 'officers':
          $this->officers();
          break;
-         case 'testValidate':
-
-         $login = new Login();
-         $login->validateToken();
-         case 'testInfoPath':
-         $login = new Login;
-
-         // $data = json_decode(file_get_contents('php://input'), true);
-         //  $jwt = $data['jwt'];
-
-         $arr = $login->validateToken(file_get_contents('php://input'));
-         var_dump($arr);
-         //echo $login->getCurrentUser($arr);
-         //header('HTTP/1.1 200 OK');
-         break;
          default:
          echo $object;
          header('HTTP/1.1 400 Bad Request');
          break;
+
       }
    }
 
@@ -89,6 +75,9 @@ class Server{
          $json = $this->response($list);
          echo $json;
          break;
+         default:
+         header('HTTP/1.1 400 Bad Request');
+         break;
       }
    }
 
@@ -97,12 +86,15 @@ class Server{
       include('model/members.php');
       $member = new Members;
       switch($task){
-      case 'GET_MEMBER_BY_ID':
-        $id = $this->data['data']['id'];
-        $info = $member->getMember($id);
-        $json = $this->response($info);
-        echo $json;
+         case 'GET_MEMBER_BY_ID':
+         $id = $this->data['data']['id'];
+         $info = $member->getMember($id);
+         $json = $this->response($info);
+         echo $json;
 
+         break;
+         default:
+         header('HTTP/1.1 400 Bad Request');
          break;
       }
    }
@@ -139,34 +131,33 @@ class Server{
          }
          header('HTTP/1.1 200 OK');
          break;
+         default:
+         header('HTTP/1.1 400 Bad Request');
+         break;
       }
    }
 
    private function fees(){
       $task = $this->data['task'];
+      include('model/members.php');
+      $members = new Members;
+      include('model/fees.php');
+      $fees = new Fees($this->login, $members);
       switch($task){
-         case 'GET':
-         break;
-         case 'PUT':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
+         case 'GET_FEES_BY_MEMBER':
 
+         $user_id = $this->data['data']['user_id'];
+         $result = $fees->getMemberFees($user_id);
+         $json = $this->response($result);
+         echo $json;
          break;
-         case 'POST':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-
+         case 'GET_ALL_FEES':
+         $result = $fees->getAllFees();
+         $json = $this->response($result);
+         echo $json;
          break;
-         case 'DELETE':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-
+         default:
+         header('HTTP/1.1 400 Bad Request');
          break;
       }
    }
@@ -174,45 +165,27 @@ class Server{
    private function files(){
       $task = $this->data['task'];
       switch($task){
-         case 'GET':
-         break;
-         case 'PUT':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-
-         break;
-         case 'POST':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-
-         break;
-         case 'DELETE':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-
+         default:
+         header('HTTP/1.1 400 Bad Request');
          break;
       }
    }
 
    private function officers(){
-     $task = $this->data['task'];
+      $task = $this->data['task'];
       include('model/members.php');
       $members = new Members;
       include('model/officers.php');
       $officers = new Officers($this->login, $members);
       switch($task){
          case 'GET_OFFICERS':
-           $info = $officers->getOfficers();
-          $json = $this->response($info);
-           echo $json;
+         $info = $officers->getOfficers();
+         $json = $this->response($info);
+         echo $json;
          break;
-
+         default:
+         header('HTTP/1.1 400 Bad Request');
+         break;
       }
    }
 
@@ -221,7 +194,7 @@ class Server{
    private function response($builtArr){
       $token = $this->login->getToken();
       if(!empty($token)){
-        $builtArr['user'] = $token;
+         $builtArr['user'] = $token;
       }
       $json = json_encode($builtArr);
 

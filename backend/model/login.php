@@ -18,7 +18,7 @@ class Login{
    private $fName = '';
    private $lName = '';
    private $email = '';
-   private $user_type_id = '';
+   private $user_type_id = 0;
    private $name = '';
 
 
@@ -178,6 +178,10 @@ class Login{
          }
          function getType(){
             return $this->user_type_id;
+         }
+
+         function getUserID(){
+            return $this->validatedUser;
          }
       }
       ?>

@@ -43,7 +43,7 @@ class Events{
       }
 
       return array("data" => array("past"=>$pastArr, "future"=>$futureArr),
-                  "eventTypes" => $this->listEventTypes());
+      "eventTypes" => $this->listEventTypes());
    }
 
    function getEvent($eventID){
@@ -166,17 +166,17 @@ class Events{
       $statement->closeCursor();
 
       if(count($results) === 1){
-      $eventType = array(
-         "event_type_id" => $results[0]['event_type_id'],
-         "name" => $results[0]['name'],
-         "description" => $results[0]['description'],
-         "defaultPoints" => $results[0]['defaultPoints']
-      );
+         $eventType = array(
+            "event_type_id" => $results[0]['event_type_id'],
+            "name" => $results[0]['name'],
+            "description" => $results[0]['description'],
+            "defaultPoints" => $results[0]['defaultPoints']
+         );
 
-      return $eventType;
-   }else {
-      return FALSE;
-   }
+         return $eventType;
+      }else {
+         return FALSE;
+      }
    }
 
    function createEvent(){
@@ -191,21 +191,6 @@ class Events{
 
    }
 
-   function getFiles(){
-
-   }
-
-   function deleteFile(){
-
-   }
-
-   function updateFile(){
-
-   }
-
-   function createFile(){
-
-   }
 }
 
 ?>
