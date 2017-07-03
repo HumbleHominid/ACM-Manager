@@ -33,7 +33,7 @@ class Server{
       require_once('model/login.php');
       $this->login = new Login;
       if(!empty($this->data['token'])){
-         $login->validateToken($this->data['token']);
+         $this->login->validateToken($this->data['token']);
       }
 
       switch($object){
@@ -56,11 +56,10 @@ class Server{
          $this->officers();
          break;
          case 'testValidate':
-         include('model/login.php');
+
          $login = new Login();
          $login->validateToken();
          case 'testInfoPath':
-         include('model/login.php');
          $login = new Login;
 
          // $data = json_decode(file_get_contents('php://input'), true);
@@ -79,39 +78,18 @@ class Server{
    }
 
    private function events(){
-      $item = NULL;
       $task = $this->data['task'];
+      include('model/members.php');
+      $members = new Members;
+      include('model/events.php');
+      $events = new Events($this->login, $members);
       switch($task){
-         case 'GET':
-         if(!isset($id) || strlen($id) === 0){
-            include('model/events.php');
-            $events = new Events;
-            $list = $events->sidebar();
-            echo $this->response($list);
-         }
-         break;
-         case 'PUT':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-         break;
-         case 'POST':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-
-         break;
-         case 'DELETE':
-         if($id === ''){
-            header('HTTP/1.1 400 Bad Request');
-            exit();
-         }
-
+         case 'GET_LIST':
+         $list = $events->listAll();
+         $json = $this->response($list);
+         echo $json;
          break;
       }
-      $this->response($item);
    }
 
    private function members(){
@@ -124,17 +102,17 @@ class Server{
         $info = $member->getMember($id);
         $json = $this->response($info);
         echo $json;
-  
+
          break;
       }
    }
 
    private function login(){
       $task = $this->data['task'];
-      
+
       switch($task){
          case 'ATTEMPT_LOGIN':
-          
+
          $user = $this->data['data']['username'];
          $pass = $this->data['data']['password'];
 
@@ -234,7 +212,7 @@ class Server{
           $json = $this->response($info);
            echo $json;
          break;
-      
+
       }
    }
 
@@ -243,7 +221,7 @@ class Server{
    private function response($builtArr){
       $token = $this->login->getToken();
       if(!empty($token)){
-        $builtArr['user'] = $token; 
+        $builtArr['user'] = $token;
       }
       $json = json_encode($builtArr);
 

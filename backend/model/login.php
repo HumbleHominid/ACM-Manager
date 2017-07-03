@@ -63,20 +63,22 @@ class Login{
       try {
          include('key.php');
          $secretKey = base64_decode($SECRET_KEY);
-         $token = json_decode($inToken, true);
-         $JWT = $token['jwt'];
-         $DecodedDataArray = JWT::decode($JWT, $secretKey, array(ALGORITHM));
-         $decodedToken = json_decode($token, true);
+         $decodedObject = JWT::decode($inToken, $secretKey, array(ALGORITHM));
+         $decodedToken = (array) $decodedObject;
 
-         $this->fName = $decodedToken['data']['fName'];
-         $this->lName = $decodedToken['data']['lName'];
-         $this->email = $decodedToken['data']['email'];
-         $this->validatedUser = $decodedToken['data']['user_id'];
-         $this->user_type_id = $decodedToken['data']['user_type']['user_type_id'];
-         $this->type_name = $decodedToken['data']['user_type']['name'];
+         $decodedData = (array) $decodedToken['data'];
+
+         $this->fName = $decodedData['fName'];
+         $this->lName = $decodedData['lName'];
+         $this->email = $decodedData['email'];
+         $this->validatedUser = $decodedData['user_id'];
+         $userType = (array) $decodedData['user_type'];
+         $this->user_type_id = $userType['user_type_id'];
+         $this->type_name = $userType['name'];
 
          return true;
       } catch (Exception $e) {
+         echo $e->getMessage();
          return false;
       }
    }
@@ -166,7 +168,7 @@ class Login{
                      'user_type_id' => $typeId,
                      'name' => $typeResults[0]['name'],
                      'description' => $typeResults[0]['description']
-                  ) 
+                  )
                );
                return $token;
 
@@ -174,6 +176,8 @@ class Login{
                return NULL;
             }
          }
-
+         function getType(){
+            return $this->user_type_id;
+         }
       }
       ?>
