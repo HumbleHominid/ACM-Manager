@@ -11,17 +11,18 @@ var appUserObj = {
   lName: "",
   email: "",
   userType: userTypeObj,
-  user_id: 0, /* Please */
+  user_id: 0,
   jwt: ""
 }
 
 //This is a user in the application, other than who is logged in
-//Note this doesn't have user_id or a jwt
+//Note this doesn't have a jwt
 var userObj = {
   fName: "",
   lName: "",
   email: "",
-  userType: userTypeObj
+  userType: userTypeObj,
+  user_id: 0
 }
 
 //Return data for officers
