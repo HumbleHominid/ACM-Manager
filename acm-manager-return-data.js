@@ -79,7 +79,6 @@ var eventObj = {
         ],
         
         //Only return files that the user can see.
-        fileDescription: "",
         files: [
           {
             file: fileObj,
@@ -142,11 +141,16 @@ var feesObj = {
   feeTypes: [
     feeObj
   ],
-  fees: [
+  debtors: [
     {
-      fee: feeObj,
-      additionalInfo: "",
-      paid: false
+      user: userObj,
+      fees: [
+        {
+          fee: feeObj,
+          additionalInfo: "",
+          paid: false
+        }
+      ]
     }
   ]
 }
