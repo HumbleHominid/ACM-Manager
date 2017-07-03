@@ -106,7 +106,6 @@ var eventObj = {
         ],
         
         //Only return files that the user can see.
-        fileDescription: "",
         files: [
           {
             file: fileObj,
