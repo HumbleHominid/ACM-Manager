@@ -1,5 +1,5 @@
 //Account Creation
-//Send to katie.mtech.edu/~acmuser/login
+//Send to katie.mtech.edu/~acmuser/backend/login
 {
     "task": "CREATE_ACCOUNT",
     "data": {
@@ -11,7 +11,7 @@
 }
 
 //Login
-//Send to katie.mtech.edu/~acmuser/login
+//Send to katie.mtech.edu/~acmuser/backend/login
 {
     "task": "ATTEMPT_LOGIN",
     "data": {
@@ -35,7 +35,7 @@
 }
 
 //Get member info by id
-//Send to katie.mtech.edu/~acmuser/members
+//Send to katie.mtech.edu/~acmuser/backend/members
 {
 	"task": "GET_MEMBER_BY_ID",
 	"data": {
@@ -44,8 +44,15 @@
 }
 
 //Get list of officers
-//end to katie.mtech.edu/~acmuser/officers
+//end to katie.mtech.edu/~acmuser/backend/officers
 
 {
 	"task": "GET_OFFICERS"
+}
+
+//Get list of events w/ their files that you have permissions for.
+// Permissions based on token.
+// Send to katie.mtech.edu/~acmuser/backend/events
+{
+   "task": "GET_LIST"
 }

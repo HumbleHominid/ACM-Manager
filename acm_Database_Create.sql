@@ -123,7 +123,7 @@ CREATE TABLE Files (
 CREATE TABLE Event_Files (
   event_id int NOT NULL,
   file_id int NOT NULL,
-  additonalInfo varchar(50),
+  additionalInfo varchar(50),
   FOREIGN KEY(event_id) REFERENCES Events(event_id),
   FOREIGN KEY(file_id) REFERENCES Files(file_id),
   PRIMARY KEY(event_id, file_id)
