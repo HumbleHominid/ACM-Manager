@@ -4,15 +4,16 @@ import GenericModal from './generic-modal';
 export default GenericModal.extend({  
   actions: {
     createAccount() {
-      let user = { };
+      let obj = { data: { } };
 
-      user.first = this.$("#create-account-first-name")[0].value;
-      user.last = this.$("#create-account-last-name")[0].value;
-      user.username = this.$("#create-account-email")[0].value;
-      user.password = this.$("#create-account-password")[0].value;
+      obj.task = "CREATE_ACCOUNT";
+      obj.data.first = this.$("#create-account-first-name")[0].value;
+      obj.data.last = this.$("#create-account-last-name")[0].value;
+      obj.data.username = this.$("#create-account-email")[0].value;
+      obj.data.password = this.$("#create-account-password")[0].value;
 
-      let sameEmail = user.username === this.$("#create-account-confirm-email")[0].value;
-      let samePass = user.password === this.$("#create-account-confirm-password")[0].value;
+      let sameEmail = obj.data.username === this.$("#create-account-confirm-email")[0].value;
+      let samePass = obj.data.password === this.$("#create-account-confirm-password")[0].value;
 
       if (!samePass || !sameEmail) {
         if (!this.$("#create-account-error-alert")[0]) {
@@ -32,16 +33,16 @@ export default GenericModal.extend({
         return false;
       }
 
-      user = JSON.stringify(user);
+      obj = JSON.stringify(obj);
 
       (function(component) {
         Ember.$.ajax({
           type: 'PUT',
           contentType: 'application/json',
           url: 'https://katie.mtech.edu/~acmuser/backend/login',
-          data: user
-        }).then(function() {
-          component.$("#create-account-form").reset();
+          data: obj
+        }).done(function() {
+          component.$("#create-account-form")[0].reset();
           
           component.$("#create-account-modal").modal('hide');
           
@@ -53,10 +54,22 @@ export default GenericModal.extend({
             closeAfter: 3000,
             radius: true
           });
-        }).fail(function() {
-          
+        }).fail(function(/* jqXHW, textStatus, err */) {
+          if (!component.$("#create-account-submit-error-alert")[0]) {
+            component.$("form").prepend('<div id="create-account-submit-error-alert" class="alert alert-danger alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="create-account-submit-error-alert-text">There was an error creating your account at this time.</span></div>');
+          }
+          else {
+            let alertTextSpan = component.$("#create-account-submit-error-alert-text")[0];
+            
+            if (alertTextSpan.innerHTML.indexOf("again") !== -1) {
+              alertTextSpan.innerHTML = alertTextSpan.innerHTML + ", and again";
+            }
+            else {
+              alertTextSpan.innerHTML = alertTextSpan.innerHTML + " again";
+            }
+          }
         });
-      })(this);
+      }) (this);
       
       return false;
     }
