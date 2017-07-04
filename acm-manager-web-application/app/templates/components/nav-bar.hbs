@@ -31,16 +31,16 @@
               <span class="glyphicon glyphicon-calendar" aria-hidden="true"><span class="navbar-glyph-text"> Events</span></span>
           {{/link-to}}
         </li>
+        <li class={{if (is-active-route currentPath 'officers') "active" ""}} role="presentation">
+          {{#link-to "officers"}}
+              <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"><span class="navbar-glyph-text"> Officers</span></span>
+          {{/link-to}}
+        </li>
 
         {{#if user.jwt}}
           <li class={{if (is-active-route currentPath 'files') "active" ""}} role="presentation">
             {{#link-to "files"}}
                 <span class="glyphicon glyphicon-file" aria-hidden="true"><span class="navbar-glyph-text"> Files</span></span>
-            {{/link-to}}
-          </li>
-          <li class={{if (is-active-route currentPath 'officers') "active" ""}} role="presentation">
-            {{#link-to "officers"}}
-                <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"><span class="navbar-glyph-text"> Officers</span></span>
             {{/link-to}}
           </li>
 
