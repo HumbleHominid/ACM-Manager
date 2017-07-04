@@ -55,7 +55,7 @@ export default Ember.Controller.extend({
       }).done(function(data) {
         controller.set('events', Ember.copy(data.eventData, true));
       }).fail(function(/* jqXHW, textStatus, err */) {
-        controller.clearCookies();
+        //fail
       });
     }) (this);
   },
