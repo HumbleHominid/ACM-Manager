@@ -23,9 +23,15 @@ export default Ember.Controller.extend({
         url: 'https://katie.mtech.edu/~acmuser/backend/login',
         data: tokenRequestObj
       }).done(function(data) {
-        controller.send('login', data.user);
+        this.set('user', data.user);
+        
+        this.setCookies();
+        
+        this.welcomeBackMessage();
       }).fail(function(/* jqXHW, textStatus, err */) {
-        //something failed
+        controller.clearCookies();
+        
+        controller.invalidSessionMessage();
       });
     }) (this);
   },
@@ -49,11 +55,42 @@ export default Ember.Controller.extend({
       }).done(function(data) {
         controller.set('events', Ember.copy(data.eventData, true));
       }).fail(function(/* jqXHW, textStatus, err */) {
-        //something failed
+        controller.clearCookies();
       });
     }) (this);
   },
-  
+  clearCookies: function() {
+    Object.keys(this.get('cookies').read()).forEach(function(key) {
+      this.get('cookies').clear(key);
+    }, this);
+  },
+  setCookies: function() {
+    this.get('cookies').write('jwt', this.get('user.jwt'), {
+      secure: true
+    });
+       
+    this.get('cookies').write('rememberMe', (this.get('user.rememberMe') ? "true" : "false"), {
+      secure: true
+    });
+  },
+  welcomeBackMessage() {
+    this.get('notify').success("Welcome back " + this.get('user.fName') + " " + this.get('user.lName') + "!", {
+      closeAfter: 3000,
+      radius: true
+    });
+  },
+  byeMessage() {
+    this.get('notify').warning("Bye!", {
+      closeAfter: 3000,
+      radius: true
+    });
+  },
+  invalidSessionMessage() {
+    this.get('notify').warning("Session has been invalidated. Please log in again.", {
+      closeAfter: 3000,
+      radius: true
+    });
+  },
   init() {
     this._super(...arguments);
     
@@ -66,37 +103,17 @@ export default Ember.Controller.extend({
   actions: {
     login(user) {
       this.set('user', user);
-
-      this.get('cookies').write('jwt', user.jwt, {
-        secure: true
-      });
-        
-      this.get('cookies').write('user_id', user.user_id, {
-        secure: true
-      });
-         
-      this.get('cookies').write('rememberMe', user.rememberMe, {
-        secure: true
-      });
-        
-      this.get('notify').success("Welcome back " + user.fName + " " + user.lName + "!", {
-        closeAfter: 3000,
-        radius: true
-      });
+      
+      this.setCookies();
+      
+      this.welcomeBackMessage();
     },
     logout() {
       this.set('user', null);
-
-      Object.keys(this.get('cookies').read()).forEach(function(key) {
-        this.get('cookies').clear(key);
-      }, this);
+      
+      this.clearCookies();
       
       this.getEvents();
-      
-      this.get('notify').warning("Bye!", {
-        closeAfter: 3000,
-        radius: true
-      });
     },
     updateJWT(jwt) {
       this.set('user.jwt', jwt);
