@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
       }).done(function(data) {
         controller.set('user', data.user);
         
-        controller.setCookies();
+        controller.setCookies(data.user.jwt, true);
         
         controller.welcomeBackMessage();
       }).fail(function(/* jqXHW, textStatus, err */) {
@@ -60,15 +60,15 @@ export default Ember.Controller.extend({
        
     this.get('cookies').clear('rememberMe');
   },
-  setCookies: function() {
-    this.get('cookies').write('jwt', this.get('user.jwt'), {
+  setCookies: function(jwt, rememberMe) {
+    this.get('cookies').write('jwt', jwt, {
       domain: true,
-      secure: true
+      secure: "secure"
     });
        
-    this.get('cookies').write('rememberMe', (this.get('user.rememberMe') ? "true" : "false"), {
+    this.get('cookies').write('rememberMe', (rememberMe ? "true" : "false"), {
       domain: true,
-      secure: true
+      secure: "secure"
     });
   },
   welcomeBackMessage() {
@@ -104,7 +104,7 @@ export default Ember.Controller.extend({
     login(user) {
       this.set('user', user);
       
-      this.setCookies();
+      this.setCookies(user.jwt, user.rememberMe);
       
       this.welcomeBackMessage();
     },
@@ -119,7 +119,7 @@ export default Ember.Controller.extend({
       this.set('user.jwt', jwt);
 
       this.get('cookies').write('jwt', jwt, {
-        secure: true
+        secure: "secure"
       });
     }
   }
