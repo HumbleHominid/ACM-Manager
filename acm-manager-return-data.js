@@ -61,7 +61,7 @@ var eventObj = {
   eventTypes: [
     eventTypeObj
   ],
-  data: {
+  eventData: {
     past: [
       {
         event_id: 0,

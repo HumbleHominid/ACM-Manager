@@ -14,6 +14,14 @@
   <dl id="{{data.event_id}}-list-item" class="collapse" aria-expanded="false">
     <dt>Coordinator</dt><dd>{{data.coordinator.fName}} {{data.coordinator.lName}} ({{data.coordinator.email}})</dd>
     <dt>Additional Info</dt><dd>{{data.additionalInfo}}</dd>
+    <dt>Attendance</dt><dd>{{data.attendance.amount}}</dd>
+    {{#if data.attendance.attendees}}
+      <dt>Attendees</dt><dd>
+      {{#each-in data.attendance.attendees as |key value|}}
+        {{value.fName}} {{value.lName}}<br>
+      {{/each-in}}
+      </dd>
+    {{/if}}
     <dt>Files</dt>
     <ul class="list-group">
       {{#each-in data.files as |key value|}}

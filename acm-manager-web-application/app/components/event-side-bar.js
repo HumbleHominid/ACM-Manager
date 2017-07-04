@@ -7,13 +7,7 @@ export default Ember.Component.extend({
   },
   filterTime: true,
   filterType: false,
-  
-  init() {
-    this._super(...arguments);
-    
-    this.set('data.past', Ember.copy(this.get('eventData.past')));
-    this.set('data.future', Ember.copy(this.get('eventData.future')));
-  },
+
   didRender() {
     let el = this.$(".upcoming-events-localized");
     let windowWidth = parseInt(Ember.$(window).width());
@@ -24,6 +18,10 @@ export default Ember.Component.extend({
     let panelHeadingHeight = this.$(".panel-heading").outerHeight(true);
 
     this.$(".upcoming-events-list").css("max-height", eventsHeight - (panelBodyHeight + panelHeadingHeight));
+  },
+  didReceiveAttrs() {
+    this.set('data.past', Ember.copy(this.get('eventData.past')));
+    this.set('data.future', Ember.copy(this.get('eventData.future')));
   },
   actions: {
     filterTime() {

@@ -12,7 +12,7 @@
       {{#link-to "home" class="navbar-brand navbar__brand"}}
         <img class="navbar__brand__image" alt="MTA Brand" src="./MTA.png">
       {{/link-to}}
-      {{#if user.jwt}}{{log user user.user_id}}
+      {{#if user.jwt}}
         {{#link-to "account" (query-params user_id=user.user_id)}}
           <span class="glyphicon glyphicon-user navbar-text" aria-hidden="true"> {{user.fName}} {{user.lName}}</span>
         {{/link-to}}

@@ -33,7 +33,7 @@ export default GenericModal.extend({
         return false;
       }
 
-      obj = JSON.stringify(obj);console.log(obj)
+      obj = JSON.stringify(obj);
 
       (function(component) {
         Ember.$.ajax({
