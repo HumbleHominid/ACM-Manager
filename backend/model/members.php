@@ -39,6 +39,23 @@ class Members{
       }
    }
 
+   function listMembers(){
+      include('dbStartup.php');
+      $query = "SELECT * FROM Users
+      ORDER BY lName, fName";
+      $statement = $db->prepare($query);
+      $statement->execute();
+      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+      $statement->closeCursor();
+
+      $members = array();
+      foreach($results as $result){
+         array_push($members, $this->getMember($result['user_id']));
+      }
+
+      return array("memberList" => $members);
+
+   }
 }
 
 ?>

@@ -91,7 +91,11 @@ class Server{
          $info = $member->getMember($id);
          $json = $this->response($info);
          echo $json;
-
+         break;
+         case 'LIST_MEMBERS':
+         $info = $member->listMembers();
+         $json = $this->response($info);
+         echo $json;
          break;
          default:
          header('HTTP/1.1 400 Bad Request');
