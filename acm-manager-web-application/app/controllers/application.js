@@ -7,6 +7,29 @@ export default Ember.Controller.extend({
   user: { },
   events: { },
   
+  loginWithToken(jwt) {
+    if (!jwt) {
+      return;
+    }
+    
+    let tokenRequestObj = { task: "UPDATE_TOKEN", token: jwt };
+    
+    tokenRequestObj = JSON.stringify(tokenRequestObj);
+    
+    (function(controller) {
+      Ember.$.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: 'https://katie.mtech.edu/~acmuser/backend/login',
+        data: tokenRequestObj
+      }).done(function(data) {
+        controller.send('login', data.user);
+      }).fail(function(/* jqXHW, textStatus, err */) {
+        //something failed
+      });
+    }) (this);
+  },
+  
   getEvents: function() {
     let jwt = this.get('cookies').read('jwt');
     let eventRequestObj = { task: "GET_LIST" };
@@ -24,12 +47,6 @@ export default Ember.Controller.extend({
         url: 'https://katie.mtech.edu/~acmuser/backend/events',
         data: eventRequestObj
       }).done(function(data) {
-        if (data.user) {
-          data.user.rememberMe = controller.get('cookies').read('rememberMe');
-          
-          controller.send('login', Ember.copy(data.user));
-        }
-
         controller.set('events', Ember.copy(data.eventData, true));
       }).fail(function(/* jqXHW, textStatus, err */) {
         //something failed
@@ -40,6 +57,10 @@ export default Ember.Controller.extend({
   init() {
     this._super(...arguments);
     
+    let jwt = this.get('cookies').read('jwt');
+
+    this.loginWithToken(jwt);
+
     this.getEvents();
   },
   actions: {
