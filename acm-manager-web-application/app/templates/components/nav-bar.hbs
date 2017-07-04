@@ -14,7 +14,7 @@
       {{/link-to}}
       {{#if user.jwt}}
         {{#link-to "account" (query-params user_id=user.user_id)}}
-          <span class="glyphicon glyphicon-user navbar-text" aria-hidden="true"> {{user.fName}} {{user.lName}}</span>
+          <span class="glyphicon glyphicon-user navbar-text" aria-hidden="true"><span class="navbar-glyph-text"> {{user.fName}} {{user.lName}}</span></span>
         {{/link-to}}
       {{/if}}
     </div>
@@ -23,31 +23,31 @@
       <ul class="nav navbar-nav">
         <li class={{if (is-active-route currentPath 'home') "active" ""}} role="presentation">
           {{#link-to "home"}}
-              <span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>
+              <span class="glyphicon glyphicon-home" aria-hidden="true"><span class="navbar-glyph-text"> Home</span></span>
             {{/link-to}}
         </li>
         <li class={{if (is-active-route currentPath 'events') "active" ""}} role="presentation">
           {{#link-to "events"}}
-              <span class="glyphicon glyphicon-calendar" aria-hidden="true"> Events</span>
+              <span class="glyphicon glyphicon-calendar" aria-hidden="true"><span class="navbar-glyph-text"> Events</span></span>
           {{/link-to}}
         </li>
 
         {{#if user.jwt}}
           <li class={{if (is-active-route currentPath 'files') "active" ""}} role="presentation">
             {{#link-to "files"}}
-                <span class="glyphicon glyphicon-file" aria-hidden="true"> Files</span>
+                <span class="glyphicon glyphicon-file" aria-hidden="true"><span class="navbar-glyph-text"> Files</span></span>
             {{/link-to}}
           </li>
           <li class={{if (is-active-route currentPath 'officers') "active" ""}} role="presentation">
             {{#link-to "officers"}}
-                <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"> Officers</span>
+                <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"><span class="navbar-glyph-text"> Officers</span></span>
             {{/link-to}}
           </li>
 
           {{#if (is-admin user.user_type.user_type_id)}}
             <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
               {{#link-to "fees"}}
-                  <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"> Fees</span>
+                  <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"><span class="navbar-glyph-text"> Fees</span></span>
               {{/link-to}}
             </li>
           {{/if}}
@@ -58,25 +58,25 @@
           <li role="presentation" {{action logoutCallback}}>
             {{#link-to currentPath}}
               <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
-                <span class="glyphicon glyphicon-log-out" aria-hidden="true"> Log Out</span>
+                <span class="glyphicon glyphicon-log-out" aria-hidden="true"><span class="navbar-glyph-text"> Log Out</span></span>
               </div>
             {{/link-to}}
           </li>
         {{else}}
           <li role="presentation" data-toggle="modal" data-target="#log-in-modal">
             {{#link-to currentPath}}
-                <span class="glyphicon glyphicon-log-in" aria-hidden="true"> Log In</span>
+                <span class="glyphicon glyphicon-log-in" aria-hidden="true"><span class="navbar-glyph-text"> Log In</span></span>
             {{/link-to}}
           </li>
           <li role="presentation" data-toggle="modal" data-target="#create-account-modal">
             {{#link-to currentPath}}
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"> Create Account</span>
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"><span class="navbar-glyph-text"> Create Account</span></span>
             {{/link-to}}
           </li>
         {{/if}}
         <li role="presentation" data-toggle="modal" data-target="#contact-us-modal">
           {{#link-to currentPath}}
-              <span class="glyphicon glyphicon-envelope" aria-hidden="true"> Contact Us</span>
+              <span class="glyphicon glyphicon-envelope" aria-hidden="true"><span class="navbar-glyph-text"> Contact Us</span></span>
           {{/link-to}}
         </li>
       </ul>

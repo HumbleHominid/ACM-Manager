@@ -5,10 +5,7 @@ export default Ember.Controller.extend({
   notify: Ember.inject.service(),
   
   user: { },
-  events: {
-    past: [ ],
-    future: [ ]
-  },
+  events: { },
   
   getEvents: function() {
     let jwt = this.get('cookies').read('jwt');

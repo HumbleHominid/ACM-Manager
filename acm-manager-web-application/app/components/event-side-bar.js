@@ -41,31 +41,25 @@ export default Ember.Component.extend({
       };
       
       this.get('eventData.past').forEach(function(event) {
-        if (event.eventType.event_type_id in data.past) {
-          data.past[event.eventType.event_type_id].events.push(event);
-        }
-        else {
+        if (!(event.eventType.event_type_id in data.past)) {
           data.past[event.eventType.event_type_id] = {
             name: event.eventType.name,
             events: [ ]
           };
-          
-          data.past[event.eventType.event_type_id].events.push(event);
-        }
+        }//if
+        
+        data.past[event.eventType.event_type_id].events.push(event);
       }, this);
           
       this.get('eventData.future').forEach(function(event) {
-        if (event.eventType.event_type_id in data.future) {
-          data.future[event.eventType.event_type_id].events.push(event);
-        }
-        else {
+        if (!(event.eventType.event_type_id in data.future)) {
           data.future[event.eventType.event_type_id] = {
             name: event.eventType.name,
             events: [ ]
           };
-          
-          data.future[event.eventType.event_type_id].events.push(event);
-        }
+        }//if
+        
+        data.future[event.eventType.event_type_id].events.push(event);
       }, this);
       
       this.set('data', data);
