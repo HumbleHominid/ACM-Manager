@@ -3,9 +3,9 @@
 RewriteEngine on
 
 
-RewriteBase /~tbrooks/ACM-Manager/backend
+RewriteBase /~acmuser/ACM-Manager/backend
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*) /~tbrooks/ACM-Manager/backend/server.php [L]
+RewriteRule ^(.*) /~acmuser/ACM-Manager/backend/server.php [L]
 
 </IfModule>
