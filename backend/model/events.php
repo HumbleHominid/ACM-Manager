@@ -42,7 +42,7 @@ class Events{
          array_push($futureArr, $this->getEvent($result['event_id']));
       }
 
-      return array("data" => array("past"=>$pastArr, "future"=>$futureArr),
+      return array("eventData" => array("past"=>$pastArr, "future"=>$futureArr),
       "eventTypes" => $this->listEventTypes());
    }
 
@@ -77,7 +77,7 @@ class Events{
       return FALSE;
    }
 
-   function sidebar(){
+   /*function sidebar(){
       include('dbStartup.php');
       $pastQuery = 'SELECT * FROM Events
       JOIN Event_Type ON Events.eventType = Event_Type.event_type_id
@@ -106,7 +106,7 @@ class Events{
 
 
       return $results;
-   }
+   }*/
 
    function getAttendanceObject($event_id){
       include('dbStartup.php');
