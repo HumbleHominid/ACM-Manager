@@ -4,12 +4,8 @@
   border-radius: calc(5px + 0.25%);
   
   margin: 0px 1%;
-  margin: 0px 1%;
-  margin: 0px 1%;
   
-  padding: 0px 0.5%;
-  padding: 0px 0.5%;
-  padding: 0px 0.5%;
+  padding: 1%;
 }
 
 .about-acm {
@@ -17,17 +13,17 @@
 }
 
 @media only screen
-and (max-width: 1225px) {
+and (max-width: 1200px) {
   .jumbotron--home {
     width: 98%;
   }
 }
 
 @media only screen
-and (min-width: 1225px) {
+and (min-width: 1200px) {
   .jumbotron--home {
-    width: -moz-calc(100% - 125px - 5% - 1%);
-    width: -webkit-calc(100% - 125px - 5% - 1%);
-    width: calc(100% - 125px - 5% - 1%);
+    width: -moz-calc(100% - 100px - 5% - 3%);
+    width: -webkit-calc(100% - 100px - 5% - 3%);
+    width: calc(100% - 100px - 5% - 3%);
   }
 }

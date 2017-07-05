@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{event-side-bar}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Upcoming Events Sort event preview by: Time Type');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Upcoming Events Sort event preview by: Time Type Past Future');
 });

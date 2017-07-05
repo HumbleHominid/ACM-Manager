@@ -8,7 +8,7 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('home');
-  this.route('account');
+  this.route('account', { qureyParams: [ "user_id" ] });
   this.route('event_details');
   this.route('events');
   this.route('files');
