@@ -3,42 +3,34 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   cookies: Ember.inject.service(),
   notify: Ember.inject.service(),
-  
-  user: { },
+  store: Ember.inject.service(),
+  session: Ember.inject.service(),
+
   events: { },
+  user: { },
   
   loginWithToken(jwt) {
-    let tokenRequestObj = { task: "UPDATE_TOKEN", token: jwt };
-    
-    tokenRequestObj = JSON.stringify(tokenRequestObj);
-    
+    let tokenRequestObj = { task: "UPDATE_TOKEN", jwt: jwt };
+
     (function(controller) {
-      Ember.$.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: 'https://katie.mtech.edu/~acmuser/backend/login',
-        data: tokenRequestObj
-      }).done(function(data) {
-        controller.set('user', data.user);
-        
-        controller.setCookies(data.user.jwt, true);
-        
-        controller.welcomeBackMessage();
-      }).fail(function(/* jqXHW, textStatus, err */) {
+      controller.get('session').authenticate('authenticator:auth', tokenRequestObj).catch(function(/* reason */) {
         controller.clearCookies();
         
         controller.invalidSessionMessage();
+      }).then(function() {
+        let user = controller.get('session.data.authenticated.user');
+
+        controller.set('user', user);
+        
+        controller.setCookies({ jwt: user.jwt, rememberMe: true });
+        
+        controller.welcomeBackMessage();
       });
     }) (this);
   },
-  
   getEvents: function() {
-    let jwt = this.get('cookies').read('jwt');
-    let eventRequestObj = { task: "GET_LIST" };
-    
-    if (jwt) {
-      eventRequestObj.token = jwt;
-    }
+    let jwt = this.get('session.data.authenticated.user.jwt');
+    let eventRequestObj = { task: "GET_LIST", token: jwt };
     
     eventRequestObj = JSON.stringify(eventRequestObj);
     
@@ -60,16 +52,12 @@ export default Ember.Controller.extend({
        
     this.get('cookies').clear('rememberMe');
   },
-  setCookies: function(jwt, rememberMe) {
-    this.get('cookies').write('jwt', jwt, {
-      domain: true,
-      secure: "secure"
-    });
-       
-    this.get('cookies').write('rememberMe', (rememberMe ? "true" : "false"), {
-      domain: true,
-      secure: "secure"
-    });
+  setCookies: function(params) {
+    for (let cookie in params) {
+      this.get('cookies').write(cookie, params[cookie].toString(), {
+        secure: true
+      });
+    }//for
   },
   welcomeBackMessage() {
     this.get('notify').success("Welcome back " + this.get('user.fName') + " " + this.get('user.lName') + "!", {
@@ -91,7 +79,7 @@ export default Ember.Controller.extend({
   },
   init() {
     this._super(...arguments);
-    
+
     let jwt = this.get('cookies').read('jwt');
 
     if (jwt) {
@@ -99,12 +87,22 @@ export default Ember.Controller.extend({
     }
 
     this.getEvents();
+
+    Ember.$(window).on('beforeunload', () => {
+      if (this.get('cookies').read('rememberMe') !== "true") {
+        this.clearCookies();
+      }
+    });
   },
   actions: {
-    login(user) {
+    login(rememberMe) {
+      let user = this.get('session.data.authenticated.user');
+
       this.set('user', user);
-      
-      this.setCookies(user.jwt, user.rememberMe);
+
+      this.setCookies({ jwt: user, rememberMe: rememberMe });
+
+      this.getEvents();
       
       this.welcomeBackMessage();
     },
@@ -114,6 +112,11 @@ export default Ember.Controller.extend({
       this.clearCookies();
       
       this.getEvents();
+
+      this.byeMessage();
+    },
+    invalidateSession: function() {
+      this.get('session').invalidate();
     },
     updateJWT(jwt) {
       this.set('user.jwt', jwt);

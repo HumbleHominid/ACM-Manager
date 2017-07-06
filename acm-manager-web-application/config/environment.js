@@ -23,6 +23,11 @@ module.exports = function(environment) {
     }
   };
 
+  ENV['simple-auth'] = {
+    store: 'simple-auth-session-store:local-storage',
+    authorizer: 'authorizer:auth'
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -45,6 +50,7 @@ module.exports = function(environment) {
   if (environment === 'production') {
     ENV.rootURL = '/~acmuser/';
   }
+  
   if (environment === 'mfryer') {
     ENV.rootURL = '/~mfryer/ACM-Manager/';
   }
