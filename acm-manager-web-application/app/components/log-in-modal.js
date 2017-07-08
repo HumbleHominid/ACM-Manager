@@ -5,9 +5,6 @@ export default GenericModal.extend({
   session: Ember.inject.service(),
 
   actions: {
-    onCreateAccountButtonPress() {
-      this.get('createAccountCallback') ();
-    },
     authenticate() {
       (function(component) {
         component.get('session').authenticate('authenticator:auth', {

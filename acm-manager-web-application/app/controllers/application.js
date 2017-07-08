@@ -10,10 +10,11 @@ export default Ember.Controller.extend({
   user: { },
   
   loginWithToken(jwt) {
-    let tokenRequestObj = { task: "UPDATE_TOKEN", jwt: jwt };
-
     (function(controller) {
-      controller.get('session').authenticate('authenticator:auth', tokenRequestObj).catch(function(/* reason */) {
+      controller.get('session').authenticate('authenticator:auth', {
+        task: "UPDATE_TOKEN",
+        jwt: jwt
+      }).catch(function(/* reason */) {
         controller.clearCookies();
         
         controller.invalidSessionMessage();
@@ -95,12 +96,12 @@ export default Ember.Controller.extend({
     });
   },
   actions: {
-    login(rememberMe) {
+    login() {
       let user = this.get('session.data.authenticated.user');
 
       this.set('user', user);
 
-      this.setCookies({ jwt: user, rememberMe: rememberMe });
+      this.setCookies({ jwt: user.jwt, rememberMe: user.rememberMe });
 
       this.getEvents();
       
