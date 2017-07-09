@@ -12,10 +12,13 @@ export default GenericModal.extend({
           username: component.$('#log-in-email')[0].value,
           password: component.$('#log-in-password')[0].value
         }).then(() => {
-          component.set('session.data.authenticated.user.rememberMe', component.$('#log-in-checkbox')[0].checked);
-          
-          component.get('loginCallback') ();
+          let rememberMe = component.$('#log-in-checkbox')[0].checked;
+          let cookieTimeout = (rememberMe ? (14 * 24 * 60 * 60) : null);
 
+          component.set('session.store.cookieTimeout', cookieTimeout);
+          
+          component.get('loginCallback') (rememberMe);
+          
           component.$('#log-in-form')[0].reset();
           
           component.$("#log-in-modal").modal('hide');

@@ -3,13 +3,12 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   cookies: Ember.inject.service(),
   notify: Ember.inject.service(),
-  store: Ember.inject.service(),
   session: Ember.inject.service(),
 
   events: { },
   user: { },
   
-  loginWithToken(jwt) {
+  loginWithToken: function(jwt) {
     (function(controller) {
       controller.get('session').authenticate('authenticator:auth', {
         task: "UPDATE_TOKEN",
@@ -50,6 +49,7 @@ export default Ember.Controller.extend({
   },
   clearCookies: function() {
     this.get('cookies').clear('jwt');
+    this.get('cookies').clear('user_id');
        
     this.get('cookies').clear('rememberMe');
   },
@@ -80,28 +80,24 @@ export default Ember.Controller.extend({
   },
   init() {
     this._super(...arguments);
-
-    let jwt = this.get('cookies').read('jwt');
-
-    if (jwt) {
-      this.loginWithToken(jwt);
-    }
-
-    this.getEvents();
-
-    Ember.$(window).on('beforeunload', () => {
-      if (this.get('cookies').read('rememberMe') !== "true") {
-        this.clearCookies();
-      }
+    
+    this.get('session.store').restore().then((user) => {
+      console.log(user);
+    }).catch(() => {
+      this.clearCookies();
+      
+      this.invalidSessionMessage();
+    }).finally(() => {
+      this.getEvents();
     });
   },
   actions: {
-    login() {
+    login(/* rememberMe */) {
       let user = this.get('session.data.authenticated.user');
 
       this.set('user', user);
-
-      this.setCookies({ jwt: user.jwt, rememberMe: user.rememberMe });
+      
+      this.get('session.store').persist(user);
 
       this.getEvents();
       
@@ -123,7 +119,7 @@ export default Ember.Controller.extend({
       this.set('user.jwt', jwt);
 
       this.get('cookies').write('jwt', jwt, {
-        secure: "secure"
+        secure: "secure"  
       });
     }
   }
