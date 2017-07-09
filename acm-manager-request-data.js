@@ -43,6 +43,12 @@
    }
 }
 
+//Get member info for all.
+//Send to katie.mtech.edu/~acmuser/backend/members
+{
+   "task": "LIST_MEMBERS",
+}
+
 //Get list of officers
 //end to katie.mtech.edu/~acmuser/backend/officers
 
