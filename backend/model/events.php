@@ -1,142 +1,140 @@
 <?php
 class Events{
 
-   private $login = NULL;
-   private $members = NULL;
-   private $files = NULL;
+  private $login = NULL;
+  private $members = NULL;
+  private $files = NULL;
   private $conn = NULL;
 
-   function Events($login, $members){
+  function Events($login, $members){
     $this->conn = new DbConn(); 
-      $this->login = $login;
-      $this->members = $members;
-      include('files.php');
-      $this->files = new Files($this->login, $this->members);
-   }
+    $this->login = $login;
+    $this->members = $members;
+    include('files.php');
+    $this->files = new Files($this->login, $this->members);
+  }
 
-   function listAll(){
-   
-      //Get past
-      $pastQuery = 'SELECT event_id FROM Events
+  function listAll(){
+
+    //Get past
+    $pastQuery = 'SELECT event_id FROM Events
       WHERE eventTime < NOW()
       ORDER BY eventTime;'; 
-      $pastResults = $this->conn->select($pastQuery);
+    $pastResults = $this->conn->select($pastQuery);
 
 
-      //Get future
-      $futureQuery = 'SELECT event_id FROM Events
+    //Get future
+    $futureQuery = 'SELECT event_id FROM Events
       WHERE eventTime > NOW()
       ORDER BY eventTime;'; 
-      $futureResults = $this->conn->select($futureQuery);
-   
+    $futureResults = $this->conn->select($futureQuery);
 
-      $pastArr = array();
-      foreach($pastResults as $result){
-         array_push($pastArr, $this->getEvent($result['event_id']));
-      }
-      $futureArr = array();
-      foreach($futureResults as $result){
-         array_push($futureArr, $this->getEvent($result['event_id']));
-      }
 
-      return array("eventData" => array("past"=>$pastArr, "future"=>$futureArr),
+    $pastArr = array();
+    foreach($pastResults as $result){
+      array_push($pastArr, $this->getEvent($result['event_id']));
+    }
+    $futureArr = array();
+    foreach($futureResults as $result){
+      array_push($futureArr, $this->getEvent($result['event_id']));
+    }
+
+    return array("eventData" => array("past"=>$pastArr, "future"=>$futureArr),
       "eventTypes" => $this->listEventTypes());
-   }
+  }
 
-   function getEvent($eventID){
-   
+  function getEvent($eventID){
 
-      $query = 'SELECT * FROM Events
+
+    $query = 'SELECT * FROM Events
       WHERE event_id = ?;';
-      $results = $this->conn->select($query, [$eventID]); 
+    $results = $this->conn->select($query, [$eventID]); 
 
-      if(count($results) === 1){
-         $event = array(
-            "event_id" => $results[0]['event_id'],
-            "coordinator" => $this->members->getMember($results[0]['coordinator']),
-            "eventType" => $this->getEventType($results[0]['eventType']),
-            "name" => $results[0]['name'],
-            "additionalInfo" => $results[0]['additionalInfo'],
-            "location" => $results[0]['location'],
-            "eventTime" => $results[0]['eventTime'],
-            "points" => $results[0]['points'],
-            "attendance" => $this->getAttendanceObject($eventID),
-            "files" => $this->files->getEventFiles($results[0]['event_id'])
+    if(count($results) === 1){
+      $event = array(
+        "event_id" => $results[0]['event_id'],
+        "coordinator" => $this->members->getMember($results[0]['coordinator']),
+        "eventType" => $this->getEventType($results[0]['eventType']),
+        "name" => $results[0]['name'],
+        "additionalInfo" => $results[0]['additionalInfo'],
+        "location" => $results[0]['location'],
+        "eventTime" => $results[0]['eventTime'],
+        "points" => $results[0]['points'],
+        "attendance" => $this->getAttendanceObject($eventID),
+        "files" => $this->files->getEventFiles($results[0]['event_id'])
+      );
 
-         );
+      return $event;
+    }
+    return FALSE;
+  }
 
-         return $event;
-      }
-      return FALSE;
-   }
+  function getAttendanceObject($event_id){
 
-    function getAttendanceObject($event_id){
- 
-      $cntQuery = 'SELECT COUNT(*) AS Count FROM User_Attendance
+    $cntQuery = 'SELECT COUNT(*) AS Count FROM User_Attendance
       WHERE event_id = ?;';     
-      $cntResults = $this->conn->select($cntQuery, [$event_id]);
-    
-      $attendance['amount'] = $cntResults[0]['Count'];
+    $cntResults = $this->conn->select($cntQuery, [$event_id]);
 
-      if($this->login->getType() > 1){
-         $query = 'SELECT user_id FROM User_Attendance
-         WHERE event_id = ?;';
-          $results = $this->conn->select($query, [$event_id]);   
+    $attendance['amount'] = $cntResults[0]['Count'];
 
-         $attendees = array();
+    if($this->login->getType() > 1){
+      $query = 'SELECT user_id FROM User_Attendance
+        WHERE event_id = ?;';
+      $results = $this->conn->select($query, [$event_id]);   
 
-         foreach($results as $result){
-            array_push($attendees, $this->members->getMember($result['user_id']));
-         }
-         $attendance['attendees'] = $attendees;
-      }
-      return $attendance;
-   }
-
-   function listEventTypes(){
-
-      $query = 'SELECT event_type_id FROM Event_Type';
-      $results = $this->conn->select($query);
-
-      $types = array();
+      $attendees = array();
 
       foreach($results as $result){
-         array_push($types, $this->getEventType($result['event_type_id']));
+        array_push($attendees, $this->members->getMember($result['user_id']));
       }
-      return $types;
-   }
+      $attendance['attendees'] = $attendees;
+    }
+    return $attendance;
+  }
 
-   function getEventType($event_type_id){
+  function listEventTypes(){
 
-      $query = 'SELECT * FROM Event_Type
+    $query = 'SELECT event_type_id FROM Event_Type';
+    $results = $this->conn->select($query);
+
+    $types = array();
+
+    foreach($results as $result){
+      array_push($types, $this->getEventType($result['event_type_id']));
+    }
+    return $types;
+  }
+
+  function getEventType($event_type_id){
+
+    $query = 'SELECT * FROM Event_Type
       WHERE event_type_id = ?;';
-      $results = $this->conn->select($query, [$event_type_id]);
+    $results = $this->conn->select($query, [$event_type_id]);
 
-      if(count($results) === 1){
-         $eventType = array(
-            "event_type_id" => $results[0]['event_type_id'],
-            "name" => $results[0]['name'],
-            "description" => $results[0]['description'],
-            "defaultPoints" => $results[0]['defaultPoints']
-         );
+    if(count($results) === 1){
+      $eventType = array(
+        "event_type_id" => $results[0]['event_type_id'],
+        "name" => $results[0]['name'],
+        "description" => $results[0]['description'],
+        "defaultPoints" => $results[0]['defaultPoints']
+      );
+      return $eventType;
+    }else {
+      return FALSE;
+    }
+  }
 
-         return $eventType;
-      }else {
-         return FALSE;
-      }
-   }
+  function createEvent(){
 
-   function createEvent(){
+  }
 
-   }
+  function updateEvent(){
 
-   function updateEvent(){
+  }
 
-   }
+  function deleteEvent(){
 
-   function deleteEvent(){
-
-   }
+  }
 
 }
 
