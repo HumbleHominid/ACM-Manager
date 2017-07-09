@@ -1,12 +1,13 @@
 <?php
-include('dbStartup.php');
 class Events{
 
    private $login = NULL;
    private $members = NULL;
    private $files = NULL;
+  private $conn = NULL;
 
    function Events($login, $members){
+    $this->conn = new DbConn(); 
       $this->login = $login;
       $this->members = $members;
       include('files.php');
@@ -14,24 +15,20 @@ class Events{
    }
 
    function listAll(){
-      include('dbStartup.php');
+   
       //Get past
       $pastQuery = 'SELECT event_id FROM Events
       WHERE eventTime < NOW()
-      ORDER BY eventTime;';
-      $pastStatement = $db->prepare($pastQuery);
-      $pastStatement->execute();
-      $pastResults = $pastStatement->fetchAll(PDO::FETCH_ASSOC);
-      $pastStatement->closeCursor();
+      ORDER BY eventTime;'; 
+      $pastResults = $this->conn->select($pastQuery);
+
 
       //Get future
       $futureQuery = 'SELECT event_id FROM Events
       WHERE eventTime > NOW()
-      ORDER BY eventTime;';
-      $futureStatement = $db->prepare($futureQuery);
-      $futureStatement->execute();
-      $futureResults = $futureStatement->fetchAll(PDO::FETCH_ASSOC);
-      $futureStatement->closeCursor();
+      ORDER BY eventTime;'; 
+      $futureResults = $this->conn->select($futureQuery);
+   
 
       $pastArr = array();
       foreach($pastResults as $result){
@@ -47,15 +44,11 @@ class Events{
    }
 
    function getEvent($eventID){
-      include('dbStartup.php');
+   
 
       $query = 'SELECT * FROM Events
-      WHERE event_id = :id;';
-      $statement = $db->prepare($query);
-      $statement->bindValue(':id', $eventID);
-      $statement->execute();
-      $results = $statement->fetchAll();
-      $statement->closeCursor();
+      WHERE event_id = ?;';
+      $results = $this->conn->select($query, [$eventID]); 
 
       if(count($results) === 1){
          $event = array(
@@ -77,57 +70,18 @@ class Events{
       return FALSE;
    }
 
-   /*function sidebar(){
-      include('dbStartup.php');
-      $pastQuery = 'SELECT * FROM Events
-      JOIN Event_Type ON Events.eventType = Event_Type.event_type_id
-      JOIN (SELECT fName, lName, user_id, email FROM Users)
-      AS Coord ON Coord.user_id=Events.coordinator
-      WHERE event_time < NOW()
-      ORDER BY event_time DESC;';
-      $pastState = $db->prepare($pastQuery);
-      $pastState->execute();
-      $pastResults = $pastState->fetchAll(PDO::FETCH_ASSOC);
-      $pastState->closeCursor();
-
-      $futureQuery = 'SELECT * FROM Events
-      JOIN Event_Type ON Events.eventType = Event_Type.event_type_id
-      JOIN (SELECT fName, lName, user_id, email FROM Users)
-      AS Coord ON Coord.user_id=Events.coordinator
-      WHERE event_time > NOW()
-      ORDER BY event_time ASC
-      LIMIT 5;';
-      $futureState = $db->prepare($futureQuery);
-      $futureState->execute();
-      $futureResults = $futureState->fetchAll(PDO::FETCH_ASSOC);
-      $futureState->closeCursor();
-
-      $results = array('past' => $pastResults, 'future'=> $futureResults);
-
-
-      return $results;
-   }*/
-
-   function getAttendanceObject($event_id){
-      include('dbStartup.php');
+    function getAttendanceObject($event_id){
+ 
       $cntQuery = 'SELECT COUNT(*) AS Count FROM User_Attendance
-      WHERE event_id = :id;';
-      $statement = $db->prepare($cntQuery);
-      $statement->bindValue(':id', $event_id);
-      $statement->execute();
-      $cntResults = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
-
+      WHERE event_id = ?;';     
+      $cntResults = $this->conn->select($cntQuery, [$event_id]);
+    
       $attendance['amount'] = $cntResults[0]['Count'];
 
       if($this->login->getType() > 1){
          $query = 'SELECT user_id FROM User_Attendance
-         WHERE event_id = :id;';
-         $statement = $db->prepare($query);
-         $statement->bindValue(':id', $event_id);
-         $statement->execute();
-         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-         $statement->closeCursor();
+         WHERE event_id = ?;';
+          $results = $this->conn->select($query, [$event_id]);   
 
          $attendees = array();
 
@@ -140,12 +94,9 @@ class Events{
    }
 
    function listEventTypes(){
-      include('dbStartup.php');
+
       $query = 'SELECT event_type_id FROM Event_Type';
-      $statement = $db->prepare($query);
-      $statement->execute();
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
+      $results = $this->conn->select($query);
 
       $types = array();
 
@@ -156,14 +107,10 @@ class Events{
    }
 
    function getEventType($event_type_id){
-      include('dbStartup.php');
+
       $query = 'SELECT * FROM Event_Type
-      WHERE event_type_id = :id;';
-      $statement = $db->prepare($query);
-      $statement->bindValue(':id', $event_type_id);
-      $statement->execute();
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
+      WHERE event_type_id = ?;';
+      $results = $this->conn->select($query, [$event_type_id]);
 
       if(count($results) === 1){
          $eventType = array(

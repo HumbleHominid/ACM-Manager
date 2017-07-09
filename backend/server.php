@@ -12,6 +12,7 @@ class Server{
 
    //Main handler method
    public function serve(){
+      include('model/dbConn.php');
       //Get the URL info for REST
       $URI = str_replace($this->relAddress, '', $_SERVER['REQUEST_URI']);
 
@@ -134,6 +135,10 @@ class Server{
             echo 'Error creating account.';
          }
          header('HTTP/1.1 200 OK');
+         break;
+         case 'UPDATE_TOKEN':
+         $json = $this->response(array());
+         echo $json;
          break;
          default:
          header('HTTP/1.1 400 Bad Request');

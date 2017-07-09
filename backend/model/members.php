@@ -1,24 +1,20 @@
 <?php
-include('dbStartup.php');
 class Members{
+    private $conn = NULL;
+  function Members(){
+
+    $this->conn = new DbConn();
+  }
 
    function getMember($userId){
-      include('dbStartup.php');
+  
       $query = "SELECT * FROM Users
-      WHERE user_id = $userId";
-      $statement = $db->prepare($query);
-      $statement->execute();
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
-
+      WHERE user_id = ?";
+      $results = $this->conn->select($query, [$userId]); 
 
       $typeId = $results[0]['user_type'];
-      $userType = "SELECT * FROM User_Type WHERE user_type_id = :typeId";
-      $statement = $db->prepare($userType);
-      $statement->bindValue(':typeId', $typeId);
-      $statement->execute();
-      $typeResults = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
+      $userType = "SELECT * FROM User_Type WHERE user_type_id = ?"; 
+      $typeResults = $this->conn->select($userType, [$typeId]);
 
 
       if(count($results)){
@@ -40,13 +36,10 @@ class Members{
    }
 
    function listMembers(){
-      include('dbStartup.php');
+   
       $query = "SELECT * FROM Users
       ORDER BY lName, fName";
-      $statement = $db->prepare($query);
-      $statement->execute();
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
+      $results = $this->conn->select($query);
 
       $members = array();
       foreach($results as $result){

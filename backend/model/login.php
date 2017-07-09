@@ -1,5 +1,4 @@
 <?php
-include('dbStartup.php');
 require_once 'jwt/src/BeforeValidException.php';
 require_once 'jwt/src/ExpiredException.php';
 require_once 'jwt/src/SignatureInvalidException.php';
@@ -14,37 +13,35 @@ class Login{
    private $domain = 'katie.mtech.edu/~acmuser';
    private $validatedUser = -1;
    private $currToken = '';
-
+   private $conn = NULL;
    private $fName = '';
    private $lName = '';
    private $email = '';
    private $user_type_id = 0;
    private $name = '';
 
+   function Login(){
+
+    $this->conn = new DbConn;
+   }
 
    function attemptLogin($user, $pass){
-      include('dbStartup.php');
+   
       $query = 'SELECT * FROM Users
       JOIN Passwords ON Users.password_id = Passwords.password_id
       WHERE (passwordTimeout >= NOW() OR passwordTimeout IS NULL)
-      AND email = :user;';
-      $statement = $db->prepare($query);
-      $statement->bindValue(':user', $user);
-      $statement->execute();
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
+      AND email = ?;'; 
+      $results = $this->conn->select($query, [$user]);
+
 
       if(COUNT($results) === 1){
          if(password_verify($pass, $results[0]['password'])){
             $this->validatedUser = $results[0]['user_id'];
 
             $typeId = $results[0]['user_type'];
-            $userType = "SELECT * FROM User_Type WHERE user_type_id = :typeId";
-            $statement = $db->prepare($userType);
-            $statement->bindValue(':typeId', $typeId);
-            $statement->execute();
-            $typeResults = $statement->fetchAll(PDO::FETCH_ASSOC);
-            $statement->closeCursor();
+            $userType = "SELECT * FROM User_Type WHERE user_type_id = ?;"; 
+            $typeResults = $this->conn->select($userType, [$typeId]);
+
 
             $this->validatedUser = $results[0]['user_id'];
             $this->fName = $results[0]['fName'];
@@ -111,24 +108,18 @@ class Login{
 
    public function getToken(){
       if($this->validatedUser > -1){
-         include('dbStartup.php');
+   
          $query = 'SELECT * FROM Users
-         WHERE user_id = :user;';
-         $statement = $db->prepare($query);
-         $statement->bindValue(':user', $this->validatedUser);
-         $statement->execute();
-         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-         $statement->closeCursor();
+         WHERE user_id = ?;'; 
+       
+        $results = $this->conn->select($query, [$this->validatedUser]);
 
          include('key.php');
 
          $typeId = $results[0]['user_type'];
-         $userType = "SELECT * FROM User_Type WHERE user_type_id = :typeId";
-         $statement = $db->prepare($userType);
-         $statement->bindValue(':typeId', $typeId);
-         $statement->execute();
-         $typeResults = $statement->fetchAll(PDO::FETCH_ASSOC);
-         $statement->closeCursor();
+         $userType = "SELECT * FROM User_Type WHERE user_type_id = ?;"; 
+         $typeResults = $this->conn->select($userType, [$typeId]);
+      
 
          $tokenId    = base64_encode(mcrypt_create_iv(32));
 

@@ -1,26 +1,23 @@
 <?php
-include('dbStartup.php');
 class Files{
 
    private $login = NULL;
    private $members = NULL;
+    private $conn = NULL;
 
    function Files($login, $members){
-      $this->login = $login;
-      $this->members = $members;
 
+     $this->conn = new DbConn();
+     $this->login = $login;
+      $this->members = $members;
    }
 
    function getFile($file_id){
-      include('dbStartup.php');
+   
       $query = 'SELECT * FROM Files
-      WHERE file_id = :id AND audience <= :uType;';
-      $statement = $db->prepare($query);
-      $statement->bindValue(':id', $file_id);
-      $statement->bindValue(':uType', $this->login->getType());
-      $statement->execute();
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
+      WHERE file_id = ? AND audience <= ?;';
+      $results = $this->conn->select($query, [$file_id, $this->login->getType()]); 
+
       if(count($results) === 1){
       return array(
          "file_id"=> $results[0]['file_id'],
@@ -36,14 +33,11 @@ class Files{
    }
 
    function getEventFiles($event_id){
-      include('dbStartup.php');
+
       $query = 'SELECT * FROM Event_Files
-      WHERE event_id = :id;';
-      $statement = $db->prepare($query);
-      $statement->bindValue(':id', $event_id);
-      $statement->execute();
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
+      WHERE event_id = ?;';
+      $results = $this->conn->select($query, [$event_id]);
+
       $arr = array();
       foreach($results as $result){
          $file = $this->getFile($result['file_id']);

@@ -1,22 +1,22 @@
 <?php
-include('dbStartup.php');
+
 class Fees{
 
    private $login = NULL;
    private $members = NULL;
+    private $conn = NULL;
 
    function Fees($login, $members){
+
+      $this->conn = new DbConn(); 
       $this->login = $login;
       $this->members = $members;
    }
 
    function listFeeTypes(){
-      include('dbStartup.php');
+     
       $query = 'SELECT fee_type_id FROM Fee_Type';
-      $statement = $db->prepare($query);
-      $statement->execute();
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
+      $results = $this->conn->select($query);
 
       $types = array();
 
@@ -27,15 +27,11 @@ class Fees{
    }
 
    function getFeeType($fee_type_id){
-      include('dbStartup.php');
-      $query = 'SELECT * FROM Fee_Type
-      WHERE fee_type_id = :id;';
-      $statement = $db->prepare($query);
-      $statement->bindValue(':id', $fee_type_id);
-      $statement->execute();
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
 
+      $query = 'SELECT * FROM Fee_Type
+      WHERE fee_type_id = ?;';
+      $results = $this->conn->select($query, [$fee_type_id]);
+     
       if(count($results) === 1){
          $feeType = array(
             "fee_type_id" => $results[0]['fee_type_id'],
@@ -49,18 +45,13 @@ class Fees{
       }
    }
 
-   function getFee($fee_id){
-      include('dbStartup.php');
-      $query = 'SELECT * FROM Fees
-      WHERE fee_id = :id;';
-      $statement = $db->prepare($query);
-      $statement->bindValue(':id', $fee_id);
-      $statement->execute();
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
+    function getFee($fee_id){
+        $query = 'SELECT * FROM Fees
+           WHERE fee_id = ?;';
+        $results = $this->conn->select($query, [$fee_id]);
 
-      if(count($results) === 1){
-         $fee = array(
+        if(count($results) === 1){
+            $fee = array(
             "fee_id" => $results[0]['fee_id'],
             "name" => $results[0]['name'],
             "description" => $results[0]['description'],
@@ -79,24 +70,16 @@ class Fees{
    }
 
    function memberFees($user_id){
-      include('dbStartup.php');
       if($this->login->getType() > 1
       || $this->login->getUserID() === $user_id){
          $unpaidQuery = 'SELECT * FROM Debtor_Fees
-         WHERE debtor_id = :id AND paid = 0;';
-         $statement = $db->prepare($unpaidQuery);
-         $statement->bindValue(':id', $user_id);
-         $statement->execute();
-         $unpaidResults = $statement->fetchAll(PDO::FETCH_ASSOC);
-         $statement->closeCursor();
+         WHERE debtor_id = ? AND paid = 0;';
+         $unpaidResults = $this->conn->select($unpaidQuery, [$user_id]);
+      
 
          $paidQuery = 'SELECT * FROM Debtor_Fees
-         WHERE debtor_id = :id AND paid = 1;';
-         $statement = $db->prepare($paidQuery);
-         $statement->bindValue(':id', $user_id);
-         $statement->execute();
-         $paidResults = $statement->fetchAll(PDO::FETCH_ASSOC);
-         $statement->closeCursor();
+         WHERE debtor_id = ? AND paid = 1;'; 
+         $paidResults = $this->conn->select($paidQuery, [$user_id]);
 
          $unpaidFees = array();
          foreach($unpaidResults as $result){
@@ -125,12 +108,9 @@ class Fees{
    }
 
    function getAllFees(){
-      include('dbStartup.php');
+     
       $query = 'SELECT DISTINCT debtor_id FROM Debtor_Fees;';
-      $statement = $db->prepare($query);
-      $statement->execute();
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
+        $results = $this->conn->select($query);
 
       $debtors = array();
       foreach($results as $result){
