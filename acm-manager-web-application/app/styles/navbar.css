@@ -12,7 +12,12 @@
   width: 100%;
 }
 
-@media (max-width: 1225px) {
+.navbar-glyph-text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+@media (max-width: 1200px) {
     .navbar-header {
         float: none;
     }
@@ -44,7 +49,7 @@
         padding-top: 10px;
         padding-bottom: 10px;
     }
-    .collapse.in{
+    .collapse.in {
         display:block !important;
     }
 }
