@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  cookies: Ember.inject.service(),
   notify: Ember.inject.service(),
   session: Ember.inject.service(),
 
@@ -13,18 +12,12 @@ export default Ember.Controller.extend({
       controller.get('session').authenticate('authenticator:auth', {
         task: "UPDATE_TOKEN",
         jwt: jwt
+      }).then(function() {
+        controller.send('login');
       }).catch(function(/* reason */) {
-        controller.clearCookies();
+        controller.get('session.store').clear();
         
         controller.invalidSessionMessage();
-      }).then(function() {
-        let user = controller.get('session.data.authenticated.user');
-
-        controller.set('user', user);
-        
-        controller.setCookies({ jwt: user.jwt, rememberMe: true });
-        
-        controller.welcomeBackMessage();
       });
     }) (this);
   },
@@ -47,32 +40,19 @@ export default Ember.Controller.extend({
       });
     }) (this);
   },
-  clearCookies: function() {
-    this.get('cookies').clear('jwt');
-    this.get('cookies').clear('user_id');
-       
-    this.get('cookies').clear('rememberMe');
-  },
-  setCookies: function(params) {
-    for (let cookie in params) {
-      this.get('cookies').write(cookie, params[cookie].toString(), {
-        secure: true
-      });
-    }//for
-  },
-  welcomeBackMessage() {
+  welcomeBackMessage: function() {
     this.get('notify').success("Welcome back " + this.get('user.fName') + " " + this.get('user.lName') + "!", {
       closeAfter: 3000,
       radius: true
     });
   },
-  byeMessage() {
+  byeMessage: function() {
     this.get('notify').warning("Bye!", {
       closeAfter: 3000,
       radius: true
     });
   },
-  invalidSessionMessage() {
+  invalidSessionMessage: function() {
     this.get('notify').warning("Session has been invalidated. Please log in again.", {
       closeAfter: 3000,
       radius: true
@@ -81,18 +61,22 @@ export default Ember.Controller.extend({
   init() {
     this._super(...arguments);
     
-    this.get('session.store').restore().then((user) => {
-      console.log(user);
-    }).catch(() => {
-      this.clearCookies();
-      
-      this.invalidSessionMessage();
-    }).finally(() => {
-      this.getEvents();
-    });
+    if (this.get('session.store')) {
+      this.get('session.store').restore().then((user) => {
+        if (user.jwt) {
+          this.loginWithToken(user.jwt);
+        }
+      }).catch(() => {
+        this.get('session.store').clear();
+        
+        this.invalidSessionMessage();
+      }).finally(() => {
+        this.getEvents();
+      });
+    }
   },
   actions: {
-    login(/* rememberMe */) {
+    login() {
       let user = this.get('session.data.authenticated.user');
 
       this.set('user', user);
@@ -100,27 +84,18 @@ export default Ember.Controller.extend({
       this.get('session.store').persist(user);
 
       this.getEvents();
-      
       this.welcomeBackMessage();
     },
     logout() {
       this.set('user', null);
       
-      this.clearCookies();
+      this.get('session.store').clear();
       
       this.getEvents();
-
       this.byeMessage();
     },
     invalidateSession: function() {
       this.get('session').invalidate();
-    },
-    updateJWT(jwt) {
-      this.set('user.jwt', jwt);
-
-      this.get('cookies').write('jwt', jwt, {
-        secure: "secure"  
-      });
     }
   }
 });

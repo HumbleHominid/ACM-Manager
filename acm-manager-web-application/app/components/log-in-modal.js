@@ -13,9 +13,12 @@ export default GenericModal.extend({
           password: component.$('#log-in-password')[0].value
         }).then(() => {
           let rememberMe = component.$('#log-in-checkbox')[0].checked;
-          let cookieTimeout = (rememberMe ? (14 * 24 * 60 * 60) : null);
-
-          component.set('session.store.cookieTimeout', cookieTimeout);
+          
+          if (rememberMe) {
+            let cookieTimeout = 14 * 24 * 60 * 60;
+            
+            component.set('session.store.cookieExpirationTime', cookieTimeout);
+          }
           
           component.get('loginCallback') (rememberMe);
           

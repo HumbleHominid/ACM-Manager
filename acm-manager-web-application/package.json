@@ -1,14 +1,14 @@
 {
   "name": "acm-manager-web-application",
-  "version": "0.0.0",
-  "description": "Small description for acm-manager-web-application goes here",
+  "version": "0.1.0",
+  "description": "Manger for the Montana Tech ACM.",
   "license": "MIT",
-  "author": "",
+  "author": "Michael Fryer",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "https://github.com/HumbleHominid/ACM-Manager",
   "scripts": {
     "build": "ember build",
     "start": "ember server",

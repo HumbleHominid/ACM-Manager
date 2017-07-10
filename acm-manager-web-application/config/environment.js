@@ -25,7 +25,6 @@ module.exports = function(environment) {
 
   ENV['simple-auth'] = {
     store: 'simple-auth-session-store:cookie',
-    authorizer: 'authorizer:auth',
     routeAfterAuthentication: '/home'
   };
 

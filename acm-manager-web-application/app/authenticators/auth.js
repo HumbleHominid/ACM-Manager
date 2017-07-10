@@ -4,7 +4,7 @@ import OAuth2PasswordGrantAuthenticator from 'ember-simple-auth/authenticators/o
 export default OAuth2PasswordGrantAuthenticator.extend({
   session: Ember.inject.service(),
 
-  restore(data) {
+  restore: function(data) {
     return new Ember.RSVP.Promise(function(resolve, reject) {
       if (!Ember.isEmpty(data.token)) {
         resolve(data);
@@ -14,7 +14,7 @@ export default OAuth2PasswordGrantAuthenticator.extend({
       }
     });
   },
-  authenticate(options) {
+  authenticate: function(options) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       Ember.$.ajax({
         type: 'POST',
