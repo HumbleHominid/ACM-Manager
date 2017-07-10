@@ -114,7 +114,7 @@ class Server{
         $json = $this->response(array());
         echo $json;
       }else{
-        echo 'INVALID CREDENTIALS';
+        echo $this->response(['reason'=>'INVALID CREDENTIALS']);
       }
       break;
     case 'CREATE_ACCOUNT':
@@ -128,7 +128,7 @@ class Server{
         $json = $this->response(array());
         echo $json;
       }else{
-        echo 'Error creating account.';
+        echo $this->response(['reason'=>'Error creating account.']);
       }
       header('HTTP/1.1 200 OK');
       break;

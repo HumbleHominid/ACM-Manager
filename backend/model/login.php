@@ -73,32 +73,23 @@ class Login{
 
       return true;
     } catch (Exception $e) {
-      echo $e->getMessage();
+      echo ["reason" =>$e->getMessage()];
       return false;
     }
   }
 
   public function createUser($user, $pass, $first, $last){
     include('dbStartup.php');
-    $query = 'INSERT INTO Passwords(password,passwordTimeout) VALUES (:pass, NULL);';
+    $query = 'INSERT INTO Passwords(password,passwordTimeout) VALUES (?, NULL);';
+    $query2 = 'INSERT INTO Users(password_id, user_type, fName, lName, email) VALUES (?, 1, ?, ?, ?);';
 
-    $query2 = 'INSERT INTO Users(password_id, user_type, fName, lName, email) VALUES (:id, 1,:first, :last, :user);';
-
-    try{
-      $statement = $db->prepare($query);
-      $statement->bindValue(':pass', password_hash($pass, PASSWORD_BCRYPT));
-      $statement->execute();
-
-      $statement2 = $db->prepare($query2);
-      $statement2->bindValue(':user', $user);
-      $statement2->bindValue(':first', $first);
-      $statement2->bindValue(':last', $last);
-      $statement2->bindValue(':id', $db->lastInsertId());
-      $statement2->execute();
+    try{ 
+      $this->conn->modify($query, [password_hash($pass, PASSWORD_BCRYPT)]);   
+      $this->conn->modify($query2, [$this->conn->lastInsertId(), $first, $last, $user]); 
 
       return $this->attemptLogin($user, $pass);
     }catch(Exception $e){
-      echo $e->getMessage();
+      echo ["reason" => $e->getMessage()];
       die();
     }
   }
