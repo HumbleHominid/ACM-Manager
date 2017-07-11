@@ -6,7 +6,6 @@ export default Ember.Controller.extend({
 
   events: { },
   user: { },
-  
   loginWithToken: function(jwt) {
     (function(controller) {
       controller.get('session').authenticate('authenticator:auth', {

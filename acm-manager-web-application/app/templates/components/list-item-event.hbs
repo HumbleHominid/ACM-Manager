@@ -1,17 +1,20 @@
 <h4 class="list-group-item-heading">{{data.title}}</h4>
 
-<dl class="list-group-item-text">
+<dl class="list-group-item-text {{if horizontal 'dl-horizontal'}}">
+  <dt>Name</dt><dd>{{data.name}}</dd>
   <dt>Type</dt><dd>{{data.eventType.name}}</dd>
   <dt>Location</dt><dd>{{data.location}}</dd>
   <dt>Date</dt><dd>{{date}}</dd>
   <dt>Time</dt><dd>{{time}}</dd>
   <dt>Points</dt><dd>{{data.points}}</dd>
   
-  <p class="unselectable pointer bg-info" data-toggle="collapse" data-target="#{{data.event_id}}-list-item" aria-expanded="false">
-    <dt>Expand/Collapse</dt>
-  </p>
+  {{#if collapsable}}
+    <p class="unselectable pointer bg-info" data-toggle="collapse" data-target="#{{data.event_id}}-list-item" aria-expanded="false">
+      <dt>Expand/Collapse</dt>
+    </p>
+  {{/if}}
   
-  <dl id="{{data.event_id}}-list-item" class="collapse" aria-expanded="false">
+  <dl id="{{data.event_id}}-list-item" class="{{if collapsable 'collapse'}}" aria-expanded="false">
     <dt>Coordinator</dt><dd>{{data.coordinator.fName}} {{data.coordinator.lName}} ({{data.coordinator.email}})</dd>
     <dt>Additional Info</dt><dd>{{data.additionalInfo}}</dd>
     <dt>Attendance</dt><dd>{{data.attendance.amount}}</dd>

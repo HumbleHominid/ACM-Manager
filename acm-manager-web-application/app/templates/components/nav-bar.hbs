@@ -12,7 +12,7 @@
       {{/link-to}}
       {{#if user.jwt}}
         {{#link-to "account" (query-params user_id=user.user_id)}}
-          <span class="glyphicon glyphicon-user navbar-text" aria-hidden="true"><span class="navbar-glyph-text"> {{user.fName}} {{user.lName}}, {{user.user_type.name}}</span></span>
+          <span class="glyphicon glyphicon-user navbar-text pointer" aria-hidden="true"><span class="navbar-glyph-text"> {{user.fName}} {{user.lName}}, {{user.user_type.name}}</span></span>
         {{/link-to}}
       {{/if}}
     </div>

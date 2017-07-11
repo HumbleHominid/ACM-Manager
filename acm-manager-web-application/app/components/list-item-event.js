@@ -1,9 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: [ "list-group-item"],
+  classNameBindings: [ "list:list-group-item"],
   date: "",
   time: "",
+  list: true,
+  horizontal: false,
+  collapsable: true,
   
   init() {
     this._super(...arguments);

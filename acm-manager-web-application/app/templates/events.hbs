@@ -1,2 +1,24 @@
-This is the events page!<br>
+<div class="page-header">
+    <h1>Events</h1>
+</div>
+
+<div class="well well-lg">
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default" id="panelOne">
+      <div class="panel-heading" role="tab" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <h4 class="panel-title">
+          <a role="button">
+            Event #1
+          </a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panelOne">
+        <div class="panel-body">
+        {{list-item-event list=false horizontal=true collapsable=false}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {{outlet}}

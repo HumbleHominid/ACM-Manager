@@ -1,29 +1,9 @@
-.jumbotron.jumbotron--home {
-  border-radius: -webkit-calc(5px + 0.25%);
-  border-radius: -moz-calc(5px + 0.25%);
-  border-radius: calc(5px + 0.25%);
-  
-  margin: 0px 1%;
+.jumbotron {
+  border-radius: 6px;
   
   padding: 1%;
 }
 
 .about-acm {
   text-indent: 15px;
-}
-
-@media only screen
-and (max-width: 1200px) {
-  .jumbotron--home {
-    width: 98%;
-  }
-}
-
-@media only screen
-and (min-width: 1200px) {
-  .jumbotron--home {
-    width: -moz-calc(100% - 100px - 5% - 3%);
-    width: -webkit-calc(100% - 100px - 5% - 3%);
-    width: calc(100% - 100px - 5% - 3%);
-  }
 }
