@@ -10,7 +10,7 @@ var appUserObj = {
   fName: "",
   lName: "",
   email: "",
-  userType: userTypeObj,
+  user_type: userTypeObj,
   user_id: 0,
   jwt: ""
 }

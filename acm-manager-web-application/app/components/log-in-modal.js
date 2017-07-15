@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import GenericModal from './generic-modal';
 
+const { inject: { service } } = Ember;
+
 export default GenericModal.extend({
-  session: Ember.inject.service(),
+  session: service(),
 
   actions: {
     authenticate() {

@@ -19,7 +19,7 @@
         </div>
         <div id="upcoming-events-past" class="collapse" aria-expanded="false">
           {{#if filterTime}}
-            {{#each-in data.past as |key value|}}
+            {{#each-in events.past as |key value|}}
               {{list-item-event data=value}}
             {{/each-in}}
           {{/if}}
@@ -42,7 +42,7 @@
         </div>
         <div id="upcoming-events-future" class="collapse in" aria-expanded="true">
           {{#if filterTime}}
-            {{#each-in data.future as |key value|}}
+            {{#each-in events.future as |key value|}}
               {{list-item-event data=value}}
             {{/each-in}}
           {{/if}}
