@@ -25,7 +25,7 @@
           {{/if}}
           
           {{#if filterType}}
-            {{#each-in data.past as |key value|}}
+            {{#each-in events.pastTyped as |key value|}}
               <div class="list-group-item list-group-item-info unselectable pointer" data-toggle="collapse" data-target="#upcoming-events-past-type-{{key}}" aria-expaneded="false">
                 {{value.name}} <span class="glyphicon glyphicon-menu-down" />
               </div>
@@ -48,7 +48,7 @@
           {{/if}}
           
           {{#if filterType}}
-            {{#each-in data.future as |key value|}}
+            {{#each-in events.futureTyped as |key value|}}
               <div class="list-group-item list-group-item-info unselectable pointer" data-toggle="collapse" data-target="#upcoming-events-future-type-{{key}}" aria-expaneded="false">
                 {{value.name}} <span class="glyphicon glyphicon-menu-down" />
               </div>
