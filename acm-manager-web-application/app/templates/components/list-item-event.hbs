@@ -25,23 +25,25 @@
       {{/each-in}}
       </dd>
     {{/if}}
-    <dt>Files</dt>
-    <ul class="list-group">
-      {{#each-in data.files as |key value|}}
-        <li class="list-group-item">
-          <div class="media">
-            <div class="media-left">
-              <span class="glyphicon glyphicon-file" />
-            </div>
-            
-            <div class="media-body">
-              <h5 class="media-heading">{{value.description}}</h5>
+    {{#if data.files}}
+      <dt>Files</dt>
+      <ul class="list-group">
+        {{#each-in data.files as |key value|}}
+          <li class="list-group-item">
+            <div class="media">
+              <div class="media-left">
+                <span class="glyphicon glyphicon-file" />
+              </div>
               
-              <strong><a href="#{{value.fName}}">Download</a></strong>
+              <div class="media-body">
+                <h5 class="media-heading">{{value.description}}</h5>
+                
+                <strong><a href="#{{value.fName}}">Download</a></strong>
+              </div>
             </div>
-          </div>
-        </li>
-      {{/each-in}}
-    </ul>
+          </li>
+        {{/each-in}}
+      </ul>
+    {{/if}}
   </dl>
 </dl>

@@ -2,25 +2,50 @@
   <h1>Events</h1>
 </div>
 
-<div class="well well-lg">
-  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    {{#each-in events.past as |key value|}}
-    <div class="panel panel-default" id="panel{{key}}">
-      <div class="panel-heading" role="tab" data-toggle="collapse" data-parent="#accordion" href="#collapse{{key}}" aria-expanded="true" aria-controls="collapse{{key}}">
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab">
+      <h4 class="panel-title">
+        Past
+      </h4>
+    </div>
+  </div>
+  {{#each-in events.past as |key value|}}
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" data-toggle="collapse" data-parent="#accordion" href="#collapsePast{{key}}" aria-expanded="false" aria-controls="collapsePast{{key}}" id="panelPast{{key}}">
         <h4 class="panel-title">
-          <a role="button">
-            {{value.name}}
-          </a>
+          {{value.name}}
         </h4>
       </div>
-      <div id="collapse{{key}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panel{{key}}">
+      <div id="collapsePast{{key}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="panelPast{{key}}">
         <div class="panel-body">
           {{list-item-event list=false horizontal=true collapsable=false data=value}}
         </div>
       </div>
     </div>
-    {{/each-in}}
+  {{/each-in}}
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab">
+      <h4 class="panel-title">
+        Future
+      </h4>
+    </div>
   </div>
+  {{#each-in events.future as |key value|}}
+    <div class="panel panel-default" id="panelFuture{{key}}">
+      <div class="panel-heading" role="tab" data-toggle="collapse" data-parent="#accordion" href="#collapseFuture{{key}}" aria-expanded="false" aria-controls="collapseFuture{{key}}">
+        <h4 class="panel-title">
+          {{value.name}}
+        </h4>
+      </div>
+      <div id="collapseFuture{{key}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="panelFuture{{key}}">
+        <div class="panel-body">
+          {{list-item-event list=false horizontal=true collapsable=false data=value}}
+        </div>
+      </div>
+    </div>
+  {{/each-in}}
 </div>
-
+BREAK
 {{outlet}}
