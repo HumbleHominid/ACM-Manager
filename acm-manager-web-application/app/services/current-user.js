@@ -1,45 +1,40 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  user: null,
+  data: null,
   
-  id: Ember.computed('user', function() {
-    let user = this.get('user');
+  id: Ember.computed('data', function() {
+    let user = this.get('data');
     
     return (user ? user.user_id : -1);
   }),
-  name: Ember.computed('user', function() {
-    let user = this.get('user');
+  name: Ember.computed('data', function() {
+    let user = this.get('data');
     
     return (user ? user.fName + " " + user.lName : "");
   }),
-  token: Ember.computed('user', function() {
-    let user = this.get('user');
+  token: Ember.computed('data', function() {
+    let user = this.get('data');
     
     return (user ? user.jwt : "");
   }),
-  email: Ember.computed('user', function() {
-    let user = this.get('user');
-    
-    return (user ? user.email : "");
-  }),
-  userType: Ember.computed('user', function() {
-    let user = this.get('user');
+  userType: Ember.computed('data', function() {
+    let user = this.get('data');
     
     return (user ? user.user_type : "");
   }),
   init() {
     this._super(...arguments);
     
-    this.set('user', { });
+    this.set('data', { });
   },
   load(user) {
-    this.set('user', user);
+    this.set('data', user);
   },
   clear() {
-    this.get('user').clear();
+    this.get('data').clear();
   },
   read() {
-    return this.get('user');
+    return this.get('data');
   }
 });
