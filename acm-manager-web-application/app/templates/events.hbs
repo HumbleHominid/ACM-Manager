@@ -10,9 +10,7 @@
         Past
       </h4>
     </div>
-  </div>
-  {{#each-in events.past as |key value|}}
-    <div class="panel panel-default">
+    {{#each-in events.past as |key value|}}
       <div class="panel-heading" role="tab" data-toggle="collapse" data-parent="#accordion" href="#collapsePast{{key}}" aria-expanded="false" aria-controls="collapsePast{{key}}" id="panelPast{{key}}">
         <h4 class="panel-title">
           {{value.name}}
@@ -23,17 +21,15 @@
           {{list-item-event list=false horizontal=true collapsable=false data=value}}
         </div>
       </div>
-    </div>
-  {{/each-in}}
+    {{/each-in}}
+  </div>
   <div class="panel panel-default">
     <div class="panel-heading" role="tab">
       <h4 class="panel-title">
         Future
       </h4>
     </div>
-  </div>
-  {{#each-in events.future as |key value|}}
-    <div class="panel panel-default" id="panelFuture{{key}}">
+    {{#each-in events.future as |key value|}}
       <div class="panel-heading" role="tab" data-toggle="collapse" data-parent="#accordion" href="#collapseFuture{{key}}" aria-expanded="false" aria-controls="collapseFuture{{key}}">
         <h4 class="panel-title">
           {{value.name}}
@@ -44,8 +40,8 @@
           {{list-item-event list=false horizontal=true collapsable=false data=value}}
         </div>
       </div>
-    </div>
-  {{/each-in}}
+    {{/each-in}}
+  </div>
 </div>
-BREAK
+~~BREAK~~
 {{outlet}}
