@@ -26,13 +26,13 @@ export default Ember.Service.extend({
   init() {
     this._super(...arguments);
     
-    this.set('data', { });
+    this.set('data', null);
   },
   load(user) {
     this.set('data', user);
   },
   clear() {
-    this.get('data').clear();
+    this.set('data', null);
   },
   read() {
     return this.get('data');

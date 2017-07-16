@@ -8,16 +8,18 @@
 </div>
 <br><br>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="panel panel-primary">
+  <div class="panel panel-default">
     <div class="panel-heading" role="tab">
-      <h4 class="panel-title">
+      <h3 class="panel-title">
         Past
-      </h4>
+      </h3>
     </div>
     {{#if filterTime}}
-      {{#each-in events.past as |key value|}}
-        {{event-list-item-route suffix="events-route-past" data=value key=key}}
-      {{/each-in}}
+      <div class="list-group">
+        {{#each-in events.past as |key value|}}
+          {{event-list-item-route suffix="events-route-past" data=value key=key}}
+        {{/each-in}}
+      </div>
     {{/if}}
     {{#if filterType}}
       {{#each-in events.pastTyped as |key value|}}
@@ -30,13 +32,14 @@
           {{/each-in}}
         </div>
       {{/each-in}}
-    {{/if}}    
+    {{/if}}
+    <div class="panel-footer"><p></p></div>
   </div>
-  <div class="panel panel-primary">
+  <div class="panel panel-default">
     <div class="panel-heading" role="tab">
-      <h4 class="panel-title">
+      <h3 class="panel-title">
         Future
-      </h4>
+      </h3>
     </div>
     {{#if filterTime}}
       {{#each-in events.future as |key value|}}
@@ -54,7 +57,8 @@
           {{/each-in}}
         </div>
       {{/each-in}}
-    {{/if}}    
+    {{/if}}
+    <div class="panel-footer"><p></p></div>
   </div>
 </div>
 

@@ -57,8 +57,8 @@ export default Ember.Service.extend({
   load(data) {
     this.set('data', data);
   },
-  empty() {
-    this.get('data').clear();
+  clear() {
+    this.set('data', null);
   },
   read() {
     return this.get('data');
