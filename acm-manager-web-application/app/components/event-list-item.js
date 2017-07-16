@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   list: true,
   horizontal: false,
   collapsable: true,
+  suffix: "",
   
   init() {
     this._super(...arguments);

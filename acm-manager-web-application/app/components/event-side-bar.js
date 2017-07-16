@@ -17,7 +17,7 @@ export default Ember.Component.extend({
     let panelBodyHeight = this.$(".panel-body").outerHeight(true);
     let panelHeadingHeight = this.$(".panel-heading").outerHeight(true);
 
-    this.$(".upcoming-events-list").css("max-height", eventsHeight - (panelBodyHeight + panelHeadingHeight));
+    this.$(".events-list").css("max-height", eventsHeight - (panelBodyHeight + panelHeadingHeight));
   },
   actions: {
     filterTime() {

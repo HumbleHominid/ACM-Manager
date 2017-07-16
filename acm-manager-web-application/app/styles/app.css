@@ -65,4 +65,12 @@ body {
   
   background-color: #aaa;
 }
+  
+.events-list {
+  overflow-y: scroll;
+  
+  position: relative;
+  
+  width: 100%;
+}
 

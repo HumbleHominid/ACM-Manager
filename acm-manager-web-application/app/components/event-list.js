@@ -1,7 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  events: Ember.inject.service(),
+  filterTime: true,
+  filterType: false,
+  suffix: "",
+  title: "",
+  data: null,
+  expanded: false,
   
   tagName: ''
 });

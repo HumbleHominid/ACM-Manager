@@ -1,0 +1,10 @@
+<div class="list-group-item list-group-item-success unselectable pointer" role="tab" data-toggle="collapse" data-parent="{{if accordian '#accordian'}}" href="#{{key}}{{suffix}}" aria-expanded="false" aria-controls="{{key}}{{suffix}}">
+  <h4 class="panel-title">
+    {{data.name}}
+  </h4>
+</div>
+<div id="{{key}}{{suffix}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="panelPast{{key}}">
+  <div class="panel-body">
+    {{event-list-item suffix=suffix list=false horizontal=true collapsable=false data=data}}
+  </div>
+</div>

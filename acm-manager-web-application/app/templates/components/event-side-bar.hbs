@@ -12,7 +12,12 @@
           <button disabled={{if filterType "disabled" ""}} type="button" class="btn btn-xs btn-default" {{action 'filterType'}}>Type</button>
         </div>
       </div>
-      {{event-list filterType=filterType filterTime=filterTime}}
+      
+      <div class="list-group events-list no-scrollbar" data-spy="scroll">
+        {{event-list filterType=filterType filterTime=filterTime suffix="side-bar-past" title="Past" data=(if filterTime events.past (if filterType events.pastTyped null))}}
+        
+        {{event-list filterType=filterType filterTime=filterTime suffix="side-bar-future" title="Future" data=(if filterTime events.future (if filterType events.futureTyped null)) expanded=true}}
+      </div>
     </div>
   </div>
 </div>
