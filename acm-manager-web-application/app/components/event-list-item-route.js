@@ -4,6 +4,5 @@ export default Ember.Component.extend({
   data: null,
   suffix: "",
   key: "",
-  accordian: true,
   tagName: ''
 });

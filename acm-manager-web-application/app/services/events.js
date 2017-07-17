@@ -22,7 +22,7 @@ export default Ember.Service.extend({
       }//if
       
       past[eventTypeId].events.push(event);
-    }, this);
+    });
     
     return past;
   }),
@@ -45,10 +45,78 @@ export default Ember.Service.extend({
       }//if
       
       future[eventTypeId].events.push(event);
-    }, this);
+    });
     
     return future;
   }),
+  search(query) {
+    let data = this.get('data');
+    
+    if (data) {
+      let re = new RegExp(query, 'gi');
+      let events = {
+        past: [ ],
+        future: [ ]
+      };
+      
+      data.eventData.past.forEach(function(event) {
+        if (event.name.match(re) || event.eventType.name.match(re)) {
+          events.past.push(event);
+        }
+      });
+      
+      data.eventData.future.forEach(function(event) {
+        if (event.name.match(re) || event.eventType.name.match(re)) {
+          events.future.push(event);
+        }
+      });
+      
+      return events;
+    }
+  },
+  searchTyped(query) {
+    let data = this.get('data');
+    
+    if (data) {
+      let re = new RegExp(query, 'gi');
+      let events = {
+        past: [ ],
+        future: [ ]
+      };
+      
+      data.eventData.past.forEach(function(event) {
+        let eventTypeId = event.eventType.event_type_id;
+      
+        if (event.name.match(re) || event.eventType.name.match(re)) {
+          if (!(eventTypeId in events.past)) {
+            events.past[eventTypeId] = {
+              name: event.eventType.name,
+              events: [ ]
+            };
+          }//if
+          
+          events.past[eventTypeId].events.push(event);
+        }
+      });
+      
+      data.eventData.future.forEach(function(event) {
+        let eventTypeId = event.eventType.event_type_id;
+      
+        if (event.name.match(re) || event.eventType.name.match(re)) {
+          if (!(eventTypeId in events.future)) {
+            events.future[eventTypeId] = {
+              name: event.eventType.name,
+              events: [ ]
+            };
+          }//if
+          
+          events.future[eventTypeId].events.push(event);
+        }
+      });
+      
+      return events;
+    }
+  },
   init() {
     this._super(...arguments);
     
