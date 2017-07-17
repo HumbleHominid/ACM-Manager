@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
       </button>
       {{#link-to "home" class="navbar-brand navbar__brand"}}
-        <img class="navbar__brand__image" alt="MTA Brand" src="./MTA.png">
+        <img class="navbar__brand__image" alt="MTA Brand" src="./assets/MTA.png">
       {{/link-to}}
       {{#if currentUser.token}}
         {{#link-to "account" (query-params user_id=currentUser.id)}}

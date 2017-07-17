@@ -2,4 +2,16 @@
   <h1>Officers</h1>
 </div>
 
+<div class="row">
+  {{#each-in officers.data as |key value|}}
+    {{#if value}}
+      <div class="col-md-3">
+        <img src="./assets/{{value.settings.src}}" alt={{value.settings.alt}} class="img-{{value.settings.style}} officer-image" onerror="this.src='./assets/user.png'"><br>
+        <strong>Name: </strong> {{value.fName}} {{value.lName}}<br>
+        <strong>Position:</strong> {{value.user_type.name}}<br>
+        <strong>Email</strong> {{value.email}}
+      </div>
+    {{/if}}
+  {{/each-in}}
+</div>
 {{outlet}}
