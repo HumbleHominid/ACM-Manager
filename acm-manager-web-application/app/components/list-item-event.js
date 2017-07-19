@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: [ "list-group-item"],
   date: "",
   time: "",
   
@@ -8,7 +9,7 @@ export default Ember.Component.extend({
     this._super(...arguments);
     
     let eventTime = this.get('data.eventTime');
-    
+
     if (eventTime) {
       let dateTime = new Date(this.get('data.eventTime'));
       

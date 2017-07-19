@@ -1,10 +1,7 @@
-.jumbotron--home {
-  border-radius: calc(5px + 0.25%);
+.jumbotron {
+  border-radius: 6px;
   
-  margin: 0px calc(5px + 0.5%);
-  
-  padding-left: calc(2px + 0.25%);
-  padding-right: calc(2px + 0.25%);
+  padding: 1%;
 }
 
 .about-acm {

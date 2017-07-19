@@ -7,6 +7,8 @@
 @import 'jumbotron.css';
 
 .form-margin {
+  margin: -webkit-calc(5px + 1%);
+  margin: -moz-calc(5px + 1%);
   margin: calc(5px + 1%);
 }
 
@@ -15,8 +17,6 @@
 }
 
 .footer__container {
-  position: fixed;
-
   bottom: 1%;
 
   text-align: center;
@@ -39,6 +39,26 @@
   -webkit-user-select: none; /* Chrome/Safari */        
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
+}
+
+.content-container {
+  margin: 0px 1%;
+}
+
+@media only screen
+and (max-width: 1200px) {
+  .content-container {
+    width: 98%;
+  }
+}
+
+@media only screen
+and (min-width: 1200px) {
+  .content-container {
+    width: -moz-calc(100% - 100px - 5% - 3%);
+    width: -webkit-calc(100% - 100px - 5% - 3%);
+    width: calc(100% - 100px - 5% - 3%);
+  }
 }
 
 body {

@@ -11,17 +11,18 @@ var appUserObj = {
   lName: "",
   email: "",
   userType: userTypeObj,
-  user_id: 0, /* Please */
+  user_id: 0,
   jwt: ""
 }
 
 //This is a user in the application, other than who is logged in
-//Note this doesn't have user_id or a jwt
+//Note this doesn't have a jwt
 var userObj = {
   fName: "",
   lName: "",
   email: "",
-  userType: userTypeObj
+  userType: userTypeObj,
+  user_id: 0
 }
 
 //Return data for officers
@@ -60,7 +61,7 @@ var eventObj = {
   eventTypes: [
     eventTypeObj
   ],
-  data: {
+  eventData: {
     past: [
       {
         event_id: 0,
@@ -74,12 +75,14 @@ var eventObj = {
         location: "",
         eventTime: "",
         points: 0,
-        attendance: [
-          userObj
-        ],
+        attendance: {
+          amount: 0,
+          attendees: [
+            userObj
+          ]
+        },
         
         //Only return files that the user can see.
-        fileDescription: "",
         files: [
           {
             file: fileObj,
@@ -102,12 +105,14 @@ var eventObj = {
         location: "",
         eventTime: "",
         points: 0,
-        attendance: [
-          userObj
-        ],
+        attendance: {
+          amount: 0,
+          attendees: [
+            userObj
+          ]
+        },
         
         //Only return files that the user can see.
-        fileDescription: "",
         files: [
           {
             file: fileObj,
@@ -131,7 +136,7 @@ var feeObj = {
   fee_id: 0,
   name: "",
   description: "",
-  duedate: "",
+  dueDate: "",
   fee: 0,
   feeType: feeTypeObj
 }
@@ -142,11 +147,16 @@ var feesObj = {
   feeTypes: [
     feeObj
   ],
-  fees: [
+  debtors: [
     {
-      fee: feeObj,
-      additionalInfo: "",
-      paid: false
+      user: userObj,
+      fees: [
+        {
+          fee: feeObj,
+          additionalInfo: "",
+          paid: false
+        }
+      ]
     }
   ]
 }
