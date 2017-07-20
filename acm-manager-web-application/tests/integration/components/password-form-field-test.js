@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{password-form-field}}`);
 
-  assert.equal(this.$().text().trim(), 'Password');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Password One lowercase, one uppercase, one number, one special character (!@#$), and 8 character minimum');
 });

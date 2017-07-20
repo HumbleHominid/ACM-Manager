@@ -12,14 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{event-list-item}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#event-list-item}}
-      template block text
-    {{/event-list-item}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Name Type Location Date Time Points Expand/Collapse Coordinator () Additional Info Attendance');
 });
