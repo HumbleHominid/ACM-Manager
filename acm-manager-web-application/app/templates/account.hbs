@@ -3,9 +3,9 @@
 </div>
 
 <div>
-  <strong>Name: </strong> John Doe<br>
-  <strong>Position: </strong>peon<br>
-  <strong>Email: </strong>jdoe@mtech.edu
+  <strong>Name: </strong> {{currentUser.name}}<br>
+  <strong>Position: </strong>{{currentUser.userType.name}}<br>
+  <strong>Email: </strong>{{currentUser.data.email}}
 </div>
 
 {{outlet}}
