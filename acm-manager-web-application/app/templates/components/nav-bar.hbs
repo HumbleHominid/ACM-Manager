@@ -8,11 +8,11 @@
         <span class="icon-bar"></span>
       </button>
       {{#link-to "home" class="navbar-brand navbar__brand"}}
-        <img class="navbar__brand__image" alt="MTA Brand" src="./MTA.png">
+        <img class="navbar__brand__image" alt="MTA Brand" src="./assets/MTA.png">
       {{/link-to}}
-      {{#if user.jwt}}
-        {{#link-to "account" (query-params user_id=user.user_id)}}
-          <span class="glyphicon glyphicon-user navbar-text" aria-hidden="true"><span class="navbar-glyph-text"> {{user.fName}} {{user.lName}}, {{user.user_type.name}}</span></span>
+      {{#if currentUser.token}}
+        {{#link-to "account" (query-params user_id=currentUser.id)}}
+          <span class="glyphicon glyphicon-user navbar-text pointer" aria-hidden="true"><span class="navbar-glyph-text"> {{currentUser.name}}, {{currentUser.userType.name}}</span></span>
         {{/link-to}}
       {{/if}}
     </div>
@@ -35,14 +35,14 @@
           {{/link-to}}
         </li>
 
-        {{#if user.jwt}}
+        {{#if currentUser.token}}
           <li class={{if (is-active-route currentPath 'files') "active" ""}} role="presentation">
             {{#link-to "files"}}
                 <span class="glyphicon glyphicon-file" aria-hidden="true"><span class="navbar-glyph-text"> Files</span></span>
             {{/link-to}}
           </li>
 
-          {{#if (is-admin user.user_type.user_type_id)}}
+          {{#if (is-admin currentUser.userType.user_type_id)}}
             <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
               {{#link-to "fees"}}
                   <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"><span class="navbar-glyph-text"> Fees</span></span>
@@ -50,14 +50,17 @@
             </li>
           {{/if}}
         {{/if}}
+        <li role="presentation">
+          <a href="https://github.com/HumbleHominid/ACM-Manager" target="_blank">
+              <span class="glyphicon glyphicon-console" aria-hidden="true"><span class="navbar-glyph-text"> Source</span></span>
+          </a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        {{#if user.jwt}}
+        {{#if currentUser.token}}
           <li role="presentation" {{action logoutCallback}}>
             {{#link-to currentPath}}
-              <div data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
-                <span class="glyphicon glyphicon-log-out" aria-hidden="true"><span class="navbar-glyph-text"> Log Out</span></span>
-              </div>
+              <span class="glyphicon glyphicon-log-out" aria-hidden="true"><span class="navbar-glyph-text"> Log Out</span></span>
             {{/link-to}}
           </li>
         {{else}}

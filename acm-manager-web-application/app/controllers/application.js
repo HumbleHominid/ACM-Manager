@@ -1,11 +1,12 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
-  notify: Ember.inject.service(),
-  session: Ember.inject.service(),
+const { inject: { service } } = Ember;
 
-  events: { },
-  user: { },
+export default Ember.Controller.extend({
+  notify: service(),
+  session: service(),
+  currentUser: service(),
+  events: service(),
   
   loginWithToken: function(jwt) {
     (function(controller) {
@@ -34,14 +35,16 @@ export default Ember.Controller.extend({
         url: 'https://katie.mtech.edu/~acmuser/backend/events',
         data: eventRequestObj
       }).done(function(data) {
-        controller.set('events', Ember.copy(data.eventData, true));
+        let eventData = Ember.copy(data, true);
+        
+        controller.get('events').load(eventData);
       }).fail(function(/* jqXHW, textStatus, err */) {
         //fail
       });
     }) (this);
   },
   welcomeBackMessage: function() {
-    this.get('notify').success("Welcome back " + this.get('user.fName') + " " + this.get('user.lName') + "!", {
+    this.get('notify').success("Welcome back " + this.get('currentUser.name') + "!", {
       closeAfter: 3000,
       radius: true
     });
@@ -78,18 +81,18 @@ export default Ember.Controller.extend({
   actions: {
     login() {
       let user = this.get('session.data.authenticated.user');
-
-      this.set('user', user);
       
       this.get('session.store').persist(user);
+      
+      this.get('currentUser').load(user);
 
       this.getEvents();
       this.welcomeBackMessage();
     },
     logout() {
-      this.set('user', null);
-      
       this.get('session.store').clear();
+      
+      this.get('currentUser').clear();
       
       this.getEvents();
       this.byeMessage();

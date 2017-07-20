@@ -1,19 +1,22 @@
 import Ember from 'ember';
 import GenericModal from './generic-modal';
 
+const { inject: { service } } = Ember;
+
 export default GenericModal.extend({
-  session: Ember.inject.service(),
+  session: service(),
 
   actions: {
     authenticate() {
+      let rememberMe = this.$('#log-in-checkbox')[0].checked;
+      
       (function(component) {
         component.get('session').authenticate('authenticator:auth', {
           task: "ATTEMPT_LOGIN",
           username: component.$('#log-in-email')[0].value,
-          password: component.$('#log-in-password')[0].value
+          password: component.$('#log-in-password')[0].value,
+          rememberMe: rememberMe
         }).then(() => {
-          let rememberMe = component.$('#log-in-checkbox')[0].checked;
-          
           if (rememberMe) {
             let cookieTimeout = 14 * 24 * 60 * 60;
             

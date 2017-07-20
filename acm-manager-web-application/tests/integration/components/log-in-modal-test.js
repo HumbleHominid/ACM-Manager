@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{log-in-modal}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Log In Email Password Remember Me Submit Reset Create Account Close');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), '× Log In Email Password One lowercase, one uppercase, one number, one special character (!@#$), and 8 character minimum Remember Me Submit Reset Create Account Close');
 });
