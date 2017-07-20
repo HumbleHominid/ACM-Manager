@@ -10,7 +10,7 @@ var appUserObj = {
   fName: "",
   lName: "",
   email: "",
-  userType: userTypeObj,
+  user_type: userTypeObj,
   user_id: 0,
   jwt: ""
 }
@@ -55,71 +55,46 @@ var eventTypeObj = {
   defaultPoints: 0
 }
 
-//Return data for events get request
 var eventObj = {
+  event_id: 0,
+  //replaced using users table
+  coordinator: userObj,
+  
+  //replaced using event type table
+  eventType: eventTypeObj,
+  name: "",
+  additionalInfo: "",
+  location: "",
+  eventTime: "",
+  points: 0,
+  attendance: {
+    amount: 0,
+    attendees: [
+      userObj
+    ]
+  },
+  
+  //Only return files that the user can see.
+  files: [
+    {
+      file: fileObj,
+      additionalInfo: ""
+    }
+  ]
+}
+
+//Return data for events get request
+var eventsObj = {
   user: appUserObj,
   eventTypes: [
     eventTypeObj
   ],
   eventData: {
     past: [
-      {
-        event_id: 0,
-        //replaced using users table
-        coordinator: userObj,
-        
-        //replaced using event type table
-        eventType: eventTypeObj,
-        name: "",
-        additionalInfo: "",
-        location: "",
-        eventTime: "",
-        points: 0,
-        attendance: {
-          amount: 0,
-          attendees: [
-            userObj
-          ]
-        },
-        
-        //Only return files that the user can see.
-        files: [
-          {
-            file: fileObj,
-            additionalInfo: ""
-          }
-        ]
-      }
+      eventObj
     ],
     future: [
-      {
-        event_id: 0,
-        
-        //replaced using users table
-        coordinator: userObj,
-        
-        //replaced using event type table
-        eventType: eventTypeObj,
-        name: "",
-        additionalInfo: "",
-        location: "",
-        eventTime: "",
-        points: 0,
-        attendance: {
-          amount: 0,
-          attendees: [
-            userObj
-          ]
-        },
-        
-        //Only return files that the user can see.
-        files: [
-          {
-            file: fileObj,
-            additionalInfo: ""
-          }
-        ]
-      }
+      eventObj
     ]
   }
 }

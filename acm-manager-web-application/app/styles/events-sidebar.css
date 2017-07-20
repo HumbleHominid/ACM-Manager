@@ -36,11 +36,3 @@ and (min-width: 1200px) {
     max-height: calc(125px + 50%);
   }
 }
-  
-.upcoming-events-list {
-  overflow-y: scroll;
-  
-  position: relative;
-  
-  width: 100%;
-}

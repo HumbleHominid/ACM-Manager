@@ -25,7 +25,8 @@ export default OAuth2PasswordGrantAuthenticator.extend({
           token: options.jwt,
           data: {
             username: options.username,
-            password: options.password
+            password: options.password,
+            rememberMe: options.rememberMe
           }
         })
       }).done((response) => {
