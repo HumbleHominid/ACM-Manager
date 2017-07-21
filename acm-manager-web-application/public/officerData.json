@@ -22,5 +22,11 @@
     "src": "treasurer.jpg",
     "alt": "Treasurer",
     "style": "rounded"
+  },
+  "advisor": {
+    "bio": "",
+    "src": "advisor.jpg",
+    "alt": "Advisor",
+    "style": "rounded"
   }
 }

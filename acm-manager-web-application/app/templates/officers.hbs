@@ -2,17 +2,24 @@
   <h1>Officers</h1>
 </div>
 
-<div class="row">
-  {{#each-in officers.data as |key value|}}
-    {{#if value}}
-      <div class="col-md-3">
-        <img src="./assets/{{value.settings.src}}" alt={{value.settings.alt}} class="img-{{value.settings.style}} officer-image" onerror="this.src='./assets/user.png'"><br>
-        <strong>Name: </strong> {{value.fName}} {{value.lName}}<br>
-        <strong>Position:</strong> {{value.user_type.name}}<br>
-        <strong>Email</strong> {{value.email}}
-      </div>
-    {{/if}}
-  {{/each-in}}
+<div class="container-fluid">
+  <div class="row">
+    {{#each-in officers.data as |key value|}}
+      {{#if value}}
+        <div class="col-xs-12 col-md-4">
+          <div class="media officers-item">
+            <div class="media-left">
+              <img src="./assets/{{value.settings.src}}" alt={{value.settings.alt}} class="img-{{value.settings.style}} officer-image" onerror="this.src='./assets/user.png'">
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{{value.fName}} {{value.lName}}, <em>{{value.user_type.name}}</em></h4>
+              <a href="mailto:#">{{value.email}}</a>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    {{/each-in}}
+  </div>
 </div>
 
 {{outlet}}

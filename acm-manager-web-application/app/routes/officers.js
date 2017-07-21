@@ -12,7 +12,6 @@ export default Ember.Route.extend({
     let officers = this.get('officers');
     
     if (!officers.get('data')) {
-    
       return Ember.$.ajax({
         type: 'POST',
         contentType: 'application/json',

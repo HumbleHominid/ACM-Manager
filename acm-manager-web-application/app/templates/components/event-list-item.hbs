@@ -15,7 +15,7 @@
   {{/if}}
   
   <dl id="list-item-{{data.event_id}}-{{suffix}}" class="{{if collapsable 'collapse'}}" aria-expanded="false">
-    <dt>Coordinator</dt><dd>{{data.coordinator.fName}} {{data.coordinator.lName}} ({{data.coordinator.email}})</dd>
+    <dt>Coordinator</dt><dd>{{data.coordinator.fName}} {{data.coordinator.lName}}, <a href="mailto:#">{{data.coordinator.email}}</a></dd>
     <dt>Additional Info</dt><dd>{{data.additionalInfo}}</dd>
     <dt>Attendance</dt><dd>{{data.attendance.amount}}</dd>
     {{#if data.attendance.attendees}}
