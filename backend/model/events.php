@@ -124,8 +124,8 @@ class Events{
     }
   }
 
-  function createEvent(){
-
+  function createEvent($data){
+    
   }
 
   function updateEvent(){
@@ -134,6 +134,14 @@ class Events{
 
   function deleteEvent(){
 
+  }
+
+  function createEventType(){
+  
+  }
+
+  function updateEventType(){
+  
   }
 
 }

@@ -30,10 +30,7 @@ class Server{
     require_once('model/login.php');
     $this->login = new Login;
     if(!empty($this->data['token'])){
-      $valid = $this->login->validateToken($this->data['token']);
-      if($valid !== true){
-        $this->data['reason'] = $valid['reason'];
-      }
+      $this->login->validateToken($this->data['token']);
     }
 
     switch($object){
@@ -106,13 +103,20 @@ class Server{
   private function login(){
     $task = $this->data['task'];
 
+      $rememberMe = FALSE;
+
+      if(!empty($this->data['data']['rememberMe'])){
+        $rememberMe = $this->data['data']['rememberMe'];
+      }
+
+
+
     switch($task){
     case 'ATTEMPT_LOGIN':
 
       $user = $this->data['data']['username'];
       $pass = $this->data['data']['password'];
-
-      $result = $this->login->attemptLogin($user, $pass);
+      $result = $this->login->attemptLogin($user, $pass, $rememberMe);
       if($result){
         $json = $this->response(array());
         echo $json;
@@ -126,7 +130,7 @@ class Server{
       $pass = $this->data['data']['password'];
       $first = $this->data['data']['first'];
       $last = $this->data['data']['last'];
-      $result = $this->login->createUser($user, $pass, $first, $last);
+      $result = $this->login->createUser($user, $pass, $first, $last, $rememberMe);
       if($result){
         $json = $this->response(array());
         echo $json;
@@ -204,10 +208,6 @@ class Server{
     if(!empty($token)){
       $builtArr['user'] = $token;
     }
-    if(!empty($this->data['reason'])){
-      $builtArr['reason'] = $this->data['reason'];
-    }
-
     $json = json_encode($builtArr);
 
     if($json === FALSE){

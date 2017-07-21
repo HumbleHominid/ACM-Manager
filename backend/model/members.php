@@ -45,5 +45,7 @@ class Members{
     return array("memberList" => $members);
 
   }
+  
+  //recalculatePoints
 }
 ?>
