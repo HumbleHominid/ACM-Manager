@@ -28,7 +28,7 @@ class Officers{
 
   function getOfficer($position){
     $query = "SELECT user_type_id FROM User_Type
-    WHERE description = ?";
+    WHERE name = ?";
     $results = $this->conn->select($query, [$position]);
 
     if(count($results) == 1){

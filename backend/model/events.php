@@ -124,24 +124,76 @@ class Events{
     }
   }
 
+  function pushEventInfoToArray($data){
+    $values = array();
+    array_push($values, $data['coordinator']);
+    array_push($values, $data['eventType']);
+    array_push($values, $data['name']);
+    array_push($values, $data['additionalInfo']);
+    array_push($values, $data['location']);
+    array_push($values, $data['eventTime']);
+    array_push($values, $data['points']);
+    return $values;
+  }
+
   function createEvent($data){
-    
+    $query = 'INSERT INTO Events(coordinator, eventType, name, 
+                                additionalInfo, location, eventTime, points)
+                                VALUES(?,?,?,?,?,?,?);';
+    $values = $this->pushEventInfoToArray($data);
+    $this->conn->modify($query, $values);
+    return array("eventData" => $this->getEvent($this->conn->lastInsertId()));        
   }
 
-  function updateEvent(){
-
+  function updateEvent($data){
+    $query = 'UPDATE Events 
+              SET coordinator = ?, eventType = ?, name = ?, 
+              additionalInfo = ?, location = ?, 
+              eventTime = ?, points = ?
+              WHERE event_id = ?';
+                 
+    $values = $this->pushEventInfoToArray($data);
+    array_push($values, $data['event_id']); 
+    $this->conn->modify($query, $values);
+    return array("eventData" => $this->getEvent($data['event_id'])); 
   }
 
-  function deleteEvent(){
+  function deleteEvent($eventId){
 
+    $deleteAttendance = "DELETE FROM User_Attendance WHERE event_id = ?;";
+    $this->conn->modify($deleteAttendance, [$eventId]);
+
+    $deleteEvent = 'DELETE FROM Events WHERE event_id = ?';
+    $result = $this->conn->modify($deleteEvent, [$eventId]);
+
+    return array('Status'=>$result); 
   }
 
-  function createEventType(){
-  
+  function pushEventTypeDataToArray($data){
+    $values = array();
+    array_push($values, $data['name']);
+    array_push($values, $data['description']);
+    array_push($values, $data['defaultPoints']);
+    return $values;
   }
 
-  function updateEventType(){
-  
+  function createEventType($data){
+    $insert = 'INSERT INTO Event_Type(name, description, defaultPoints)
+               VALUES(?,?,?);';
+    $values = $this->pushEventTypeDataToArray($data);
+    $this->conn->modify($insert, $values);
+    return array("EventType" => $this->getEventType($this->conn->lastInsertId()));
+  }
+
+  function updateEventType($data){
+    $update = 'UPDATE Event_Type 
+               SET name=?, description=?, defaultPoints=?
+               WHERE event_type_id = ?;';
+    $values = $this->pushEventTypeDataToArray($data);
+    array_push($values, $data['event_type_id']);
+    $this->conn->modify($update, $values);
+    $this->getEventType($this->conn->lastInsertId());
+    return array("EventType" => $this->getEventType($data['event_type_id']));
   }
 
 }

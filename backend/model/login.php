@@ -101,7 +101,6 @@ class Login{
 
   public function getToken(){
     if($this->validatedUser > -1){
-
       $query = 'SELECT * FROM Users
       WHERE user_id = ?;';
 
@@ -148,6 +147,7 @@ class Login{
           'lName' => $results[0]['lName'],
           'email' => $results[0]['email'],
           'user_id' => $results[0]['user_id'],
+          'points' => $results[0]['points'],
           'user_type' => array(
             'user_type_id' => $typeId,
             'name' => $typeResults[0]['name'],
@@ -166,6 +166,10 @@ class Login{
 
     function getUserID(){
       return $this->validatedUser;
+    }
+
+    function isOfficer(){
+      return $this->user_type_id > 1;
     }
   }
   ?>

@@ -72,6 +72,47 @@ class Server{
       $json = $this->response($list);
       echo $json;
       break;
+    case 'CREATE_EVENT':
+      if($this->login->isOfficer()){
+        $result = $events->createEvent($this->data['data']); 
+        echo $this->response($result);
+      }else{
+        echo $this->response(array('reason'=>'You are not an officer.'));
+      }
+
+      break;  
+    case 'DELETE_EVENT':
+      if($this->login->isOfficer()){
+        $result = $events->deleteEvent($this->data['data']['event_id']);
+        echo $this->response($result);
+      }else{
+        echo $this->response(array('reason'=>'You are not an officer.'));
+      }
+      break;  
+    case 'UPDATE_EVENT':
+      if($this->login->isOfficer()){
+        $result = $events->updateEvent($this->data['data']);
+        echo $this->response($result);
+      }else{
+        echo $this->response(array('reason'=>'You are not an officer.'));
+      }
+      break; 
+    case 'CREATE_EVENT_TYPE':
+      if($this->login->isOfficer()){
+        $result = $events->createEventType($this->data['data']);  
+        echo $this->response($result);
+      }else{
+        echo $this->response(array('reason'=>'You are not an officer.'));
+      }
+      break; 
+    case 'UPDATE_EVENT_TYPE':
+      if($this->login->isOfficer()){
+        $result =  $events->updateEventType($this->data['data']);
+        echo $this->response($result);
+      }else{
+        echo $this->response(array('reason'=>'You are not an officer.'));
+      }
+      break;
     default:
       header('HTTP/1.1 400 Bad Request');
       break;
