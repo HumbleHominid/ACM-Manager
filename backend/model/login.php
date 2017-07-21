@@ -73,8 +73,7 @@ class Login{
 
       return true;
     } catch (Exception $e) {
-      echo ["reason" =>$e->getMessage()];
-      return false;
+      return ["reason" =>'Token failed validation.']; 
     }
   }
 

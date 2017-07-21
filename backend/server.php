@@ -30,7 +30,10 @@ class Server{
     require_once('model/login.php');
     $this->login = new Login;
     if(!empty($this->data['token'])){
-      $this->login->validateToken($this->data['token']);
+      $valid = $this->login->validateToken($this->data['token']);
+      if($valid !== true){
+        $this->data['reason'] = $valid['reason'];
+      }
     }
 
     switch($object){
@@ -201,6 +204,10 @@ class Server{
     if(!empty($token)){
       $builtArr['user'] = $token;
     }
+    if(!empty($this->data['reason'])){
+      $builtArr['reason'] = $this->data['reason'];
+    }
+
     $json = json_encode($builtArr);
 
     if($json === FALSE){
