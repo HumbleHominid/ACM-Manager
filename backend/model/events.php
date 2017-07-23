@@ -69,6 +69,70 @@ class Events{
     return FALSE;
   }
 
+  function pushEventInfoToArray($data){
+    $values = array();
+    array_push($values, $data['coordinator']);
+    array_push($values, $data['eventType']);
+    array_push($values, $data['name']);
+    array_push($values, $data['additionalInfo']);
+    array_push($values, $data['location']);
+    array_push($values, $data['eventTime']);
+    array_push($values, $data['points']);
+    return $values;
+  }
+
+  function createEvent($data){
+    $query = 'INSERT INTO Events(coordinator, eventType, name, 
+                                additionalInfo, location, eventTime, points)
+                                VALUES(?,?,?,?,?,?,?);';
+    $values = $this->pushEventInfoToArray($data);
+    $this->conn->modify($query, $values);
+
+    $event_id = $this->conn->lastInsertId();
+    $this->updateEventAttendees($data['attendees'], $event_id);
+
+    return array("eventData" => $this->getEvent($event_id));        
+  }
+
+  function updateEvent($data){
+    $query = 'UPDATE Events 
+              SET coordinator = ?, eventType = ?, name = ?, 
+              additionalInfo = ?, location = ?, 
+              eventTime = ?, points = ?
+              WHERE event_id = ?';
+                 
+    $values = $this->pushEventInfoToArray($data);
+    array_push($values, $data['event_id']); 
+    $this->conn->modify($query, $values);
+
+    $this->updateEventAttendees($data['attendees'], $data['event_id']);
+    
+    return array("eventData" => $this->getEvent($data['event_id'])); 
+  }
+
+  function deleteEvent($eventId){
+
+    $deleteAttendance = "DELETE FROM User_Attendance WHERE event_id = ?;";
+    $this->conn->modify($deleteAttendance, [$eventId]);
+
+    $deleteEvent = 'DELETE FROM Events WHERE event_id = ?';
+    $result = $this->conn->modify($deleteEvent, [$eventId]);
+
+    return array('Status'=>$result); 
+  }
+
+  function pushEventTypeDataToArray($data){
+    $values = array();
+    array_push($values, $data['name']);
+    array_push($values, $data['description']);
+    array_push($values, $data['defaultPoints']);
+    return $values;
+  }
+
+/********************************************************************
+ * Attendance 
+ ********************************************************************/
+
   function getAttendanceObject($event_id){
 
     $cntQuery = 'SELECT COUNT(*) AS Count FROM User_Attendance
@@ -91,6 +155,36 @@ class Events{
     }
     return $attendance;
   }
+
+  function updateEventAttendees($attendees, $event_id){
+    //Get list of old attendees.
+    $oldListQuery = "SELECT user_id FROM User_Attendance WHERE event_id = ?";
+    $oldList = $this->conn->select($oldListQuery, [$event_id]);
+    
+    //Drop old attendess.
+    $dropAttendeeQuery = "DELETE FROM User_Attendance WHERE event_id = ?";
+    $this->conn->modify($dropAttendeeQuery, [$event_id]);
+
+    foreach($oldList as $person){
+      $this->members->recalculatePoints($person['user_id']);
+    }   
+
+
+    //Update attendees.
+    $addAttendee = 'INSERT INTO User_Attendance(user_id, event_id, 
+      givenPoints, additionalInfo) 
+      VALUES (?,?,?,?)';
+    foreach($attendees as $attendee){ 
+      $data = [$attendee['user_id'], $event_id, $attendee['givenPoints'], $attendee['additionalInfo']];
+     $this->conn->modify($addAttendee, $data);
+      $this->members->recalculatePoints($attendee['user_id']);
+    } 
+  }
+
+/********************************************************************
+ * Event Types
+ ********************************************************************/
+
 
   function listEventTypes(){
 
@@ -122,59 +216,6 @@ class Events{
     }else {
       return FALSE;
     }
-  }
-
-  function pushEventInfoToArray($data){
-    $values = array();
-    array_push($values, $data['coordinator']);
-    array_push($values, $data['eventType']);
-    array_push($values, $data['name']);
-    array_push($values, $data['additionalInfo']);
-    array_push($values, $data['location']);
-    array_push($values, $data['eventTime']);
-    array_push($values, $data['points']);
-    return $values;
-  }
-
-  function createEvent($data){
-    $query = 'INSERT INTO Events(coordinator, eventType, name, 
-                                additionalInfo, location, eventTime, points)
-                                VALUES(?,?,?,?,?,?,?);';
-    $values = $this->pushEventInfoToArray($data);
-    $this->conn->modify($query, $values);
-    return array("eventData" => $this->getEvent($this->conn->lastInsertId()));        
-  }
-
-  function updateEvent($data){
-    $query = 'UPDATE Events 
-              SET coordinator = ?, eventType = ?, name = ?, 
-              additionalInfo = ?, location = ?, 
-              eventTime = ?, points = ?
-              WHERE event_id = ?';
-                 
-    $values = $this->pushEventInfoToArray($data);
-    array_push($values, $data['event_id']); 
-    $this->conn->modify($query, $values);
-    return array("eventData" => $this->getEvent($data['event_id'])); 
-  }
-
-  function deleteEvent($eventId){
-
-    $deleteAttendance = "DELETE FROM User_Attendance WHERE event_id = ?;";
-    $this->conn->modify($deleteAttendance, [$eventId]);
-
-    $deleteEvent = 'DELETE FROM Events WHERE event_id = ?';
-    $result = $this->conn->modify($deleteEvent, [$eventId]);
-
-    return array('Status'=>$result); 
-  }
-
-  function pushEventTypeDataToArray($data){
-    $values = array();
-    array_push($values, $data['name']);
-    array_push($values, $data['description']);
-    array_push($values, $data['defaultPoints']);
-    return $values;
   }
 
   function createEventType($data){
