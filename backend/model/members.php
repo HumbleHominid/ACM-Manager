@@ -1,8 +1,13 @@
 <?php
 class Members{
   private $conn = NULL;
+  private $metadata = NULL;
+  private $endpoint = 'User';
+  
   function Members(){
     $this->conn = new DbConn();
+    require_once('metadata.php');
+    $this->metadata = new Metadata();
   }
 
   function getMember($userId){
@@ -61,6 +66,7 @@ class Members{
                WHERE user_id = ?;"; 
     $this->conn->modify($update, [$points, $userId]);
  
+    $this->metadata->updateMetadata($this->endpoint); 
   }
 }
 ?>

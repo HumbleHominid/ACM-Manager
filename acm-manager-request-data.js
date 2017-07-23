@@ -193,6 +193,15 @@ var attendee = {
   "task": "GET_ALL_FEES"
 }
 
+/********************************************************************
+ * METADATA - Send to katie.mtech.edu/~acmuser/backend/metadata
+ ********************************************************************/
 
+{
+  "task": "GET_METADATA"
+    "data": {
+      "endpoint": ""
+    }
+}
 
 

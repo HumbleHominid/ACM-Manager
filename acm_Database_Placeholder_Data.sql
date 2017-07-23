@@ -45,4 +45,10 @@ INSERT INTO Event_Type (name, description, defaultPoints)
 	
 INSERT INTO Event_Type (name, description, defaultPoints)
 	VALUES ('ASMT Meeting', 'Attendance for an ASMT proposal meeting', 1);
-	
+
+INSERT INTO Metadata(endpoint, updateTime) VALUES ('Events', NOW());
+INSERT INTO Metadata(endpoint, updateTime) VALUES ('Login', NOW());
+INSERT INTO Metadata(endpoint, updateTime) VALUES ('Members', NOW());
+INSERT INTO Metadata(endpoint, updateTime) VALUES ('Fees', NOW());
+INSERT INTO Metadata(endpoint, updateTime) VALUES ('Officers', NOW());
+INSERT INTO Metadata(endpoint, updateTime) VALUES ('Files', NOW());

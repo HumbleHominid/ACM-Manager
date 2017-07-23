@@ -1,10 +1,11 @@
 <?php
 class Events{
-
+  private $endpoint = 'Events';
   private $login = NULL;
   private $members = NULL;
   private $files = NULL;
   private $conn = NULL;
+  private $metadata = NULL;
 
   function Events($login, $members){
     $this->conn = new DbConn(); 
@@ -12,6 +13,9 @@ class Events{
     $this->members = $members;
     include('files.php');
     $this->files = new Files($this->login, $this->members);
+    
+    require_once('metadata.php');
+    $this->metadata = new Metadata();
   }
 
   function listAll(){
@@ -90,7 +94,7 @@ class Events{
 
     $event_id = $this->conn->lastInsertId();
     $this->updateEventAttendees($data['attendees'], $event_id);
-
+    $this->metadata->updateMetadata($this->endpoint); 
     return array("eventData" => $this->getEvent($event_id));        
   }
 
@@ -107,6 +111,7 @@ class Events{
 
     $this->updateEventAttendees($data['attendees'], $data['event_id']);
     
+    $this->metadata->updateMetadata($this->endpoint); 
     return array("eventData" => $this->getEvent($data['event_id'])); 
   }
 
@@ -118,6 +123,7 @@ class Events{
     $deleteEvent = 'DELETE FROM Events WHERE event_id = ?';
     $result = $this->conn->modify($deleteEvent, [$eventId]);
 
+    $this->metadata->updateMetadata($this->endpoint); 
     return array('Status'=>$result); 
   }
 
@@ -222,6 +228,8 @@ class Events{
     $insert = 'INSERT INTO Event_Type(name, description, defaultPoints)
                VALUES(?,?,?);';
     $values = $this->pushEventTypeDataToArray($data);
+
+    $this->metadata->updateMetadata($this->endpoint); 
     $this->conn->modify($insert, $values);
     return array("EventType" => $this->getEventType($this->conn->lastInsertId()));
   }
@@ -234,6 +242,7 @@ class Events{
     array_push($values, $data['event_type_id']);
     $this->conn->modify($update, $values);
     $this->getEventType($this->conn->lastInsertId());
+    $this->metadata->updateMetadata($this->endpoint); 
     return array("EventType" => $this->getEventType($data['event_type_id']));
   }
 

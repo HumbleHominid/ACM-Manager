@@ -24,9 +24,14 @@ class Login{
   private $normalTimeout = 3600;
   private $rememberTimeout = 1814400;
 
+  private $metadata = NULL;
+  private $endpoint = 'Login';
+
   function Login(){
 
     $this->conn = new DbConn;
+    require_once('metadata.php');
+    $this->metadata = new Metadata(); 
   }
 
   function attemptLogin($user, $pass, $rememberMe){
@@ -91,7 +96,8 @@ class Login{
     try{ 
       $this->conn->modify($query, [password_hash($pass, PASSWORD_BCRYPT)]);   
       $this->conn->modify($query2, [$this->conn->lastInsertId(), $first, $last, $user]); 
-
+      
+      $this->metadata->updateMetadata($this->endpoint); 
       return $this->attemptLogin($user, $pass, $rememberMe);
     }catch(Exception $e){
       echo ["reason" => $e->getMessage()];

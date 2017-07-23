@@ -52,6 +52,9 @@ class Server{
     case 'officers':
       $this->officers();
       break;
+    case 'metadata':
+      $this->metadata();
+      break;
     default:
       echo $object;
       header('HTTP/1.1 400 Bad Request');
@@ -242,6 +245,20 @@ class Server{
     }
   }
 
+  private function metadata(){
+    $task = $this->data['task'];
+    switch($task){
+      case 'GET_METADATA':
+        require_once('model/metadata.php');
+        $metadata = new Metadata();
+        $results = $metadata->getMetadata($this->data['data']['endpoint']);
+        echo $this->response($results);
+        break;
+      default:
+        header('HTTP/1.1 400 Bad Request');
+        break;
+    }
+  }
 
   //Encodes the JSON response. If it is not valid, sends error header and ends.
   private function response($builtArr){

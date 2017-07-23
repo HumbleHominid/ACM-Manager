@@ -138,4 +138,7 @@ CREATE TABLE User_Attendance (
 	FOREIGN KEY(event_id) REFERENCES Events(event_id)
 );
 
-
+CREATE TABLE Metadata(
+  endpoint VARCHAR(20),
+  updateTime DATETIME
+;
