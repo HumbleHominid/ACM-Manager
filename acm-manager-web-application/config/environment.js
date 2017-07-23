@@ -1,4 +1,5 @@
 /* jshint node: true */
+var fs = require('fs');
 
 module.exports = function(environment) {
   var ENV = {
@@ -18,14 +19,12 @@ module.exports = function(environment) {
     },
 
     APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
+      endPoint: ""
     }
   };
 
   ENV['simple-auth'] = {
-    store: 'simple-auth-session-store:cookie',
-    routeAfterAuthentication: '/home'
+    store: 'simple-auth-session-store:cookie'
   };
 
   if (environment === 'development') {
@@ -48,11 +47,17 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.rootURL = '/~acmuser/';
+    let config = JSON.parse(fs.readFileSync("vendor/config/config.json"));
+  
+    ENV.rootURL = config.rootURL;
+    ENV.APP.endPoint = config.endPoint;
   }
   
   if (environment === 'mfryer') {
-    ENV.rootURL = '/~mfryer/ACM-Manager/';
+    let config = JSON.parse(fs.readFileSync("vendor/config/mfryer.json"));
+    
+    ENV.rootURL = config.rootURL;
+    ENV.APP.endPoint = config.endPoint;
     
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
