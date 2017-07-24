@@ -39,7 +39,7 @@ export default GenericModal.extend({
         Ember.$.ajax({
           type: 'PUT',
           contentType: 'application/json',
-          url: 'https://katie.mtech.edu/~acmuser/backend/login',
+          url: component.get('metadata.endPoint') + 'login',
           data: obj
         }).done(function() {
           component.$("#create-account-form")[0].reset();

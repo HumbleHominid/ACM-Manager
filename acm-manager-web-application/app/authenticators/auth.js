@@ -1,8 +1,11 @@
 import Ember from 'ember';
 import OAuth2PasswordGrantAuthenticator from 'ember-simple-auth/authenticators/oauth2-password-grant';
 
+const { inject: { service } } = Ember;
+
 export default OAuth2PasswordGrantAuthenticator.extend({
-  session: Ember.inject.service(),
+  session: service(),
+  metadata: service(),
 
   restore: function(data) {
     return new Ember.RSVP.Promise(function(resolve, reject) {
@@ -19,7 +22,7 @@ export default OAuth2PasswordGrantAuthenticator.extend({
       Ember.$.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: 'https://katie.mtech.edu/~acmuser/backend/login',
+        url: this.get('metadata.endPoint') + 'login',
         data: JSON.stringify({
           task: options.task,
           token: options.jwt,

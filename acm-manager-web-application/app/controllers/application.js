@@ -7,6 +7,7 @@ export default Ember.Controller.extend({
   session: service(),
   currentUser: service(),
   events: service(),
+  metadata: service(),
   
   loginWithToken: function(jwt) {
     (function(controller) {
@@ -19,27 +20,6 @@ export default Ember.Controller.extend({
         controller.get('session.store').clear();
         
         controller.invalidSessionMessage();
-      });
-    }) (this);
-  },
-  getEvents: function() {
-    let jwt = this.get('session.data.authenticated.user.jwt');
-    let eventRequestObj = { task: "GET_LIST", token: jwt };
-    
-    eventRequestObj = JSON.stringify(eventRequestObj);
-    
-    (function(controller) {
-      Ember.$.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: 'https://katie.mtech.edu/~acmuser/backend/events',
-        data: eventRequestObj
-      }).done(function(data) {
-        let eventData = Ember.copy(data, true);
-        
-        controller.get('events').load(eventData);
-      }).fail(function(/* jqXHW, textStatus, err */) {
-        //fail
       });
     }) (this);
   },
@@ -74,7 +54,7 @@ export default Ember.Controller.extend({
         
         this.invalidSessionMessage();
       }).finally(() => {
-        this.getEvents();
+        this.get('events').load();
       });
     }
   },
@@ -86,7 +66,7 @@ export default Ember.Controller.extend({
       
       this.get('currentUser').load(user);
 
-      this.getEvents();
+      this.get('events').load();
       this.welcomeBackMessage();
     },
     logout() {
@@ -94,7 +74,7 @@ export default Ember.Controller.extend({
       
       this.get('currentUser').clear();
       
-      this.getEvents();
+      this.get('events').load();
       this.byeMessage();
     },
     invalidateSession: function() {

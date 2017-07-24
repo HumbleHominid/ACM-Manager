@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
+  metadata: Ember.inject.service(),
+  
   data: null,
   
   init() {
@@ -36,8 +38,29 @@ export default Ember.Service.extend({
       return data.treasurer;
     }
   }),
-  load(data) {
-    this.set('data', data);
+  load() {
+    (function(service) {
+      Ember.$.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: service.get('metadata.endPoint') + 'officers',
+        data: JSON.stringify({
+          task: "GET_OFFICERS"
+        })
+      }).done(function(data) {
+        return Ember.$.getJSON('officerData.json').then(function(officerSettings) {
+          Object.keys(officerSettings).forEach(function(key) {
+            if (data[key]) {
+              data[key].settings = officerSettings[key];
+            }
+          });
+          
+          service.set('data', data);
+        });
+      }).fail(function() {
+        //fail
+      });
+    }) (this);
   },
   read() {
     return this.get('data');

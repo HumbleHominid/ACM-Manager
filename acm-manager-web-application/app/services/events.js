@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
+const { inject: { service } } = Ember;
+
 export default Ember.Service.extend({
+  session: service(),
+  metadata: service(),
+  
   data: null,
   
   past: Ember.computed('data', function() {
@@ -122,8 +127,27 @@ export default Ember.Service.extend({
     
     this.set('data', null);
   },
-  load(data) {
-    this.set('data', data);
+  load() {
+    let session = this.get('session');
+    let jwt = (session.get('data.authenticated') ? session.get('data.authenticated.user.jwt') : null);
+    let eventRequestObj = { task: "GET_LIST", token: jwt };
+    
+    eventRequestObj = JSON.stringify(eventRequestObj);
+    
+    (function(service) {
+      Ember.$.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: service.get('metadata.endPoint') + 'events',
+        data: eventRequestObj
+      }).done(function(data) {
+        let eventData = Ember.copy(data, true);
+        
+        service.set('data', eventData);
+      }).fail(function(/* jqXHW, textStatus, err */) {
+        //fail
+      });
+    }) (this);
   },
   clear() {
     this.set('data', null);
