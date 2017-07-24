@@ -1,0 +1,10 @@
+<div class="list-group-item list-group-item-success unselectable pointer" role="tab" data-toggle="collapse" aria-expanded="false" aria-controls="{{data.event_id}}{{suffix}}" data-target="#{{data.event_id}}{{suffix}}">
+  <h4>
+    {{data.name}}
+  </h4>
+</div>
+<div id="{{data.event_id}}{{suffix}}" class="panel-collapse collapse" role="tabpanel">
+  <div class="panel-body">
+    {{event-list-item suffix=suffix list=false horizontal=true collapsable=false data=data}}
+  </div>
+</div>

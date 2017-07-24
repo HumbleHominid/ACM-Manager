@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" data-parent="#accordion" data-toggle="collapse" href="#event-list-route-{{suffix}}">
+    <h3 class="panel-title unselectable">
+      {{title}}<small> Click to Expand/Collapse</small>
+    </h3>
+  </div>
+  <div id="event-list-route-{{suffix}}" class="list-group collapse {{if expanded 'in'}}" aria-expanded="{{expanded}}">
+    {{#each-in data as |key value|}}
+      {{#if filterTime}}
+        {{event-list-item-route suffix=suffix data=value key=key}}
+      {{/if}}
+      {{#if filterType}}
+        <div class="list-group-item list-group-item-info unselectable pointer" data-toggle="collapse" data-target="#events-route-type-{{key}}-{{suffix}}" aria-expaneded="false">
+          {{value.name}} <span class="glyphicon glyphicon-menu-down" />
+        </div>
+        <div id="events-route-type-{{key}}-{{suffix}}" class="collapse" aria-expanded="false">
+          {{#each-in value.events as |key value|}}
+            {{event-list-item-route suffix=suffix data=value key=key}}
+          {{/each-in}}
+        </div>
+      {{/if}}
+    {{/each-in}}
+  </div>
+  <div class="panel-footer"><p></p></div>
+</div>

@@ -1,5 +1,5 @@
 /* Routes */
-
+@import 'officers.css';
 
 /* Components */
 @import 'navbar.css';
@@ -66,4 +66,15 @@ body {
   
   background-color: #aaa;
 }
+  
+.events-list {
+  overflow-y: scroll;
+  
+  position: relative;
+  
+  width: 100%;
+}
 
+.announcements-container {
+  margin: 1%;
+}

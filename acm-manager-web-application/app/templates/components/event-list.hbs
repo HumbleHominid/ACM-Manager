@@ -1,0 +1,20 @@
+<div class="list-group-item active unselectable pointer" data-toggle="collapse" data-target="#events-{{suffix}}" aria-expaneded="{{expanded}}">
+  {{title}} <span class="glyphicon glyphicon-menu-down" />
+</div>
+<div id="events-{{suffix}}" class="collapse {{if expanded 'in'}}" aria-expanded="{{expanded}}">
+  {{#each-in data as |key value|}}
+    {{#if filterTime}}
+      {{event-list-item suffix=suffix data=value}}
+    {{/if}}
+    {{#if filterType}}
+      <div class="list-group-item list-group-item-info unselectable pointer" data-toggle="collapse" data-target="#upcoming-events-type-{{key}}-{{suffix}}" aria-expaneded="false">
+        {{value.name}} <span class="glyphicon glyphicon-menu-down" />
+      </div>
+      <div id="upcoming-events-type-{{key}}-{{suffix}}" class="collapse" aria-expanded="false">
+        {{#each-in value.events as |key value|}}
+          {{event-list-item suffix=suffix data=value}}
+        {{/each-in}}
+      </div>
+    {{/if}}
+  {{/each-in}}
+</div>

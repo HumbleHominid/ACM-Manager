@@ -1,0 +1,26 @@
+{
+  "president": {
+    "bio": "",
+    "src": "president.jpg",
+    "alt": "President",
+    "style": "rounded"
+  },
+  "vicePresident": {
+    "bio": "",
+    "src": "vicePresident.jpg",
+    "alt": "Vice President",
+    "style": "rounded"
+  },
+  "secretary": {
+    "bio": "",
+    "src": "secretary.jpg",
+    "alt": "Secretary",
+    "style": "circle"
+  },
+  "treasurer": {
+    "bio": "",
+    "src": "treasurer.jpg",
+    "alt": "Treasurer",
+    "style": "rounded"
+  }
+}

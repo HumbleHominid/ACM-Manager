@@ -1,9 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: [ "list-group-item"],
+  classNameBindings: [ "list:list-group-item"],
   date: "",
   time: "",
+  list: true,
+  horizontal: false,
+  collapsable: true,
+  suffix: "",
   
   init() {
     this._super(...arguments);
@@ -11,7 +15,7 @@ export default Ember.Component.extend({
     let eventTime = this.get('data.eventTime');
 
     if (eventTime) {
-      let dateTime = new Date(this.get('data.eventTime'));
+      let dateTime = new Date(eventTime.replace(' ', 'T'));
       
       this.set('date', dateTime.toDateString());
       this.set('time', dateTime.toTimeString().split(" ")[0]);

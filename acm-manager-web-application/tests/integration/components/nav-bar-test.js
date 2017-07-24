@@ -12,6 +12,6 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{nav-bar}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Toggle Navigation Home Events Officers Log In Create Account Contact Us × Log In Email Password Remember Me Submit Reset Create Account Close × Create Account First Name Last Name Email Confirm Email Password Confirm Password Submit Reset Close × Contact Us First Name Last Name Your Email Your Message Send Reset Close');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Toggle Navigation Home Events Officers Source Log In Create Account Contact Us × Log In Email Password One lowercase, one uppercase, one number, one special character (!@#$), and 8 character minimum Remember Me Submit Reset Create Account Close × Create Account First Name Last Name Email Confirm Email Password One lowercase, one uppercase, one number, one special character (!@#$), and 8 character minimum Confirm Password One lowercase, one uppercase, one number, one special character (!@#$), and 8 character minimum Submit Reset Close × Contact Us First Name Last Name Your Email Your Message Send Reset Close');
 });
 
