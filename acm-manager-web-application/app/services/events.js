@@ -7,6 +7,7 @@ export default Ember.Service.extend({
   metadata: service(),
   
   data: null,
+  requestTime: null,
   
   past: Ember.computed('data', function() {
     let data = this.get('data');
@@ -125,7 +126,10 @@ export default Ember.Service.extend({
   init() {
     this._super(...arguments);
     
-    this.set('data', null);
+    this.setProperties({
+      data: null,
+      requestTime: null
+    });
   },
   load() {
     let session = this.get('session');
