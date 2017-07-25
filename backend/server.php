@@ -55,6 +55,9 @@ class Server{
     case 'metadata':
       $this->metadata();
       break;
+    case 'announcements':
+      echo "{'reason': 'NYI'}";
+      break;
     default:
       echo $object;
       header('HTTP/1.1 400 Bad Request');
