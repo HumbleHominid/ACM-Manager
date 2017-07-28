@@ -17,7 +17,6 @@ module.exports = function(environment) {
         Date: false
       }
     },
-
     APP: {
       endPoint: ""
     }
