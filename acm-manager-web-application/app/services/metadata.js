@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
+  notify: Ember.inject.service(),
+  
   _endPoint: null,
   
   init() {
@@ -27,7 +29,10 @@ export default Ember.Service.extend({
       }).done(function(data) {
         return data;
       }).fail(function(/* jqXHW, textStatus, err */) {
-        //fail
+        service.get('notify').alert(`Failed to fetch metadata for ${tableName}.`, {
+          radius: true,
+          closeAfter: 3000
+        });
       });
     }) (this);
   },

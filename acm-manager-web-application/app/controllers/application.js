@@ -8,6 +8,7 @@ export default Ember.Controller.extend({
   currentUser: service(),
   events: service(),
   metadata: service(),
+  announcements: service(),
   
   loginWithToken: function(jwt) {
     (function(controller) {
@@ -55,6 +56,7 @@ export default Ember.Controller.extend({
         this.invalidSessionMessage();
       }).finally(() => {
         this.get('events').load();
+        this.get('announcements').load();
       });
     }
   },

@@ -5,6 +5,7 @@
 @import 'navbar.css';
 @import 'events-sidebar.css';
 @import 'jumbotron.css';
+@import 'announcements-bar.css';
 
 .form-margin {
   margin: -webkit-calc(5px + 1%);
