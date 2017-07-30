@@ -6,7 +6,11 @@ export default Ember.Service.extend({
   init() {
     this._super(...arguments);
     
-    this.set('_endPoint', Ember.$(window)["0"].AcmManagerWebApplication.endPoint);
+    let domWindow = Ember.$(window);
+    
+    if (domWindow["0"].AcmManagerWebApplication) {
+      this.set('_endPoint', domWindow["0"].AcmManagerWebApplication.endPoint);
+    }
   },
   getMetadata(tableName) {
     return (function(service) {
