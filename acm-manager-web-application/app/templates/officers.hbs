@@ -12,7 +12,7 @@
               <img src="./assets/{{value.settings.src}}" alt={{value.settings.alt}} class="img-{{value.settings.style}} officer-image" onerror="this.src='./assets/user.png'">
             </div>
             <div class="media-body">
-              <h4 class="media-heading">{{value.fName}} {{value.lName}}, <em>{{value.user_type.name}}</em></h4>
+              <h4 class="media-heading">{{concat value.fName " " value.lName}}, <em>{{value.user_type.name}}</em></h4>
               <a href="mailto:{{value.email}}">{{value.email}}</a>
             </div>
           </div>

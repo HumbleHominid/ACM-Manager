@@ -1,58 +1,58 @@
 import Ember from 'ember';
 
+const { inject: { service } } = Ember;
+
 export default Ember.Service.extend({
-  metadata: Ember.inject.service(),
+  metadata: service(),
+  notify: service(),
   
-  data: null,
-  requestTime: null,
+  _data: null,
+  _requestTime: null,
   
   init() {
     this._super(...arguments);
     
     this.setProperties({
-      data: null,
-      requestTime: null
+      _data: null,
+      _requestTime: null
     });
   },
-  president: Ember.computed('data', function() {
-    let data = this.get('data');
+  president: Ember.computed('_data', function() {
+    let data = this.get('_data');
     
-    if (data) {
-      return data.president;
-    }
+    return data ? data.president : null;
   }),
-  vicePresident: Ember.computed('data', function() {
-    let data = this.get('data');
+  vicePresident: Ember.computed('_data', function() {
+    let data = this.get('_data');
     
-    if (data) {
-      return data.vicePresident;
-    }
+    return data ? data.vicePresident : null;
   }),
-  secretary: Ember.computed('data', function() {
-    let data = this.get('data');
+  secretary: Ember.computed('_data', function() {
+    let data = this.get('_data');
     
-    if (data) {
-      return data.secretary;
-    }
+    return data ? data.secretary : null;
   }),
-  treasurer: Ember.computed('data', function() {
-    let data = this.get('data');
+  treasurer: Ember.computed('_data', function() {
+    let data = this.get('_data');
     
-    if (data) {
-      return data.treasurer;
-    }
+    return data ? data.treasurer : data;
+  }),
+  data: Ember.computed('_data', function() {
+    let data = this.get('_data');
+    
+    return data ? data : null;
   }),
   load() {
     this.get('metadata').getMetadata('Officers').then((data) => {
       let metadata = data.metadata;
       let metadataTime = (metadata ? new Date(metadata.updateTime.replace(' ', 'T')) : null);
       
-      if (Ember.compare(metadataTime, this.get('requestTime')) >= 0) {
-        this.fetchOfficers();
+      if (Ember.compare(metadataTime, this.get('_requestTime')) >= 0) {
+        this._fetchOfficers();
       }
     });
   },
-  fetchOfficers() {
+  _fetchOfficers() {
     (function(service) {
       Ember.$.ajax({
         type: 'POST',
@@ -69,18 +69,18 @@ export default Ember.Service.extend({
             }
           });
           
-          service.set('data', data);
-          service.set('requestTime', new Date());
+          service.set('_data', data);
+          service.set('_requestTime', new Date());
         });
       }).fail(function() {
-        //fail
+        service.get('notify').alert("Failed to pull officer information.", {
+          radius: true,
+          closeAfter: 3000
+        });
       });
     }) (this);
   },
-  read() {
-    return this.get('data');
-  },
   clear() {
-    this.set('data', null);
+    this.set('_data', null);
   }
 });
