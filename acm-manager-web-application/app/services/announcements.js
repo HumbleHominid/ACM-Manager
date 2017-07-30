@@ -14,18 +14,18 @@ export default Ember.Service.extend({
     this.clear();
   },
   load() {
-    // this.set('_data',{
-    //   currentAnnos: [
-    //     {
-    //       message: "current"
-    //     }
-    //   ],
-    //   autoAnnos: [
-    //     {
-    //       message:  "auto"
-    //     }
-    //   ]
-    // });
+    this.set('_data',{
+      currentAnnos: [
+        {
+          message: "current"
+        }
+      ],
+      autoAnnos: [
+        {
+          message:  "auto"
+        }
+      ]
+    });
     
     this.get('metadata').getMetadata('Announcements').then((data) => {
       let metadata = data.metadata;

@@ -4,9 +4,9 @@
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <strong>New Announcements</strong> <small>Click to expand</small> <span class="badge">{{announcements.count}}</span>
+      <strong>New Announcements</strong> <small>Click to expand/collapse</small> <span class="badge">{{announcements.count}}</span>
     </div>
-    <dl class="dl-horizontal announcement-list-container collapse" aria-expanded="false">
+    <dl class="dl-horizontal announcement-list-container collapse {{if (is-one announcements.count) "in"}}" aria-expanded={{if (is-one announcements.count) "true" "false"}}>
       {{#each-in announcements.data.currentAnnos as |key value|}}
         <dt>Important</dt>
         <dd>{{value.message}}</dd>
