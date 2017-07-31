@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ["form-group"],
-  classNameBindings: ["hasFeedback:has-feedback"],
+  classNames: [ "form-group" ],
+  classNameBindings: [ "hasFeedback:has-feedback" ],
   idPrefix: "generic",
   placeholder: "",
   value: "",
@@ -11,6 +11,11 @@ export default Ember.Component.extend({
   pattern: ".+",
   formName: "",
   hasFeedback: true,
+  label: "",
+  type: "text",
+  min: null,
+  max: null,
+  step: 1,
   
   makeValid: function(div, span) {
     "use strict";

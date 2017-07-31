@@ -1,1 +1,17 @@
-{{yield}}
+<label for="{{idPrefix}}-{{formName}}" class="control-label">{{label}}</label>
+{{input
+  type=type
+  class="form-control"
+  id=(concat idPrefix "-" formName)
+  placeholder=placeholder
+  value=value
+  required=(if required "required" "")
+  pattern=pattern
+  min=min
+  max=max
+  step=step
+}}
+{{#if hasFeedback}}
+  <span id="{{idPrefix}}-{{formName}}_span" class="glyphicon form-control-feedback" aria-hidden="true" />
+{{/if}}
+<span class="help-block">{{help}}</span>

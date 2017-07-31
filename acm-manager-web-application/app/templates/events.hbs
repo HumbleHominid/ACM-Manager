@@ -2,33 +2,40 @@
   <h1>Events</h1>
 </div>
 <form class="form-inline" oninput={{action 'search'}}>
-  <p class="form-control-static">Filter View:</p>
-  <div class="btn-group" role="group" aria-label="">
-    <button disabled={{if filterTime "disabled" ""}} type="button" class="btn btn-default" {{action 'filterTime'}}>Time</button>
-    <button disabled={{if filterType "disabled" ""}} type="button" class="btn btn-default" {{action 'filterType'}}>Type</button>
+  <div class="form-group">
+    <p class="form-control-static">Filter View:</p>
+    <div class="btn-group" role="group" aria-label="">
+      <button disabled={{if filterTime "disabled" ""}} type="button" class="btn btn-default" {{action 'filterTime'}}>Time</button>
+      <button disabled={{if filterType "disabled" ""}} type="button" class="btn btn-default" {{action 'filterType'}}>Type</button>
+    </div>
   </div>
-  {{input id="events-searchbar" placeholder="Search" class="form-control"}}
+  <div class="form-group">
+    {{input id="events-searchbar" placeholder="Search" class="form-control"}}
+  </div>
+  <div class="form-group">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-modal">Add Event</button>
+  </div>
 </form>
 <br><br>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  {{#if events.data}}
-    {{event-list-route
-      filterType=filterType
-      filterTime=filterTime
-      suffix="past"
-      title="Past"
-      data=eventData.past
-    }}
-    
-    {{event-list-route
-      filterType=filterType
-      filterTime=filterTime
-      suffix="future"
-      title="Future"
-      data=eventData.future
-      expanded=true
-    }}
-  {{/if}}
+  {{event-list-route
+    filterType=filterType
+    filterTime=filterTime
+    suffix="past"
+    title="Past"
+    data=eventData.past
+  }}
+  
+  {{event-list-route
+    filterType=filterType
+    filterTime=filterTime
+    suffix="future"
+    title="Future"
+    data=eventData.future
+    expanded=true
+  }}
 </div>
+
+{{create-event-modal}}
 
 {{outlet}}
