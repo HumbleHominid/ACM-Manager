@@ -4,6 +4,8 @@ import GenericModal from './generic-modal';
 export default GenericModal.extend({  
   actions: {
     createAccount() {
+      "use strict";
+      
       let obj = { data: { } };
 
       obj.task = "CREATE_ACCOUNT";

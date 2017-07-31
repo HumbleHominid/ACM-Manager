@@ -11,21 +11,25 @@ export default Ember.Service.extend({
   _requestTime: null,
   
   init() {
+    "use strict";
+    
     this.clear();
   },
   load() {
-    this.set('_data',{
-      currentAnnos: [
-        {
-          message: "current"
-        }
-      ],
-      autoAnnos: [
-        {
-          message:  "auto"
-        }
-      ]
-    });
+    "use strict";
+    
+    // this.set('_data',{
+    //   currentAnnos: [
+    //     {
+    //       message: "current"
+    //     }
+    //   ],
+    //   autoAnnos: [
+    //     {
+    //       message:  "auto"
+    //     }
+    //   ]
+    // });
     
     this.get('metadata').getMetadata('Announcements').then((data) => {
       let metadata = data.metadata;
@@ -37,6 +41,8 @@ export default Ember.Service.extend({
     });
   },
   _fetchAnnouncements() {
+    "use strict";
+    
     let session = this.get('session');
     let jwt = (session.get('data.authenticated') ? session.get('data.authenticated.user.jwt') : null);
     
@@ -60,16 +66,22 @@ export default Ember.Service.extend({
     }) (this);
   },
   data: Ember.computed('_data', function() {
+    "use strict";
+    
     let data = this.get('_data');
     
     return data ? data : null;
   }),
   count: Ember.computed('_data', function() {
+    "use strict";
+    
     let data = this.get('_data');
 
     return data ? data.autoAnnos.length + data.currentAnnos.length : 0;
   }),
   clear() {
+    "use strict";
+    
     this.setProperties({
       _data: null,
       _requestTime: null

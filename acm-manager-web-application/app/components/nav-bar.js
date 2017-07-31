@@ -8,6 +8,8 @@ export default Ember.Component.extend({
   smallScreen: false,
   
   didRender() {
+    "use strict";
+    
     this.set('smallScreen', parseInt(Ember.$(window).width()) < 1225);
   }
 });

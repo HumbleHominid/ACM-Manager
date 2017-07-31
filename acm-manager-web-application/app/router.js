@@ -7,6 +7,8 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  "use strict";
+  
   this.route('home');
   this.route('account', { qureyParams: [ "user_id" ] });
   this.route('events');

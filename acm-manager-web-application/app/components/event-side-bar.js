@@ -9,6 +9,8 @@ export default Ember.Component.extend({
   filterType: false,
 
   didRender() {
+    "use strict";
+    
     let el = this.$(".upcoming-events-localized");
     let windowWidth = parseInt(Ember.$(window).width());
     let windowHeight = parseInt(Ember.$(window).height());
@@ -21,12 +23,16 @@ export default Ember.Component.extend({
   },
   actions: {
     filterTime() {
+      "use strict";
+      
       this.setProperties({
         filterTime: true,
         filterType: false
       });
     },
     filterType() {
+      "use strict";
+      
       this.setProperties({
         filterTime: false,
         filterType: true

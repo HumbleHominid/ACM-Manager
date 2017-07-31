@@ -8,6 +8,8 @@ export default OAuth2PasswordGrantAuthenticator.extend({
   metadata: service(),
 
   restore: function(data) {
+    "use strict";
+    
     return new Ember.RSVP.Promise(function(resolve, reject) {
       if (!Ember.isEmpty(data.token)) {
         resolve(data);
@@ -18,6 +20,8 @@ export default OAuth2PasswordGrantAuthenticator.extend({
     });
   },
   authenticate: function(options) {
+    "use strict";
+
     return new Ember.RSVP.Promise((resolve, reject) => {
       Ember.$.ajax({
         type: 'POST',
@@ -46,6 +50,8 @@ export default OAuth2PasswordGrantAuthenticator.extend({
     });
   },
   invalidate(/* data */) {
+    "use strict";
+
     return Ember.RSVP.resolve();
   }
 });

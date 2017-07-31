@@ -7,6 +7,8 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   events: service(),
   
   activate() {
+    "use strict";
+    
     this.get('events').load();
   }
 });

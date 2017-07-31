@@ -10,6 +10,8 @@ export default Ember.Component.extend({
   suffix: "",
   
   init() {
+    "use strict";
+    
     this._super(...arguments);
     
     let eventTime = this.get('data.eventTime');

@@ -7,6 +7,8 @@ export default Ember.Route.extend({
   events: service(),
   
   activate() {
+    "use strict";
+    
     this.get('officers').load();
     this.get('events').load();
   }

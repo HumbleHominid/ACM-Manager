@@ -11,6 +11,8 @@ export default Ember.Controller.extend({
   announcements: service(),
   
   loginWithToken: function(jwt) {
+    "use strict";
+    
     (function(controller) {
       controller.get('session').authenticate('authenticator:auth', {
         task: "UPDATE_TOKEN",
@@ -25,24 +27,32 @@ export default Ember.Controller.extend({
     }) (this);
   },
   welcomeBackMessage: function() {
+    "use strict";
+    
     this.get('notify').success("Welcome back " + this.get('currentUser.name') + "!", {
       closeAfter: 3000,
       radius: true
     });
   },
   byeMessage: function() {
+    "use strict";
+    
     this.get('notify').warning("Bye!", {
       closeAfter: 3000,
       radius: true
     });
   },
   invalidSessionMessage: function() {
+    "use strict";
+    
     this.get('notify').warning("Session has been invalidated. Please log in again.", {
       closeAfter: 3000,
       radius: true
     });
   },
   init() {
+    "use strict";
+    
     this._super(...arguments);
     
     if (this.get('session.store')) {
@@ -62,24 +72,28 @@ export default Ember.Controller.extend({
   },
   actions: {
     login() {
+      "use strict";
+      
       let user = this.get('session.data.authenticated.user');
       
       this.get('session.store').persist(user);
-      
       this.get('currentUser').load(user);
-
       this.get('events').load();
+      
       this.welcomeBackMessage();
     },
     logout() {
+      "use strict";
+      
       this.get('session.store').clear();
-      
       this.get('currentUser').clear();
-      
       this.get('events').load();
+      
       this.byeMessage();
     },
     invalidateSession: function() {
+      "use strict";
+      
       this.get('session').invalidate();
     }
   }

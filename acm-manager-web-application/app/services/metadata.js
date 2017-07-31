@@ -6,6 +6,8 @@ export default Ember.Service.extend({
   _endPoint: null,
   
   init() {
+    "use strict";
+    
     this._super(...arguments);
     
     let domWindow = Ember.$(window);
@@ -15,6 +17,8 @@ export default Ember.Service.extend({
     }
   },
   getMetadata(tableName) {
+    "use strict";
+    
     return (function(service) {
       return Ember.$.ajax({
         type: 'POST',
@@ -37,6 +41,8 @@ export default Ember.Service.extend({
     }) (this);
   },
   endPoint: Ember.computed('_endPoint', function() {
+    "use strict";
+    
     return this.get('_endPoint');
   })
 });

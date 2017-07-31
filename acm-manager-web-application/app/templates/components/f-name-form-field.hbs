@@ -1,5 +1,5 @@
 <label for="{{idPrefix}}-{{formName}}" class="control-label">First Name</label>
-{{input class="form-control" id=(string-append idPrefix "-" formName) placeholder="John" value=value required=(if required "required" "") pattern=pattern}}
+{{input class="form-control" id=(concat idPrefix "-" formName) placeholder="John" value=value required=(if required "required" "") pattern=pattern}}
 {{#if hasFeedback}}
   <span id="{{idPrefix}}-{{formName}}_span" class="glyphicon form-control-feedback" aria-hidden="true" />
 {{/if}}

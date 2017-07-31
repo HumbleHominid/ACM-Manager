@@ -10,6 +10,8 @@ export default Ember.Service.extend({
   _requestTime: null,
   
   init() {
+    "use strict";
+    
     this._super(...arguments);
     
     this.setProperties({
@@ -18,31 +20,43 @@ export default Ember.Service.extend({
     });
   },
   president: Ember.computed('_data', function() {
+    "use strict";
+    
     let data = this.get('_data');
     
     return data ? data.president : null;
   }),
   vicePresident: Ember.computed('_data', function() {
+    "use strict";
+    
     let data = this.get('_data');
     
     return data ? data.vicePresident : null;
   }),
   secretary: Ember.computed('_data', function() {
+    "use strict";
+    
     let data = this.get('_data');
     
     return data ? data.secretary : null;
   }),
   treasurer: Ember.computed('_data', function() {
+    "use strict";
+    
     let data = this.get('_data');
     
     return data ? data.treasurer : data;
   }),
   data: Ember.computed('_data', function() {
+    "use strict";
+    
     let data = this.get('_data');
     
     return data ? data : null;
   }),
   load() {
+    "use strict";
+    
     this.get('metadata').getMetadata('Officers').then((data) => {
       let metadata = data.metadata;
       let metadataTime = (metadata ? new Date(metadata.updateTime.replace(' ', 'T')) : null);
@@ -53,6 +67,8 @@ export default Ember.Service.extend({
     });
   },
   _fetchOfficers() {
+    "use strict";
+    
     (function(service) {
       Ember.$.ajax({
         type: 'POST',
@@ -81,6 +97,8 @@ export default Ember.Service.extend({
     }) (this);
   },
   clear() {
+    "use strict";
+    
     this.set('_data', null);
   }
 });

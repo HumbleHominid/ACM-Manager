@@ -10,16 +10,22 @@ export default Ember.Service.extend({
   _requestTime: null,
   
   data: Ember.computed('_data', function() {
+    "use strict";
+    
     let data = this.get('_data');
     
     return data ? data : null;
   }),
   past: Ember.computed('_data', function() {
+    "use strict";
+    
     let data = this.get('_data');
     
     return (data ? data.eventData.past : null);
   }),
   pastTyped: Ember.computed('_data', function() {
+    "use strict";
+    
     let past = { };
     
     this.get('_data.eventData.past').forEach(function(event) {
@@ -38,11 +44,15 @@ export default Ember.Service.extend({
     return past;
   }),
   future: Ember.computed('_data', function() {
+    "use strict";
+    
     let data = this.get('_data');
     
     return (data ? data.eventData.future : null);
   }),
   futureTyped: Ember.computed('_data', function() {
+    "use strict";
+    
     let future = { };
     
     this.get('_data.eventData.future').forEach(function(event) {
@@ -61,6 +71,8 @@ export default Ember.Service.extend({
     return future;
   }),
   search(query) {
+    "use strict";
+    
     let data = this.get('_data');
     
     if (data) {
@@ -86,6 +98,8 @@ export default Ember.Service.extend({
     }
   },
   searchTyped(query) {
+    "use strict";
+    
     let data = this.get('_data');
     
     if (data) {
@@ -129,11 +143,15 @@ export default Ember.Service.extend({
     }
   },
   init() {
+    "use strict";
+    
     this._super(...arguments);
     
     this.clear();
   },
   load() {
+    "use strict";
+    
     this.get('metadata').getMetadata('Events').then((data) => {
       let metadata = data.metadata;
       let metadataTime = (metadata ? new Date(metadata.updateTime.replace(' ', 'T')) : null);
@@ -144,6 +162,8 @@ export default Ember.Service.extend({
     });
   },
   _fetchEvents() {
+    "use strict";
+    
     let session = this.get('session');
     let jwt = (session.get('data.authenticated') ? session.get('data.authenticated.user.jwt') : null);
     
@@ -166,12 +186,16 @@ export default Ember.Service.extend({
     }) (this);
   },
   clear() {
+    "use strict";
+    
     this.setProperties({
       _data: null,
       _requestTime: null
     });
   },
   read() {
+    "use strict";
+    
     return this.get('_data');
   }
 });

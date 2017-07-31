@@ -8,6 +8,8 @@ export default GenericModal.extend({
 
   actions: {
     authenticate() {
+      "use strict";
+      
       let rememberMe = this.$('#log-in-checkbox')[0].checked;
       
       (function(component) {

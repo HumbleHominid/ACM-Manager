@@ -1,5 +1,5 @@
 <label for="{{idPrefix}}-{{formName}}" class="control-label">{{placeholder}}</label>
-{{textarea class="form-control resize-vertical" id=(string-append idPrefix "-" formName) placeholder=placeholder value=value required=(if required "required" "") pattern=pattern}}
+{{textarea class="form-control resize-vertical" id=(concat idPrefix "-" formName) placeholder=placeholder value=value required=(if required "required" "") pattern=pattern}}
 {{#if hasFeedback}}
   <span id="{{idPrefix}}-{{formName}}_span" class="glyphicon form-control-feedback" aria-hidden="true" />
 {{/if}}

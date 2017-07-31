@@ -4,7 +4,12 @@ import { module, test } from 'qunit';
 
 module('Unit | Helper | is one');
 
-// Replace this with your real tests.
+//number tests
+test('zero', function(assert) {
+  let result = isOne([0]);
+  assert.ok(!result);
+});
+
 test('one', function(assert) {
   let result = isOne([1]);
   assert.ok(result);
@@ -12,9 +17,10 @@ test('one', function(assert) {
 
 test('two', function(assert) {
   let result = isOne([2]);
-  assert.ok(result);
+  assert.ok(!result);
 });
 
+//array tests
 test('empty array', function(assert) {
   let result = isOne([[]]);
   assert.ok(!result);

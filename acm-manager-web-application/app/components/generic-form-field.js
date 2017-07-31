@@ -13,19 +13,27 @@ export default Ember.Component.extend({
   hasFeedback: true,
   
   makeValid: function(div, span) {
+    "use strict";
+    
     div.removeClass("has-warning has-error").addClass("has-success");
     span.removeClass("glyphicon-warning-sign glyphicon-remove").addClass("glyphicon-ok");
   },
   makeWarning: function(div, span) {
+    "use strict";
+    
     div.removeClass("has-error has-success").addClass("has-warning");
     span.removeClass("glyphicon-remove glyphicon-ok").addClass("glyphicon-warning-sign");
   },
   makeError: function(div, span) {
+    "use strict";
+    
     div.removeClass("has-warning has-success").addClass("has-error");
     span.removeClass("glyphicon-warning-sign glyphicon-ok").addClass("glyphicon-remove");
   },
   
   didRender() {
+    "use strict";
+    
     if (!this.get('hasFeedback')) {
       return;
     }

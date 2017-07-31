@@ -10,6 +10,8 @@ export default Ember.Controller.extend({
   filterSearch: false,
   
   eventData: Ember.computed('filterTime', 'filterType', 'filterSearch', 'events.data', function() {
+    "use strict";
+    
     if (this.get('filterSearch')) {
       let query = Ember.$('#events-searchbar')[0].value;
       
@@ -38,18 +40,24 @@ export default Ember.Controller.extend({
   }),
   actions: {
     filterTime() {
+      "use strict";
+      
       this.setProperties({
         filterTime: true,
         filterType: false
       });
     },
     filterType() {
+      "use strict";
+      
       this.setProperties({
         filterTime: false,
         filterType: true
       });
     },
     search() {
+      "use strict";
+      
       let query = Ember.$('#events-searchbar')[0].value;
       
       if (query.length > 2) {
