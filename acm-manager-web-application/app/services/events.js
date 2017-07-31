@@ -27,19 +27,22 @@ export default Ember.Service.extend({
     "use strict";
     
     let past = { };
+    let pastEvents = this.get('_data.eventData.past');
     
-    this.get('_data.eventData.past').forEach(function(event) {
-      let eventTypeId = event.eventType.event_type_id;
-      
-      if (!(eventTypeId in past)) {
-        past[eventTypeId] = {
-          name: event.eventType.name,
-          events: [ ]
-        };
-      }//if
-      
-      past[eventTypeId].events.push(event);
-    });
+    if (Ember.isPresent(pastEvents)) {
+      pastEvents.forEach(function(event) {
+        let eventTypeId = event.eventType.event_type_id;
+        
+        if (!(eventTypeId in past)) {
+          past[eventTypeId] = {
+            name: event.eventType.name,
+            events: [ ]
+          };
+        }//if
+        
+        past[eventTypeId].events.push(event);
+      });
+    }
     
     return past;
   }),
@@ -54,19 +57,22 @@ export default Ember.Service.extend({
     "use strict";
     
     let future = { };
+    let futureEvents = this.get('_data.eventData.future');
     
-    this.get('_data.eventData.future').forEach(function(event) {
-      let eventTypeId = event.eventType.event_type_id;
-      
-      if (!(eventTypeId in future)) {
-        future[eventTypeId] = {
-          name: event.eventType.name,
-          events: [ ]
-        };
-      }//if
-      
-      future[eventTypeId].events.push(event);
-    });
+    if (Ember.isPresent(futureEvents)) {
+      futureEvents.forEach(function(event) {
+        let eventTypeId = event.eventType.event_type_id;
+        
+        if (!(eventTypeId in future)) {
+          future[eventTypeId] = {
+            name: event.eventType.name,
+            events: [ ]
+          };
+        }//if
+        
+        future[eventTypeId].events.push(event);
+      });
+    }
     
     return future;
   }),
