@@ -1,11 +1,9 @@
 {{#if announcements.data}}
   <div class="alert alert-info alert-dismissible fade in" role="alert">
-    <div data-toggle="collapse" data-target=".announcement-list-container">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <h4 class="unselectable pointer"><strong>New Announcements</strong> <small>Click to expand/collapse</small> <span class="badge">{{announcements.count}}</span></h4>
-    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="unselectable pointer" data-toggle="collapse" data-target=".announcement-list-container"><strong>New Announcements</strong> <small>Click to expand/collapse</small> <span class="badge">{{announcements.count}}</span></h4>
     <dl class="dl-horizontal announcement-list-container collapse {{if (is-one announcements.count) "in"}}" aria-expanded={{if (is-one announcements.count) "true" "false"}}>
       {{#each-in announcements.data.currentAnnos as |key value|}}
         <dt>Important</dt>
