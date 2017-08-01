@@ -177,7 +177,7 @@ export default Ember.Service.extend({
       Ember.$.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: service.get('metadata.endPoint') + 'events',
+        url: `${service.get('metadata.endPoint')}events`,
         data: JSON.stringify({
           task: "GET_LIST",
           token: jwt

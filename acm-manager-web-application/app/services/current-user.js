@@ -15,7 +15,7 @@ export default Ember.Service.extend({
     
     let user = this.get('_data');
     
-    return (user ? user.fName + " " + user.lName : "");
+    return (user ? `${user.fName} ${user.lName}` : "");
   }),
   token: Ember.computed('_data', function() {
     "use strict";

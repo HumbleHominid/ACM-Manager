@@ -29,7 +29,7 @@ export default Ember.Controller.extend({
   welcomeBackMessage: function() {
     "use strict";
     
-    this.get('notify').success("Welcome back " + this.get('currentUser.name') + "!", {
+    this.get('notify').success(`Welcome back ${this.get('currentUser.name')}!`, {
       closeAfter: 3000,
       radius: true
     });

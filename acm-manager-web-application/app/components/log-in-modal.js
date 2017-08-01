@@ -25,7 +25,7 @@ export default Ember.Component.extend({
             component.set('session.store.cookieExpirationTime', cookieTimeout);
           }
           
-          component.get('loginCallback') (rememberMe);
+          component.get('loginCallback') ();
           
           component.$('#log-in-form')[0].reset();
           

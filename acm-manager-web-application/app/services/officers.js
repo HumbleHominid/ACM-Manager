@@ -73,7 +73,7 @@ export default Ember.Service.extend({
       Ember.$.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: service.get('metadata.endPoint') + 'officers',
+        url: `${service.get('metadata.endPoint')}officers`,
         data: JSON.stringify({
           task: "GET_OFFICERS"
         })

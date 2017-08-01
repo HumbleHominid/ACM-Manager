@@ -26,7 +26,7 @@ export default OAuth2PasswordGrantAuthenticator.extend({
       Ember.$.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: this.get('metadata.endPoint') + 'login',
+        url: `${this.get('metadata.endPoint')}login`,
         data: JSON.stringify({
           task: options.task,
           token: options.jwt,
@@ -37,9 +37,15 @@ export default OAuth2PasswordGrantAuthenticator.extend({
           }
         })
       }).done((response) => {
-        Ember.run(() => {
-          resolve({ user: response.user });
-        });
+        if (response.user) {
+          
+          Ember.run(() => {
+            resolve({ user: response.user });
+          });
+        }
+        else {
+          reject();
+        }
       }).fail((xhr/* , status, error */) => {
         var response = xhr.responseText;
 
@@ -49,9 +55,9 @@ export default OAuth2PasswordGrantAuthenticator.extend({
       });
     });
   },
-  invalidate(/* data */) {
+  invalidate: function(/* data */) {
     "use strict";
-
+    
     return Ember.RSVP.resolve();
   }
 });
