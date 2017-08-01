@@ -1,21 +1,9 @@
 import Ember from 'ember';
+import FormOptions from '../mixins/form-options';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(FormOptions, {
   classNames: [ "form-group" ],
   classNameBindings: [ "hasFeedback:has-feedback" ],
-  idPrefix: "generic",
-  placeholder: "",
-  value: "",
-  required: true,
-  help: "",
-  pattern: ".+",
-  formName: "",
-  hasFeedback: true,
-  label: "",
-  type: "text",
-  min: null,
-  max: null,
-  step: 1,
   
   makeValid: function(div, span) {
     "use strict";

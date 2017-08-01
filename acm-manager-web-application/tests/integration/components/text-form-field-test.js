@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('generic-modal', 'Integration | Component | generic modal', {
+moduleForComponent('text-form-field', 'Integration | Component | text form field', {
   integration: true
 });
 
@@ -10,15 +10,15 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{generic-modal}}`);
+  this.render(hbs`{{text-form-field}}`);
 
   assert.equal(this.$().text().trim(), '');
 
   // Template block usage:
   this.render(hbs`
-    {{#generic-modal}}
+    {{#text-form-field}}
       template block text
-    {{/generic-modal}}
+    {{/text-form-field}}
   `);
 
   assert.equal(this.$().text().trim(), 'template block text');

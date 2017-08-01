@@ -7,14 +7,40 @@
       </div>
     
       <form id="create-account-form" class="form-margin" onsubmit={{action 'createAccount'}}>
-        {{f-name-form-field idPrefix="create-account"}}
-        {{l-name-form-field idPrefix="create-account"}}
+        {{text-form-field
+          required=false
+          idPrefix="create-account"
+          label="First Name"
+          formName="first"
+          placeholder="John"
+        }}
+        {{text-form-field
+          required=false
+          idPrefix="create-account"
+          label="Last Name"
+          formName="last"
+          placeholder="Doe"
+        }}
 
-        {{email-form-field idPrefix="create-account"}}
-        {{email-form-field idPrefix="create-account-confirm" placeholder="Confirm Email"}}
-
-        {{password-form-field idPrefix="create-account"}}
-        {{password-form-field idPrefix="create-account-confirm" placeholder="Confirm Password"}}
+      
+        {{email-form-field
+          idPrefix="create-account"
+        }}      
+        {{email-form-field
+          idPrefix="create-account-confirm"
+          placeholder="Confirm Email"
+          label="Confirm Email"
+        }}
+        
+        {{password-form-field
+          idPrefix="create-account"
+        }}        
+        {{password-form-field
+          idPrefix="create-account-confirm"
+          placeholder="Confirm Password"
+          label="Confirm Password"
+          help=""
+        }}
 
         <div class="modal-footer">
           {{modal-buttons}}

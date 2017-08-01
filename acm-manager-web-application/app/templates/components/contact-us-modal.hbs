@@ -7,12 +7,31 @@
       </div>
     
       <form id="contact-us-form" class="form-margin">
-        {{f-name-form-field required=false idPrefix="contact-us"}}
-        {{l-name-form-field required=false idPrefix="contact-us"}}
+        {{text-form-field
+          required=false
+          idPrefix="contact-us"
+          label="First Name"
+          formName="first"
+          placeholder="John"
+        }}
+        {{text-form-field
+          required=false
+          idPrefix="contact-us"
+          label="Last Name"
+          formName="last"
+          placeholder="Doe"
+        }}
       
-        {{email-form-field idPrefix="contact-us" placeholder="Your Email" pattern="^.+@.+\..+$"}}
+        {{email-form-field
+          idPrefix="contact-us"
+          placeholder="Your email"
+          pattern="^.+@.+\..+$"
+        }}
         
-        {{textarea-form-field idPrefix="contact-us" placeholder="Your Message"}}
+        {{textarea-form-field
+          idPrefix="contact-us"
+          placeholder="Your Message"
+        }}
         
         <div class="modal-footer">
           {{modal-buttons submit="Send"}}

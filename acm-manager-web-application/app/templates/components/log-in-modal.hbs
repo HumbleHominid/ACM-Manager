@@ -7,12 +7,24 @@
       </div>
       
       <form id="log-in-form" class="form-margin" onsubmit={{action 'authenticate'}}>
-        {{email-form-field hasFeedback=false idPrefix="log-in"}}
+        {{email-form-field
+          hasFeedback=false
+          idPrefix="log-in"
+        }}
         
-        {{password-form-field hasFeedback=false idPrefix="log-in" pattern=".+"}}
+        {{password-form-field
+          hasFeedback=false
+          idPrefix="log-in"
+          pattern=".+"
+        }}
         
         <div class="form-group">
-          {{input type="checkbox" class="pointer" id="log-in-checkbox"}} Remember Me
+          {{input
+            type="checkbox"
+            class="pointer"
+            id="log-in-checkbox"
+          }}
+          Remember Me
         </div>
         
         <div class="modal-footer">
