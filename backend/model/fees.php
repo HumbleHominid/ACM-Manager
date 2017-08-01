@@ -56,7 +56,7 @@ class Fees{
         "name" => $results[0]['name'],
         "description" => $results[0]['description'],
         "dueDate" => $results[0]['dueDate'],
-        "fee" => $results[0]['fee'],
+        "amount" => $results[0]['fee'],
         "feeType" => $this->getFeeType($results[0]['fee_type_id'])
       );
       return $fee;

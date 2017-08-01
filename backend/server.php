@@ -56,7 +56,7 @@ class Server{
       $this->metadata();
       break;
     case 'announcements':
-      echo "{'reason': 'NYI'}";
+      $this->announcements();
       break;
     default:
       echo $object;
@@ -260,6 +260,23 @@ class Server{
       default:
         header('HTTP/1.1 400 Bad Request');
         break;
+    }
+  }
+
+  private function announcements(){
+    $task = $this->data['task'];
+     include('model/members.php');
+    $members = new Members;
+    include('model/announcements.php');
+    $announcements = new Announcements($members);
+    switch($task){
+      case('GET_ACTIVE'):
+        $results = $announcements->getAnnouncementsBar($this->login->getType());
+        echo $this->response($results); 
+        break;
+      default: 
+        header('HTTP/1.1 400 Bad Request');
+      break;
     }
   }
 
