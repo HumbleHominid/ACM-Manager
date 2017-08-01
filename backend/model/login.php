@@ -83,7 +83,7 @@ class Login{
       $this->rememberMe = $decodedData['rememberMe'];
       return true;
     } catch (Exception $e) {
-      echo ["reason" =>$e->getMessage()];
+      //echo ["reason" =>$e->getMessage()];
       return false;
     }
   }
