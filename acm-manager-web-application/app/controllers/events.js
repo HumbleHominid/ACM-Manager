@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
   filterType: false,
   filterSearch: false,
   
-  eventData: Ember.computed('filterTime', 'filterType', 'filterSearch', 'events.data', function() {
+  eventData: Ember.computed('filterTime', 'filterType', 'filterSearch', 'events._data', function() {
     "use strict";
     
     if (this.get('filterSearch')) {

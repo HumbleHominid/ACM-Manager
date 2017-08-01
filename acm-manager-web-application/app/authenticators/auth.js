@@ -7,19 +7,7 @@ export default OAuth2PasswordGrantAuthenticator.extend({
   session: service(),
   metadata: service(),
 
-  restore: function(data) {
-    "use strict";
-    
-    return new Ember.RSVP.Promise(function(resolve, reject) {
-      if (!Ember.isEmpty(data.token)) {
-        resolve(data);
-      }
-      else {
-        reject();
-      }
-    });
-  },
-  authenticate: function(options) {
+  authenticate(options) {
     "use strict";
 
     return new Ember.RSVP.Promise((resolve, reject) => {
@@ -38,9 +26,8 @@ export default OAuth2PasswordGrantAuthenticator.extend({
         })
       }).done((response) => {
         if (response.user) {
-          
           Ember.run(() => {
-            resolve({ user: response.user });
+            resolve(response.user);
           });
         }
         else {
@@ -54,10 +41,5 @@ export default OAuth2PasswordGrantAuthenticator.extend({
         });
       });
     });
-  },
-  invalidate: function(/* data */) {
-    "use strict";
-    
-    return Ember.RSVP.resolve();
   }
 });

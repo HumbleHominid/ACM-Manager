@@ -22,7 +22,7 @@ export default Ember.Component.extend({
           if (rememberMe) {
             let cookieTimeout = 14 * 24 * 60 * 60;
             
-            component.set('session.store.cookieExpirationTime', cookieTimeout);
+            this.set('session.store.cookieExpirationTime', cookieTimeout);
           }
           
           component.get('loginCallback') ();
