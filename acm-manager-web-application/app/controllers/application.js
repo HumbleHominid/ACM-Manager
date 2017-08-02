@@ -8,7 +8,6 @@ export default Ember.Controller.extend({
   currentUser: service(),
   events: service(),
   announcements: service(),
-  cookies: service(),
     
   _loginWithToken: function(jwt) {
     "use strict";
@@ -88,13 +87,11 @@ export default Ember.Controller.extend({
     logout() {
       "use strict";
       
-      let cookies = this.get('cookies');
+      let session = this.get('session');
       
-      Object.keys(cookies.read()).forEach((cookie) => {
-        console.log(cookie)
-      })
-      this.get('cookies').clear('ember_simple_auth-session-expiration_time');
-      this.get('session.store').persist();
+      session.invalidate().then(() => {
+        session.get('store').clear();
+      });
       
       this._updateData();
       this._byeMessage();

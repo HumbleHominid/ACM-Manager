@@ -12,6 +12,12 @@ export default Ember.Component.extend({
       
       let rememberMe = this.$('#log-in-checkbox')[0].checked;
       
+      if (rememberMe) {
+        let cookieTimeout = 14 * 24 * 60 * 60;
+        
+        this.set('session.store.cookieExpirationTime', cookieTimeout);
+      }
+          
       (function(component) {
         component.get('session').authenticate('authenticator:auth', {
           task: "ATTEMPT_LOGIN",
@@ -19,12 +25,6 @@ export default Ember.Component.extend({
           password: component.$('#log-in-password')[0].value,
           rememberMe: rememberMe
         }).then(() => {
-          if (rememberMe) {
-            let cookieTimeout = 14 * 24 * 60 * 60;
-            
-            this.set('session.store.cookieExpirationTime', cookieTimeout);
-          }
-          
           component.get('loginCallback') ();
           
           component.$('#log-in-form')[0].reset();
