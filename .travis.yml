@@ -10,7 +10,10 @@ env:
     - EMBER_VERSION=default
 matrix:
   fast_finish: true
-    
+
+services:
+  - mysql
+
 cache:
   directories:
     - node_modules
@@ -21,10 +24,13 @@ before_install:
   - npm config set spin false
   - npm install -g bower
   - bower --version
+  - mysql -e 'CREATE DATABASE acm;'
 
 install:
   - npm install
   - bower install
+  - mysql acm < ../acm_Database_Create.sql
+  - mysql acm < ../acm_Database_Placeholder.sql
 
 script:
   - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
