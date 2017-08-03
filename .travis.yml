@@ -20,6 +20,8 @@ cache:
     - bower_components
 
 before_install:
+  - cp backend/model/key.php.smp backend/model/key.php
+  - cp backend/model/dbStartup.php.smp backend/model/dbStartup.php.smp
   - cd acm-manager-web-application 
   - npm config set spin false
   - npm install -g bower

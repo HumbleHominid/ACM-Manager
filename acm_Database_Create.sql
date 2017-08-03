@@ -1,4 +1,12 @@
-/*DELETE FROM User_Attendance;
+USE tbrooks;
+
+DELETE FROM Metadata;
+DROP TABLE IF EXISTS Metadata;
+
+DELETE FROM Announcements;
+DROP TABLE IF EXISTS Announcements;
+
+DELETE FROM User_Attendance;
 DROP TABLE IF EXISTS User_Attendance;
 
 DELETE FROM Event_Files;
@@ -30,7 +38,8 @@ DROP TABLE IF EXISTS User_Type;
 
 DELETE FROM Passwords;
 DROP TABLE IF EXISTS Passwords;
-*/
+
+
 CREATE TABLE Passwords (
   password_id int NOT NULL AUTO_INCREMENT,
   password varchar(255) NOT NULL,

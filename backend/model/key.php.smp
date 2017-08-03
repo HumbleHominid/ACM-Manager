@@ -1,0 +1,5 @@
+<?php
+  $SECRET_KEY = 'pZyvh9UlgoAXz7JjURqMDvAzcEkhlhQLIg3LvKDeO8e5tpuWbmEW8SX7VRjV2YO';
+  //Sample key for Travis CI testing. Do NOT use.
+  //Generate a new key and move it to key.php
+?>
