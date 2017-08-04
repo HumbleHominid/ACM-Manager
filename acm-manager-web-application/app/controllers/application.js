@@ -8,7 +8,6 @@ export default Ember.Controller.extend({
   currentUser: service(),
   events: service(),
   announcements: service(),
-  cookies: service(),
     
   _loginWithToken: function(jwt) {
     "use strict";
@@ -53,12 +52,11 @@ export default Ember.Controller.extend({
     
     this._super(...arguments);
     
-    if (this.get('session.store')) {
-      this.get('session.store').restore().then((data) => {
-        if (data.jwt) {
-          this._loginWithToken(data.jwt);
-        }
-      }).catch(() => {
+    let session = this.get('session');
+    let store = session.get('store');
+    
+    if (store) {
+      store.restore().catch(() => {
         this._invalidSessionMessage();
       }).finally(() => {
         this.get('events').load();
@@ -78,23 +76,22 @@ export default Ember.Controller.extend({
       
       this._updateData();
       
-      let session = this.get('session');
-      let user = session.get('data.authenticated');
+      let session = this.get('session');console.log(session)
+      let user = session.get('user');
+      let jwt = session.get('data.authenticated.jwt');
 
-      session.get('store').persist({ jwt: user.jwt });
+      session.get('store').persist({ jwt: jwt, user: user });
       
       this._welcomeBackMessage();
     },
     logout() {
       "use strict";
       
-      let cookies = this.get('cookies');
+      let session = this.get('session');
       
-      Object.keys(cookies.read()).forEach((cookie) => {
-        console.log(cookie)
-      })
-      this.get('cookies').clear('ember_simple_auth-session-expiration_time');
-      this.get('session.store').persist();
+      session.invalidate().then(() => {
+        session.get('store').clear();
+      });
       
       this._updateData();
       this._byeMessage();
