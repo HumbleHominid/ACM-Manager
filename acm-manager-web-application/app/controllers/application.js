@@ -52,12 +52,11 @@ export default Ember.Controller.extend({
     
     this._super(...arguments);
     
-    if (this.get('session.store')) {
-      this.get('session.store').restore().then((data) => {
-        if (data.jwt) {
-          this._loginWithToken(data.jwt);
-        }
-      }).catch(() => {
+    let session = this.get('session');
+    let store = session.get('store');
+    
+    if (store) {
+      store.restore().catch(() => {
         this._invalidSessionMessage();
       }).finally(() => {
         this.get('events').load();
@@ -77,10 +76,11 @@ export default Ember.Controller.extend({
       
       this._updateData();
       
-      let session = this.get('session');
-      let user = session.get('data.authenticated');
+      let session = this.get('session');console.log(session)
+      let user = session.get('user');
+      let jwt = session.get('data.authenticated.jwt');
 
-      session.get('store').persist({ jwt: user.jwt });
+      session.get('store').persist({ jwt: jwt, user: user });
       
       this._welcomeBackMessage();
     },
