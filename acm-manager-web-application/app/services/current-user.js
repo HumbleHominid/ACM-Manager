@@ -1,33 +1,35 @@
 import Ember from 'ember';
 
+const { inject: { service } } = Ember;
+
 export default Ember.Service.extend({
-  session: Ember.inject.service(),
+  _session: service('session'),
   
-  id: Ember.computed('session.user', function() {
+  id: Ember.computed('_session.data.authenticated', function() {
     "use strict";
     
-    let user = this.get('session.user');
+    let user = this.get('_session.data.authenticated');
     
     return (user ? user.user_id : -1);
   }),
-  name: Ember.computed('session.user', function() {
+  name: Ember.computed('_session.data.authenticated', function() {
     "use strict";
     
-    let user = this.get('session.user');
+    let user = this.get('_session.data.authenticated');
     
     return (user ? `${user.fName} ${user.lName}` : "");
   }),
-  token: Ember.computed('session.user', function() {
+  token: Ember.computed('_session.data.authenticated', function() {
     "use strict";
     
-    let user = this.get('session.user');
+    let user = this.get('_session.data.authenticated');
     
     return (user ? user.jwt : "");
   }),
-  userType: Ember.computed('session.user', function() {
+  userType: Ember.computed('_session.data.authenticated', function() {
     "use strict";
     
-    let user = this.get('session.user');
+    let user = this.get('_session.data.authenticated');
     
     return (user ? user.user_type : "");
   })

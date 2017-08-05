@@ -1,7 +1,8 @@
 <div class="page-header">
   <h1>Events</h1>
 </div>
-<form class="form-inline" oninput={{action 'search'}}>
+
+<form class="form-inline" oninput={{action 'search'}} onsubmit={{action 'formSubmit'}}>
   <div class="form-group">
     <p class="form-control-static">Filter View:</p>
     <div class="btn-group" role="group" aria-label="">

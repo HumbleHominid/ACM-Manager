@@ -1,4 +1,8 @@
 <div class="footer__container">
+  {{#if session.isAuthenticated}}
+    {{discord-widget}}
+  {{/if}}
+  
   <p class="footer__text"><span class="glyphicon glyphicon-copyright-mark" /> Michael Fryer and Trevor Brooks</p>
 </div>
 

@@ -66,6 +66,11 @@ export default Ember.Controller.extend({
       else {
         this.set('filterSearch', false);
       }
+    },
+    formSubmit() {
+      "use strict";
+      
+      return false;
     }
   }
 });

@@ -6,6 +6,7 @@
 @import 'events-sidebar.css';
 @import 'jumbotron.css';
 @import 'announcements-bar.css';
+@import 'discord-widget.css';
 
 .form-margin {
   margin: -webkit-calc(5px + 1%);

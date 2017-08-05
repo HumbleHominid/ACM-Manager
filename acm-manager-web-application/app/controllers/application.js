@@ -3,30 +3,28 @@ import Ember from 'ember';
 const { inject: { service } } = Ember;
 
 export default Ember.Controller.extend({
-  notify: service(),
-  session: service(),
-  currentUser: service(),
-  events: service(),
-  announcements: service(),
+  _notify: service('notify'),
+  _session: service('session'),
+  _currentUser: service('currentUser'),
+  _events: service('events'),
+  _announcements: service('announcements'),
     
   _loginWithToken: function(jwt) {
     "use strict";
     
-    (function(controller) {
-      controller.get('session').authenticate('authenticator:auth', {
-        task: "UPDATE_TOKEN",
-        jwt: jwt.toString()
-      }).then(function() {
-        controller.send('login');
-      }).catch(function(/* reason */) {
-        controller._invalidSessionMessage();
-      });
-    }) (this);
+    this.get('_session').authenticate('authenticator:auth', {
+      jwt: jwt,
+      task: 'UPDATE_TOKEN'
+    }).then(() => {console.log(this.get('_session.data'))
+      this._welcomeBackMessage();
+    }).catch((/* reason */) => {
+      this._invalidSessionMessage();
+    });
   },
   _welcomeBackMessage: function() {
     "use strict";
     
-    this.get('notify').success(`Welcome back ${this.get('currentUser.name')}!`, {
+    this.get('_notify').success(`Welcome back ${this.get('_currentUser.name')}!`, {
       closeAfter: 3000,
       radius: true
     });
@@ -34,7 +32,7 @@ export default Ember.Controller.extend({
   _byeMessage: function() {
     "use strict";
     
-    this.get('notify').warning("Bye!", {
+    this.get('_notify').warning("Bye!", {
       closeAfter: 3000,
       radius: true
     });
@@ -42,7 +40,7 @@ export default Ember.Controller.extend({
   _invalidSessionMessage: function() {
     "use strict";
     
-    this.get('notify').warning("Session has been invalidated. Please log in again.", {
+    this.get('_notify').warning("Session has been invalidated. Please log in again.", {
       closeAfter: 3000,
       radius: true
     });
@@ -52,23 +50,25 @@ export default Ember.Controller.extend({
     
     this._super(...arguments);
     
-    let session = this.get('session');
+    let session = this.get('_session');
     let store = session.get('store');
     
     if (store) {
-      store.restore().catch(() => {
+      store.restore().then((data) => {
+        this._loginWithToken(data.jwt);
+      }).catch(() => {
         this._invalidSessionMessage();
       }).finally(() => {
-        this.get('events').load();
-        this.get('announcements').load();
+        this.get('_events').load();
+        this.get('_announcements').load();
       });
     }
   },
   _updateData() {
     "use strict";
     
-    this.get('events').load();
-    this.get('announcements').load();
+    this.get('_events').load();
+    this.get('_announcements').load();
   },
   actions: {
     login() {
@@ -76,21 +76,23 @@ export default Ember.Controller.extend({
       
       this._updateData();
       
-      let session = this.get('session');console.log(session)
-      let user = session.get('user');
-      let jwt = session.get('data.authenticated.jwt');
+      let session = this.get('_session');
+      let user = session.get('data.authenticated');
 
-      session.get('store').persist({ jwt: jwt, user: user });
+      session.get('store').persist(user);
       
       this._welcomeBackMessage();
     },
     logout() {
       "use strict";
       
-      let session = this.get('session');
+      let session = this.get('_session');
+      let store = session.get('store');
       
-      session.invalidate().then(() => {
-        session.get('store').clear();
+      store.persist().then(() => {
+        store.clear().then(() => {
+          session.invalidate();
+        });
       });
       
       this._updateData();
