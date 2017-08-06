@@ -15,10 +15,16 @@ export default Ember.Controller.extend({
     this.get('_session').authenticate('authenticator:auth', {
       jwt: jwt,
       task: 'UPDATE_TOKEN'
-    }).then(() => {console.log(this.get('_session.data'))
+    }).then(() => {
       this._welcomeBackMessage();
     }).catch((/* reason */) => {
       this._invalidSessionMessage();
+      
+      let store = this.get('_session.store');
+      
+      store.clear().then(() => {
+        store.persist(null);
+      });
     });
   },
   _welcomeBackMessage: function() {
@@ -55,7 +61,9 @@ export default Ember.Controller.extend({
     
     if (store) {
       store.restore().then((data) => {
-        this._loginWithToken(data.jwt);
+        if (Ember.isPresent(data.jwt)) {
+          this._loginWithToken(data.jwt);
+        }
       }).catch(() => {
         this._invalidSessionMessage();
       }).finally(() => {
@@ -89,9 +97,9 @@ export default Ember.Controller.extend({
       let session = this.get('_session');
       let store = session.get('store');
       
-      store.persist().then(() => {
+      session.invalidate().then(() => {
         store.clear().then(() => {
-          session.invalidate();
+          store.persist(null);
         });
       });
       

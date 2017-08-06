@@ -5,6 +5,7 @@ const { inject: { service } } = Ember;
 export default Ember.Service.extend({
   session: service(),
   metadata: service(),
+  currentUser: service(),
   
   _data: null,
   _requestTime: null,
@@ -171,7 +172,7 @@ export default Ember.Service.extend({
     "use strict";
     
     let session = this.get('session');
-    let jwt = (session.get('data.authenticated') ? session.get('data.authenticated.user.jwt') : null);
+    let jwt = (session.get('isAuthenticated') ? this.get('currentUser.token') : null);
     
     (function(service) {
       Ember.$.ajax({

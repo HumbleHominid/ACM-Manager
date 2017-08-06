@@ -1,9 +1,5 @@
 {{#if discordServerName}}
-  <a href={{discordLink}} target="_blank">
-    <img src="./assets/discord-logo.png" alt="Discord Logo." class="discord-img">
-  </a>
-
-  {{discordServerName}}
-  Online users <span class="badge">{{onlineUsers}}</span>
+  <a href={{discordLink}} target="_blank">Discord</a>, <em>{{discordServerName}} </em><span class="badge">{{onlineUsers}}</span>
 {{/if}}
+
 {{yield}}

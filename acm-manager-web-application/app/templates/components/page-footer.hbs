@@ -1,9 +1,36 @@
-<div class="footer__container">
-  {{#if session.isAuthenticated}}
-    {{discord-widget}}
-  {{/if}}
+<div class="row">
+  {{!-- Left Side --}}
+  <div class="col-xs-12 col-md-6">
+    <a href="https://github.com/HumbleHominid/ACM-Manager" target="_blank">Source</a> via GitHub.
+    
+    {{#if session.isAuthenticated}}
+      {{discord-widget}}
+    {{/if}}
+  </div>
   
-  <p class="footer__text"><span class="glyphicon glyphicon-copyright-mark" /> Michael Fryer and Trevor Brooks</p>
+  {{!-- This is for spacing when stacked --}}
+  <div class="visible-xs-block visible-sm-block col-xs-12">
+    <br>
+  </div>
+  
+  {{!-- Right Side --}}
+  <div class="col-xs-12 col-md-6">
+    Site Map:<br>
+    {{link-to 'Home' 'home'}}<br>
+    {{link-to 'Events' 'events'}}<br>
+    {{link-to 'Officers' 'officers'}}<br>
+    
+    {{#if session.isAuthenticated}}
+      {{link-to 'Files' 'files'}}<br>
+      {{link-to 'Account' 'account' (query-params user_id=currentUser.id)}}<br>
+      
+      {{#if (is-admin currentUser.userType.user_type_id)}}
+        {{link-to 'Fees' 'fees'}}
+      {{/if}}
+    {{/if}}
+  </div>
 </div>
+    
+<p class="footer__text"><span class="glyphicon glyphicon-copyright-mark" /> Michael Fryer and Trevor Brooks</p>
 
 {{yield}}

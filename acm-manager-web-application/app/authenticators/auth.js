@@ -34,7 +34,7 @@ export default BaseAuthenticator.extend({
         else {
           reject();
         }
-      }).fail((xhr/* , status, error */) => {console.log('fail')
+      }).fail((xhr/* , status, error */) => {
         var response = xhr.responseText;
 
         reject(response);

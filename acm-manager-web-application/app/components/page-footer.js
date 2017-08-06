@@ -3,5 +3,9 @@ import Ember from 'ember';
 const { inject: { service } } = Ember;
 
 export default Ember.Component.extend({
-  session: service()
+  tagName: 'footer',
+  classNames: [ 'container-footer', 'container-fluid' ],
+  
+  session: service(),
+  currentUser: service()
 });
