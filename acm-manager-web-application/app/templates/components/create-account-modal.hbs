@@ -7,13 +7,13 @@
       </div>
     
       <form id="create-account-form" class="form-margin" onsubmit={{action 'createAccount'}}>
-        {{text-form-field
+        {{generic-form-field
           idPrefix="create-account"
           label="First Name"
           formName="first"
           placeholder="John"
         }}
-        {{text-form-field
+        {{generic-form-field
           idPrefix="create-account"
           label="Last Name"
           formName="last"
@@ -22,7 +22,8 @@
       
         {{email-form-field
           idPrefix="create-account"
-        }}      
+          help="Please use your mtech.edu email account"
+        }}
         {{email-form-field
           idPrefix="create-account-confirm"
           placeholder="Confirm Email"
@@ -31,7 +32,7 @@
         
         {{password-form-field
           idPrefix="create-account"
-        }}        
+        }}
         {{password-form-field
           idPrefix="create-account-confirm"
           placeholder="Confirm Password"

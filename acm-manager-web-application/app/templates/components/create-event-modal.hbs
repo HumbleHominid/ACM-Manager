@@ -7,12 +7,18 @@
       </div>
       
       <form id="create-event-form" class="form-margin">
-        {{!-- TODO --}}
         {{generic-form-field
           placeholder="Name of the event"
           formName="eventName"
           idPrefix="create-event"
           label="Event Name"
+        }}
+        
+        {{select-form-field
+          idPrefix="create-event"
+          formName="eventType"
+          label="Event Type"
+          data=events.types
         }}
         
         {{textarea-form-field
@@ -27,6 +33,13 @@
           label="Location"
           idPrefix="create-event"
           formName="location"
+        }}
+        
+        {{generic-form-field
+          type="datetime-local"
+          label="Date and Time"
+          idPrefix="create-event"
+          formName="dateTime"
         }}
         
         {{generic-form-field

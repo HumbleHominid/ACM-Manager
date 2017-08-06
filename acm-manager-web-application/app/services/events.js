@@ -77,6 +77,13 @@ export default Ember.Service.extend({
     
     return future;
   }),
+  types: Ember.computed('_data', function() {
+    "use strict";
+    
+    let data = this.get('_data');
+    
+    return (data ? data.eventTypes : null);
+  }),
   search(query) {
     "use strict";
     
@@ -199,10 +206,5 @@ export default Ember.Service.extend({
       _data: null,
       _requestTime: null
     });
-  },
-  read() {
-    "use strict";
-    
-    return this.get('_data');
   }
 });

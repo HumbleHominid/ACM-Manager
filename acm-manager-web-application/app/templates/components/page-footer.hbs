@@ -25,9 +25,16 @@
       {{link-to 'Account' 'account' (query-params user_id=currentUser.id)}}<br>
       
       {{#if (is-admin currentUser.userType.user_type_id)}}
-        {{link-to 'Fees' 'fees'}}
+        {{link-to 'Fees' 'fees'}}<br>
       {{/if}}
     {{/if}}
+    
+    <br>
+    {{#scroll-top
+      animate='400' as |clickAction|
+    }}
+      <a href="#" {{action clickAction}}>Back to Top</a>
+    {{/scroll-top}}
   </div>
 </div>
     
