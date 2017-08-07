@@ -6,12 +6,19 @@
         <h4 class="modal-title">Create Event</h4>
       </div>
       
-      <form id="create-event-form" class="form-margin">
+      <form id="create-event-form" class="form-margin" onsubmit={{action 'formSubmit'}}>
         {{generic-form-field
           placeholder="Name of the event"
-          formName="eventName"
+          formName="name"
           idPrefix="create-event"
           label="Event Name"
+        }}
+        
+        {{select-form-field
+          idPrefix="create-event"
+          formName="coordinator"
+          label="Event Coordinator"
+          data=memberList
         }}
         
         {{select-form-field
@@ -39,7 +46,7 @@
           type="datetime-local"
           label="Date and Time"
           idPrefix="create-event"
-          formName="dateTime"
+          formName="eventTime"
         }}
         
         {{generic-form-field
@@ -55,7 +62,7 @@
         {{select-form-field
           idPrefix="create-event"
           formName="attendees"
-          label="Attendes"
+          label="Attendees"
           data=memberList
           multiple=true
           required=false

@@ -17,7 +17,7 @@ export default Ember.Component.extend({
         
         this.set('session.store.cookieExpirationTime', cookieTimeout);
       }
-          
+      
       (function(component) {
         component.get('session').authenticate('authenticator:auth', {
           task: "ATTEMPT_LOGIN",

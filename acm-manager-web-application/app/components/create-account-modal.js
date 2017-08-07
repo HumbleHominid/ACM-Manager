@@ -40,9 +40,9 @@ export default Ember.Component.extend({
 
       (function(component) {
         Ember.$.ajax({
-          type: 'PUT',
+          type: 'POST',
           contentType: 'application/json',
-          url: component.get('metadata.endPoint') + 'login',
+          url: `${component.get('metadata.endPoint')}login`,
           data: obj
         }).done(function() {
           component.$("#create-account-form")[0].reset();

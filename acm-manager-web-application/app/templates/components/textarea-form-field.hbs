@@ -4,13 +4,14 @@
   label=label
   help=help
   idPrefix=idPrefix
+  requireq=required
 }}
   {{textarea
     class="form-control resize-vertical"
     id=(concat idPrefix "-" formName)
     placeholder=placeholder
     value=value
-    required=required
+    required=(if required "required" "")
     pattern=pattern
   }}
 {{/generic-form-field}}
