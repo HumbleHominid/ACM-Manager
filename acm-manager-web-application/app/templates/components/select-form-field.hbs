@@ -8,7 +8,7 @@
   }}
     <select class="form-control" id={{concat idPrefix "-" formName}} value=value required=required multiple={{if multiple "multiple" ""}}>
       {{#each-in data as |key value|}}
-        <option value={{value.event_type_id}}>{{value.name}}</option>
+        <option value={{value.value}}>{{value.text}}</option>
       {{/each-in}}
     </select>
   {{/generic-form-field}}

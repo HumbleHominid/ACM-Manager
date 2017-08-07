@@ -54,7 +54,7 @@ export default Ember.Component.extend({
           }
           
           component.get('notify').success("Account created! You can now log in!", {
-            closeAfter: 3000,
+            closeAfter: 3 * 1000,
             radius: true
           });
         }).fail(function(/* jqXHW, textStatus, err */) {

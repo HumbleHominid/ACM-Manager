@@ -32,7 +32,7 @@ export default Ember.Component.extend({
           component.$("#log-in-modal").modal('hide');
         }).catch((/* reason */) => {
           component.get('notify').alert("Incorrect username or password.", {
-            closeAfter: 3000,
+            closeAfter: 3 * 1000,
             radius: true
           });
         });

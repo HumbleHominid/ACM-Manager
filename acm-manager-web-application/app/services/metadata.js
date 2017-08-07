@@ -35,7 +35,7 @@ export default Ember.Service.extend({
       }).fail(function(/* jqXHW, textStatus, err */) {
         service.get('notify').alert(`Failed to fetch metadata for ${tableName}.`, {
           radius: true,
-          closeAfter: 3000
+          closeAfter: 3 * 1000
         });
       });
     }) (this);

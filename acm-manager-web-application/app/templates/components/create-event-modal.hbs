@@ -18,7 +18,7 @@
           idPrefix="create-event"
           formName="eventType"
           label="Event Type"
-          data=events.types
+          data=eventTypes
         }}
         
         {{textarea-form-field
@@ -50,6 +50,14 @@
           formName="points"
           step="0.25"
           min="0"
+        }}
+        
+        {{select-form-field
+          idPrefix="create-event"
+          formName="attendees"
+          label="Attendes"
+          data=memberList
+          multiple=true
         }}
       
         <div class="modal-footer">

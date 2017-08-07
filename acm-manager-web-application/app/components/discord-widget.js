@@ -30,7 +30,7 @@ export default Ember.Component.extend({
       }).fail(() => {
         component.get('_notify').alert("Could not fetch information from discord", {
           radius: true,
-          closeAfter: 5 * 1000
+          closeAfter: 3 * 1000
         });
       });
     }) (this), 60 * 1000); // 60 seconds

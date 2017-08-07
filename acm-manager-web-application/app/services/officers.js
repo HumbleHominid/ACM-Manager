@@ -91,7 +91,7 @@ export default Ember.Service.extend({
       }).fail(function() {
         service.get('notify').alert("Failed to pull officer information.", {
           radius: true,
-          closeAfter: 3000
+          closeAfter: 3 * 1000
         });
       });
     }) (this);

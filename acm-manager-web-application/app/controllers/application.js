@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
     "use strict";
     
     this.get('_notify').success(`Welcome back ${this.get('_currentUser.name')}!`, {
-      closeAfter: 3000,
+      closeAfter: 3 * 1000,
       radius: true
     });
   },
@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
     "use strict";
     
     this.get('_notify').warning("Bye!", {
-      closeAfter: 3000,
+      closeAfter: 3 * 1000,
       radius: true
     });
   },
@@ -47,7 +47,7 @@ export default Ember.Controller.extend({
     "use strict";
     
     this.get('_notify').warning("Session has been invalidated. Please log in again.", {
-      closeAfter: 3000,
+      closeAfter: 3 * 1000,
       radius: true
     });
   },

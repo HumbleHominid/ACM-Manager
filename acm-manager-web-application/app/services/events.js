@@ -195,7 +195,10 @@ export default Ember.Service.extend({
         
         service.set('_data', eventData);
       }).fail(function(/* jqXHW, textStatus, err */) {
-        //fail
+        service.get('notify').alert("Failed to pull events", {
+          radius: true,
+          closeAfter: 3 * 1000
+        });
       });
     }) (this);
   },

@@ -47,7 +47,7 @@ export default Ember.Service.extend({
         service.set('_data', data);
       }).fail(function() {
         service.get('notify').alert("Could not fetch announcements.", {
-          closeAfter: 5000,
+          closeAfter: 3 * 1000,
           radius: true
         });
       });
