@@ -18,7 +18,27 @@ module.exports = function(environment) {
       }
     },
     APP: {
-      endPoint: ""
+      endPoint: "",
+      socialMedia: {
+        discord: {
+          display: false,
+          serverId: ""
+        },
+        facebook: {
+          display: false
+        },
+        instagram: {
+          display: false
+        },
+        slack: {
+          display: false,
+          inviteUrl: ""
+        },
+        twitter: {
+          display: false,
+          twitterHandle: ""
+        }
+      }
     }
   };
 
@@ -53,6 +73,7 @@ module.exports = function(environment) {
   
     ENV.rootURL = config.rootURL;
     ENV.APP.endPoint = config.endPoint;
+    ENV.APP.socialMedia = config.socialMedia;
   }
   
   if (environment === 'mfryer') {
@@ -60,6 +81,7 @@ module.exports = function(environment) {
     
     ENV.rootURL = config.rootURL;
     ENV.APP.endPoint = config.endPoint;
+    ENV.APP.socialMedia = config.socialMedia;
     
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;

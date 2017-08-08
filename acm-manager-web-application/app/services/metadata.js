@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
+const { inject: { service }, $ } = Ember;
+
 export default Ember.Service.extend({
-  notify: Ember.inject.service(),
+  notify: service(),
   
   _endPoint: null,
   
@@ -10,7 +12,7 @@ export default Ember.Service.extend({
     
     this._super(...arguments);
     
-    let domWindow = Ember.$(window);
+    let domWindow = $(window);
     
     if (domWindow["0"].AcmManagerWebApplication) {
       this.set('_endPoint', domWindow["0"].AcmManagerWebApplication.endPoint);
@@ -20,7 +22,7 @@ export default Ember.Service.extend({
     "use strict";
     
     return (function(service) {
-      return Ember.$.ajax({
+      return $.ajax({
         type: 'POST',
         contentType: 'application/json',
         url: `${service.get('metadata.endPoint')}metadata`,

@@ -1,10 +1,18 @@
 <div class="row">
   {{!-- Left Side --}}
   <div class="col-xs-12 col-md-6">
-    <a href="https://github.com/HumbleHominid/ACM-Manager" target="_blank">Source</a> via GitHub.
+    <a href="https://github.com/HumbleHominid/ACM-Manager" target="_blank">Source</a> available on <em>GitHub</em>.
     
     {{#if session.isAuthenticated}}
-      {{discord-widget}}
+      {{#if socialMedia.discord.display}}
+        {{discord-widget}}
+      {{/if}}
+      
+      {{#with socialMedia.slack as |slack|}}
+        {{#if slack.display}}
+          <a href={{slack.inviteUrl}} target="_blank">Link</a> to <em>Slack</em>
+        {{/if}}
+      {{/with}}
     {{/if}}
   </div>
   

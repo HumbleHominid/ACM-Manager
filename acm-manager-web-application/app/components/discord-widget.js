@@ -4,13 +4,11 @@ const { inject: { service } } = Ember;
 
 export default Ember.Component.extend({
   _notify: service('notify'),
-  _metadata: service('metadata'), // need to do this later
+  _socialMedia: service('social-media'),
   
   onlineUsers: 0,
   discordLink: '#',
   discordServerName: '',
-  
-  discordServerId: '221463858068324354',
   
   init() {
     "use strict";
@@ -20,7 +18,7 @@ export default Ember.Component.extend({
     setInterval((function(component) {
       Ember.$.ajax({
         type: 'GET',
-        url: `https://discordapp.com/api/guilds/${component.get('discordServerId')}/widget.json`
+        url: `https://discordapp.com/api/guilds/${component.get('_socialMedia.discord.serverId')}/widget.json`
       }).done((response) => {
         component.setProperties({
           onlineUsers: response.members.length,

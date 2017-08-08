@@ -7,5 +7,6 @@ export default Ember.Component.extend({
   classNames: [ 'container-footer', 'container-fluid' ],
   
   session: service(),
-  currentUser: service()
+  currentUser: service(),
+  socialMedia: service()
 });
