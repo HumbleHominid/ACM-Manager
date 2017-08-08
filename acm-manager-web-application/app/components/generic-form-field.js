@@ -23,7 +23,6 @@ export default Ember.Component.extend(FormOptions, {
     div.removeClass("has-warning has-success").addClass("has-error");
     span.removeClass("glyphicon-warning-sign glyphicon-ok").addClass("glyphicon-remove");
   },
-  
   didRender() {
     "use strict";
     

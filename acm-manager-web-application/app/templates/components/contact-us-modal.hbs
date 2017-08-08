@@ -9,27 +9,27 @@
       <form id="contact-us-form" class="form-margin">
         {{generic-form-field
           required=false
-          idPrefix="contact-us"
+          idPrefix=modalPrefix
           label="First Name"
           formName="first"
           placeholder="John"
         }}
         {{generic-form-field
           required=false
-          idPrefix="contact-us"
+          idPrefix=modalPrefix
           label="Last Name"
           formName="last"
           placeholder="Doe"
         }}
       
         {{email-form-field
-          idPrefix="contact-us"
+          idPrefix=modalPrefix
           placeholder="Your email"
           pattern="^.+@.+\..+$"
         }}
         
         {{textarea-form-field
-          idPrefix="contact-us"
+          idPrefix=modalPrefix
           placeholder="Your Message"
         }}
         

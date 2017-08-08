@@ -9,24 +9,25 @@
       <form id="log-in-form" class="form-margin" onsubmit={{action 'authenticate'}}>
         {{email-form-field
           hasFeedback=false
-          idPrefix="log-in"
+          idPrefix=modalPrefix
         }}
         
         {{password-form-field
           hasFeedback=false
-          idPrefix="log-in"
+          idPrefix=modalPrefix
           pattern=".+"
           help=""
         }}
         
-        <div class="form-group">
-          {{input
-            type="checkbox"
-            class="pointer"
-            id="log-in-checkbox"
-          }}
-          Remember Me
-        </div>
+        {{generic-form-field
+          hasFeedback=false
+          idPrefix=modalPrefix
+          required=false
+          type="checkbox"
+          formName="checkbox"
+          class="pointer"
+          label="Remember Me"
+        }}
         
         <div class="modal-footer">
           {{#modal-buttons}}

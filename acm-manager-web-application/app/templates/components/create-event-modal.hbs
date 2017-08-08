@@ -10,26 +10,26 @@
         {{generic-form-field
           placeholder="Name of the event"
           formName="name"
-          idPrefix="create-event"
+          idPrefix=modalPrefix
           label="Event Name"
         }}
         
         {{select-form-field
-          idPrefix="create-event"
+          idPrefix=modalPrefix
           formName="coordinator"
           label="Event Coordinator"
           data=memberList
         }}
         
         {{select-form-field
-          idPrefix="create-event"
+          idPrefix=modalPrefix
           formName="eventType"
           label="Event Type"
           data=eventTypes
         }}
         
         {{textarea-form-field
-          idPrefix="create-event"
+          idPrefix=modalPrefix
           formName="additionalInfo"
           label="Additional Information"
           placeholder="Additional information about the event"
@@ -38,14 +38,14 @@
         {{generic-form-field
           placeholder="Location event is being held"
           label="Location"
-          idPrefix="create-event"
+          idPrefix=modalPrefix
           formName="location"
         }}
         
         {{generic-form-field
           type="datetime-local"
           label="Date and Time"
-          idPrefix="create-event"
+          idPrefix=modalPrefix
           formName="eventTime"
         }}
         
@@ -53,14 +53,14 @@
           type="number"
           value="0"
           label="Points"
-          idPrefix="create-event"
+          idPrefix=modalPrefix
           formName="points"
           step="0.25"
           min="0"
         }}
         
         {{select-form-field
-          idPrefix="create-event"
+          idPrefix=modalPrefix
           formName="attendees"
           label="Attendees"
           data=memberList

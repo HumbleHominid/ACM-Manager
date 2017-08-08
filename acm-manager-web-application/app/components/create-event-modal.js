@@ -11,7 +11,22 @@ export default Ember.Component.extend({
   
   _requestTime: null,
   memberList: null,
+  modalPrefix: 'create-event',
   
+  didRender() {
+    "use strict";
+    
+    let modalPrefix = this.get('modalPrefix');
+    let modal = $(`#${modalPrefix}-modal`);
+    
+    modal.on('shown.bs.modal', () => {
+      $(`#${modalPrefix}-name`).focus();
+    });
+    
+    modal.on('hidden.bs.modal', () => {
+      $(`#${modalPrefix}-form`)[0].reset();
+    });
+  },
   init() {
     "use strict";
     
@@ -79,14 +94,15 @@ export default Ember.Component.extend({
     formSubmit() {
       "use strict";
       
+      let modalPrefix = this.get('modalPrefix');
       let formInformation = {
-        coordinator: $('#create-event-coordinator')[0].value,
-        eventType: $('#create-event-eventType')[0].value,
-        name: $('#create-event-name')[0].value,
-        additionalInfo: $('#create-event-additionalInfo')[0].value,
-        location:  $('#create-event-location')[0].value,
-        eventTime: $('#create-event-eventTime')[0].value,
-        points: $('#create-event-points')[0].value,
+        coordinator: $(`#${modalPrefix}-coordinator`)[0].value,
+        eventType: $(`#${modalPrefix}-eventType`)[0].value,
+        name: $(`#${modalPrefix}-name`)[0].value,
+        additionalInfo: $(`#${modalPrefix}-additionalInfo`)[0].value,
+        location:  $(`#${modalPrefix}-location`)[0].value,
+        eventTime: $(`#${modalPrefix}-eventTime`)[0].value,
+        points: $(`#${modalPrefix}-points`)[0].value,
         attendees: [ ]
       };
 
@@ -101,13 +117,11 @@ export default Ember.Component.extend({
             data: formInformation
           })
         }).done(function(data) {
-          $('#create-event-form')[0].reset();
-          
-          $('#create-event-modal').modal('hide');
+          $(`#${modalPrefix}-modal`).modal('hide');
           
           component.get('events').load();
           
-          let eventData = data.eventData
+          let eventData = data.eventData;
           let coordinator = eventData.coordinator;
           let timeString = new Date(eventData.eventTime.replace(' ', 'T')).toString();
           

@@ -8,33 +8,33 @@
     
       <form id="create-account-form" class="form-margin" onsubmit={{action 'createAccount'}}>
         {{generic-form-field
-          idPrefix="create-account"
+          idPrefix=modalPrefix
           label="First Name"
           formName="first"
           placeholder="John"
         }}
         {{generic-form-field
-          idPrefix="create-account"
+          idPrefix=modalPrefix
           label="Last Name"
           formName="last"
           placeholder="Doe"
         }}
       
         {{email-form-field
-          idPrefix="create-account"
+          idPrefix=modalPrefix
           help="Please use your mtech.edu email account"
         }}
         {{email-form-field
-          idPrefix="create-account-confirm"
+          idPrefix=(concat modalPrefix '-confirm')
           placeholder="Confirm Email"
           label="Confirm Email"
         }}
         
         {{password-form-field
-          idPrefix="create-account"
+          idPrefix=modalPrefix
         }}
         {{password-form-field
-          idPrefix="create-account-confirm"
+          idPrefix=(concat modalPrefix '-confirm')
           placeholder="Confirm Password"
           label="Confirm Password"
           help=""
