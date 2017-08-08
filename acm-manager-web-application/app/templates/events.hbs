@@ -14,10 +14,12 @@
     {{input id="events-searchbar" placeholder="Search" class="form-control"}}
   </div>
   
-  {{#if 'session.isAuthenticated'}}
-    <div class="form-group">
-      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-modal">Add Event</button>
-    </div>
+  {{#if session.isAuthenticated}}
+    {{#if (is-admin currentUser.userType.user_type_id)}}
+      <div class="form-group">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-modal">Add Event</button>
+      </div>
+    {{/if}}
   {{/if}}
 </form>
 

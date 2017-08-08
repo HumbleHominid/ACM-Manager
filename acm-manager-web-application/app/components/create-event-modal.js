@@ -11,6 +11,13 @@ export default Ember.Component.extend({
   
   _requestTime: null,
   memberList: null,
+  attendeeList: [
+    {
+      text: "Michael Fryer",
+      value: "0",
+      display: true
+    }
+  ],
   modalPrefix: 'create-event',
   
   didRender() {
@@ -31,15 +38,13 @@ export default Ember.Component.extend({
     
     this.set('members', null);
     
-    this._fetchMembers();
-    
-    this.on('session.store.sessionDataUpdated', this._fetchMembers());
+    this.on('session.store.sessionDataUpdated', (() => this._fetchMembers()) ());
   },
   _fetchMembers() {
     "use strict";
     
     (function(component) {
-      Ember.$.ajax({
+      $.ajax({
         type: 'POST', 
         contentType: 'application/json',
         url: `${component.get('_metadata.endPoint')}members`,
@@ -48,7 +53,12 @@ export default Ember.Component.extend({
           token: component.get('currentUser.token')
         })
       }).done(function(data) {
-        component.set('memberList', component._makeList(data.memberList));
+        let list = component._makeList(data.memberList);
+        
+        component.setProperties({
+          memberList: list,
+          attendeeList: list
+        });
       }).fail(function() {
         component.get('_notify').alert("Failed to pull member list.", {
           radius: true,
@@ -64,7 +74,8 @@ export default Ember.Component.extend({
       members.forEach(function(member, index) {
         members[index] = {
           text: `${member.fName} ${member.lName}`,
-          value: member.user_id
+          value: member.user_id,
+          display: true
         };
       });
     }
@@ -80,7 +91,8 @@ export default Ember.Component.extend({
       data.forEach(function(eventType, index) {
         data[index] = {
           text: eventType.name,
-          value: eventType.event_type_id
+          value: eventType.event_type_id,
+          display: true
         };
       });
     }
@@ -92,16 +104,50 @@ export default Ember.Component.extend({
       "use strict";
       
       let modalPrefix = this.get('modalPrefix');
+      
+      let coordinator = $(`#${modalPrefix}-coordinator`)[0];
+      let eventType = $(`#${modalPrefix}-eventType`)[0];
+      let name = $(`#${modalPrefix}-name`)[0];
+      let additionalInfo = $(`#${modalPrefix}-additionalInfo`)[0];
+      let location = $(`#${modalPrefix}-location`)[0];
+      let eventTime = $(`#${modalPrefix}-eventTime`)[0];
+      let points = $(`#${modalPrefix}-points`)[0];
+      
+      if (!(coordinator && eventType && name && additionalInfo && location && eventTime && points)) {
+        this.get('_notify').alert("Could not fetch all form data.", {
+          radius: true,
+          closeAfter: 3 * 1000
+        });
+        
+        return false;
+      }
+      
       let formInformation = {
-        coordinator: $(`#${modalPrefix}-coordinator`)[0].value,
-        eventType: $(`#${modalPrefix}-eventType`)[0].value,
-        name: $(`#${modalPrefix}-name`)[0].value,
-        additionalInfo: $(`#${modalPrefix}-additionalInfo`)[0].value,
-        location:  $(`#${modalPrefix}-location`)[0].value,
-        eventTime: $(`#${modalPrefix}-eventTime`)[0].value,
-        points: $(`#${modalPrefix}-points`)[0].value,
+        coordinator: coordinator.value,
+        eventType: eventType.value,
+        name: name.value,
+        additionalInfo: additionalInfo.value,
+        location: location.value,
+        eventTime: eventTime.value,
+        points: points.value,
         attendees: [ ]
       };
+      let attendees = this.get('attendeeList');
+      
+      attendees.forEach(function(attendee) {
+        if (!attendee.display) {
+          let attendeePoints = $(`#${modalPrefix}-attendee-points-${attendee.value}`)[0];
+          let attendeeInfo = $(`#${modalPrefix}-attendee-info-${attendee.value}`)[0];
+          
+          let obj = {
+            user_id: attendee.value,
+            givenPoints: attendeePoints ? attendeePoints.value : 0,
+            additionalInfo: attendeeInfo ? attendeeInfo.value : ""
+          };
+          
+          formInformation.attendees.push(obj);
+        }
+      });
 
       (function(component) {
         $.ajax({
@@ -114,6 +160,15 @@ export default Ember.Component.extend({
             data: formInformation
           })
         }).done(function(data) {
+          if (Ember.isPresent(data.reason)) {
+            component.get('_notify').alert(`Event creation failed. ${data.reason}`, {
+              radius: true,
+              closeAfter: 3 * 1000
+            });
+            
+            return false;
+          }
+          
           $(`#${modalPrefix}-modal`).modal('hide');
           
           component.get('events').load();
@@ -135,6 +190,27 @@ export default Ember.Component.extend({
       }) (this);
 
       return false;
+    },
+    selectChanged(e) {
+      "use strict";
+      
+      if (e.isTrusted) {
+        let select = $(`#${this.get('modalPrefix')}-add-attendee`);
+        let attendees = this.get('attendeeList');
+        
+        for (let i = 0; i < attendees.length; i++) {
+          if (parseInt(attendees[i].value) === parseInt(select[0].value)) {
+            this.set(`attendeeList.${i}.display`, false);
+            
+            break;
+          }
+        }
+      }
+    },
+    removeAttendee(index) {
+      "use strict";
+      
+      this.set(`attendeeList.${index}.display`, true);
     }
   }
 });

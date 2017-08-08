@@ -1,0 +1,32 @@
+<h4>{{attendeeName}}</h4>
+
+<div class="container-fluid form-margin">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      {{generic-form-field
+        type="number"
+        min="0"
+        label="Points"
+        idPrefix=prefix
+        formName=(concat 'attendee-points-' attendeeId)
+        value='0'
+      }}
+    </div>
+    
+    <div class="col-xs-12 col-sm-6">
+      {{generic-form-field
+        label="Additional Information"
+        idPrefix=prefix
+        formName=(concat 'attendee-info-' attendeeId)
+        placeholder="Additional Information"
+        required=false
+      }}
+    </div>
+    
+    <div class="col-xs-12 col-sm-6">
+      {{yield}}
+    </div>
+  </div>
+</div>
+
+<span class="form-divider" />

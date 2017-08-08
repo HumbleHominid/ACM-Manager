@@ -33,6 +33,7 @@
           formName="additionalInfo"
           label="Additional Information"
           placeholder="Additional information about the event"
+          required=false
         }}
         
         {{generic-form-field
@@ -59,54 +60,37 @@
           min="0"
         }}
         
-        {{select-form-field
-          idPrefix=modalPrefix
-          formName="attendees"
-          label="Attendees"
-          data=memberList
-          multiple=true
-          required=false
-        }}
+        <h3 class="attendee-header">Attendees</h3>
+        <span class="form-divider" />
         
-        {{select-form-field
-          idPrefix=modalPrefix
-          formName="addAttendee"
-          label="Add an attendee"
-          data=memberList
-          required=false
-        }}
-        
-        <button type="button" class="btn btn-success">Add Attendee</button>
+        {{#each-in attendeeList as |key value|}}
+          {{#unless value.display}}
+            {{#attendee-form-field
+              attendeeName=value.text
+              attendeeId=value.value
+              prefix=modalPrefix
+            }}
+              <button type="button" class="btn btn-danger" {{action 'removeAttendee' key}}>Remove Attendee</button>
+            {{/attendee-form-field}}
+          {{/unless}}
+        {{/each-in}}
         
         {{#generic-form-field
+          hasFeedback=false
+          formName="add-attendee"
+          label="Select an attendee to add"
           idPrefix=modalPrefix
-          formName="attendee"
-          label="Michael Fryer"
+          required=false
         }}
-          <div class="container-fluid form-margin">
-            <div class="row">
-              <div class="col-xs-12 col-sm-6">
-                {{generic-form-field
-                  type="number"
-                  min="0"
-                  label="Points"
-                  idPrefix=modalPrefix
-                  formName="attendeePoints"
-                  value='0'
-                }}
-              </div>
-              
-              <div class="col-xs-12 col-sm-6">
-                {{generic-form-field
-                  label="Additional Information"
-                  idPrefix=modalPrefix
-                  formName="attendeeInfo"
-                  placeholder="Additional Information"
-                  required=false
-                }}
-              </div>
-            </div>
-          </div>
+          <select class="form-control" id={{concat modalPrefix "-add-attendee"}} multiple={{if multiple "multiple" ""}} onchange={{action 'selectChanged'}}>
+            <option value="-1">Select Attendee</option>
+            
+            {{#each-in attendeeList as |key value|}}
+              {{#if value.display}}
+                <option value={{value.value}}>{{value.text}}</option>
+              {{/if}}
+            {{/each-in}}
+          </select>
         {{/generic-form-field}}
         
         <div class="modal-footer">

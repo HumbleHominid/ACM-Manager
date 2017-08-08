@@ -5,6 +5,7 @@ const { inject: { service }, $ } = Ember;
 export default Ember.Controller.extend({
   session: service(),
   events: service(),
+  currentUser: service(),
   
   filterTime: true,
   filterType: false,

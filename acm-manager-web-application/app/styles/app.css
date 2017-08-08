@@ -84,3 +84,13 @@ body {
 .announcements-container {
   margin: 1%;
 }
+
+.form-divider {
+  border-top: 1px solid #e5e5e5;
+  
+  width: 100%!important;
+  
+  display: block;
+  
+  padding-bottom: 15px;
+}
