@@ -1,3 +1,4 @@
 backend/model/dbStartup.php
 backend/model/key.php
-
+acm-manager-web-application/app/vendor/config.json
+acm-manager-web-application/app/vendor/mfryer.json
