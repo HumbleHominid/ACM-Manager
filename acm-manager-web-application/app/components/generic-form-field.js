@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import FormOptions from '../mixins/form-options';
 
+const { $ } = Ember;
+
 export default Ember.Component.extend(FormOptions, {
   classNames: [ "form-group" ],
   classNameBindings: [ "hasFeedback:has-feedback" ],
@@ -30,9 +32,12 @@ export default Ember.Component.extend(FormOptions, {
       return;
     }
     
-    let el = this.$("#" + this.get('idPrefix') + "-" + this.get('formName'))[0];
-    let div = Ember.$("#" + this.elementId);
-    let span = this.$("#" + this.get('idPrefix') + "-" + this.get('formName') + "_span");
+    let idPrefix = this.get('idPrefix');
+    let formName = this.get('formName');
+    
+    let el = $(`#${idPrefix}-${formName}`)[0];
+    let div = $(`#${this.elementId}`);
+    let span = $(`#${idPrefix}-${formName}_span`);
 
     if (!el) {
       return;
@@ -40,12 +45,12 @@ export default Ember.Component.extend(FormOptions, {
     
     if (el.validity.valid) {
       this.makeValid(div, span);
-    }//if
+    }
     else if (!el.value && !el.validity.valid) {
       this.makeWarning(div, span);
-    }//else if
+    }
     else if (!el.validity.valid) {
       this.makeError(div, span);
-    }//else if
+    }
   }
 });

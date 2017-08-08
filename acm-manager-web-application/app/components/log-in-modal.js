@@ -12,13 +12,10 @@ export default Ember.Component.extend({
     "use strict";
     
     let modalPrefix = this.get('modalPrefix');
-    let modal = $(`#${modalPrefix}-modal`);
     
-    modal.on('shown.bs.modal', () => {
+    $(`#${modalPrefix}-modal`).on('shown.bs.modal', () => {
       $(`#${modalPrefix}-email`).focus();
-    });
-    
-    modal.on('hidden.bs.modal', () => {
+    }).on('hidden.bs.modal', () => {
       $(`#${modalPrefix}-form`)[0].reset();
     });
   },

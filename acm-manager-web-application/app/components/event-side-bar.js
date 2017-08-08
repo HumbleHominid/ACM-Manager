@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { inject: { service } } = Ember; 
+const { inject: { service }, $ } = Ember; 
 
 export default Ember.Component.extend({
   events: service(),
@@ -12,8 +12,8 @@ export default Ember.Component.extend({
     "use strict";
     
     let el = this.$(".upcoming-events-localized");
-    let windowWidth = parseInt(Ember.$(window).width());
-    let windowHeight = parseInt(Ember.$(window).height());
+    let windowWidth = parseInt($(window).width());
+    let windowHeight = parseInt($(window).height());
 
     let eventsHeight = (windowWidth < 1200 ? 300 : 125 + (windowHeight * 0.5)) - parseInt(el.css("marginBottom"));
     let panelBodyHeight = this.$(".panel-body").outerHeight(true);

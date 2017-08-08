@@ -83,29 +83,27 @@
           formName="attendee"
           label="Michael Fryer"
         }}
-          <div class="form-margin">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                  {{generic-form-field
-                    type="number"
-                    min="0"
-                    label="Points"
-                    idPrefix=modalPrefix
-                    formName="attendeePoints"
-                    value='0'
-                  }}
-                </div>
-                
-                <div class="col-xs-12 col-sm-6">
-                  {{generic-form-field
-                    label="Additional Information"
-                    idPrefix=modalPrefix
-                    formName="attendeeInfo"
-                    placeholder="Additional Information"
-                    required=false
-                  }}
-                </div>
+          <div class="container-fluid form-margin">
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                {{generic-form-field
+                  type="number"
+                  min="0"
+                  label="Points"
+                  idPrefix=modalPrefix
+                  formName="attendeePoints"
+                  value='0'
+                }}
+              </div>
+              
+              <div class="col-xs-12 col-sm-6">
+                {{generic-form-field
+                  label="Additional Information"
+                  idPrefix=modalPrefix
+                  formName="attendeeInfo"
+                  placeholder="Additional Information"
+                  required=false
+                }}
               </div>
             </div>
           </div>

@@ -19,8 +19,10 @@ export default Ember.Component.extend({
     if (eventTime) {
       let dateTime = new Date(eventTime.replace(' ', 'T'));
       
-      this.set('date', dateTime.toDateString());
-      this.set('time', dateTime.toTimeString().split(" ")[0]);
+      this.setProperties({
+        date: dateTime.toDateString(),
+        time: dateTime.toTimeString().split(" ")[0]
+      });
     }
   }
 });

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { inject: { service } } = Ember;
+const { inject: { service }, $ } = Ember;
 
 export default Ember.Controller.extend({
   session: service(),
@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
     "use strict";
     
     if (this.get('filterSearch')) {
-      let query = Ember.$('#events-searchbar')[0].value;
+      let query = $('#events-searchbar')[0].value;
       
       if (this.get('filterTime')) {
         return this.get('events').search(query);
@@ -59,7 +59,7 @@ export default Ember.Controller.extend({
     search() {
       "use strict";
       
-      let query = Ember.$('#events-searchbar')[0].value;
+      let query = $('#events-searchbar')[0].value;
       
       if (query.length > 2) {
         this.set('filterSearch', true);

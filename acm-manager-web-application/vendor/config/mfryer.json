@@ -1,4 +1,10 @@
 {
   "endPoint": "https://katie.mtech.edu/~acmuser/backend/",
-  "rootURL": "/~mfryer/ACM-Manager/"
+  "rootURL": "/~mfryer/ACM-Manager/",
+  "socialMedia": {
+    "discord": {
+      "display": true,
+      "serverId" "221463858068324354"
+    }
+  }
 }

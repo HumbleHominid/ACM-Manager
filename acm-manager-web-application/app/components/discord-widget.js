@@ -33,6 +33,6 @@ export default Ember.Component.extend({
           closeAfter: 3 * 1000
         });
       });
-    }) (this), 60 * 1000); // 60 seconds
+    }) (this), 60 * 1000);
   }
 });
