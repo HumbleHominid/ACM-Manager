@@ -67,7 +67,50 @@
           multiple=true
           required=false
         }}
-      
+        
+        {{select-form-field
+          idPrefix=modalPrefix
+          formName="addAttendee"
+          label="Add an attendee"
+          data=memberList
+          required=false
+        }}
+        
+        <button type="button" class="btn btn-success">Add Attendee</button>
+        
+        {{#generic-form-field
+          idPrefix=modalPrefix
+          formName="attendee"
+          label="Michael Fryer"
+        }}
+          <div class="form-margin">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                  {{generic-form-field
+                    type="number"
+                    min="0"
+                    label="Points"
+                    idPrefix=modalPrefix
+                    formName="attendeePoints"
+                    value='0'
+                  }}
+                </div>
+                
+                <div class="col-xs-12 col-sm-6">
+                  {{generic-form-field
+                    label="Additional Information"
+                    idPrefix=modalPrefix
+                    formName="attendeeInfo"
+                    placeholder="Additional Information"
+                    required=false
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/generic-form-field}}
+        
         <div class="modal-footer">
           {{modal-buttons}}
         </div>
