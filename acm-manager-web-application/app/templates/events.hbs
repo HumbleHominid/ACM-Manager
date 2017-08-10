@@ -4,7 +4,7 @@
 
 <form class="form-inline" oninput={{action 'search'}} onsubmit={{action 'formSubmit'}}>
   <div class="form-group">
-    <p class="form-control-static">Filter View:</p>
+    <p class="form-control-static"><strong>Filter View:</strong></p>
     <div class="btn-group" role="group" aria-label="">
       <button disabled={{if filterTime "disabled" ""}} type="button" class="btn btn-default" {{action 'filterTime'}}>Time</button>
       <button disabled={{if filterType "disabled" ""}} type="button" class="btn btn-default" {{action 'filterType'}}>Type</button>
@@ -14,15 +14,11 @@
     {{input id="events-searchbar" placeholder="Search" class="form-control"}}
   </div>
   
-  {{#if 'session.isAuthenticated'}}
-    {{!#if (is-admin currentUser.userType.user_type_id)}}
-      <div class="form-group">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-modal">Add Event</button>
-      </div>
-      <div class="form-group">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-type-modal">Add Event Type</button>
-      </div>
-    {{!/if}}
+  {{#if (get currentUser.userType "user_type_id")}}
+    <div class="form-group">
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-modal">Add Event</button>
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-type-modal">Add Event Type</button>
+    </div>
   {{/if}}
 </form>
 
