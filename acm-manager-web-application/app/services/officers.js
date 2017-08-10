@@ -3,7 +3,7 @@ import Ember from 'ember';
 const { inject: { service } } = Ember;
 
 export default Ember.Service.extend({
-  metadata: service(),
+  _metadata: service('metadata'),
   notify: service(),
   
   _data: null,
@@ -57,7 +57,7 @@ export default Ember.Service.extend({
   load() {
     "use strict";
     
-    this.get('metadata').getMetadata('Officers').then((data) => {
+    this.get('_metadata').getMetadata('Officers').then((data) => {
       let metadata = data.metadata;
       let metadataTime = (metadata ? new Date(metadata.updateTime.replace(' ', 'T')) : null);
       
@@ -70,10 +70,12 @@ export default Ember.Service.extend({
     "use strict";
     
     (function(service) {
+      let metadata = service.get('_metadata');
+      
       Ember.$.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: `${service.get('metadata.endPoint')}officers`,
+        url: `${metadata.get('endPoint')}${metadata.get('namespace')}officers`,
         data: JSON.stringify({
           task: "GET_OFFICERS"
         })

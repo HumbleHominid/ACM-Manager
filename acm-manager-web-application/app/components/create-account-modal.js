@@ -4,6 +4,7 @@ const { inject: { service }, $ } = Ember;
 
 export default Ember.Component.extend({
   _notify: service('notify'),
+  _metadata: service('metadata'),
   
   modalPrefix: 'create-account',
   
@@ -18,49 +19,72 @@ export default Ember.Component.extend({
       $(`#${modalPrefix}-form`)[0].reset();
     });
   },
+  _getFormData() {
+    "use strict";
+      
+    let modalPrefix = this.get('modalPrefix');
+    let data = {  };
+
+    data.first = $(`#${modalPrefix}-first`)[0].value;
+    data.last = $(`#${modalPrefix}-last`)[0].value;
+    data.username = $(`#${modalPrefix}-email`)[0].value;
+    data.password = $(`#${modalPrefix}-password`)[0].value;
+
+    let sameEmail = data.username === $(`#${modalPrefix}-confirm-email`)[0].value;
+    let samePass = data.password === $(`#${modalPrefix}-confirm-password`)[0].value;
+
+    if (!samePass || !sameEmail) {
+      if (!$(`#${modalPrefix}-error-alert`)[0]) {
+        $(`#${modalPrefix}-form`).prepend('<div id="${modalPrefix}-error-alert" class="alert alert-danger alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="${modalPrefix}-error-alert-text">Emails or Passwords do not match</span></div>');
+      }
+      else {
+        let alertTextSpan = $(`#${modalPrefix}-error-alert-text`)[0];
+        
+        if (alertTextSpan.innerHTML.indexOf("again") !== -1) {
+          alertTextSpan.innerHTML = alertTextSpan.innerHTML + ", and again";
+        }
+        else {
+          alertTextSpan.innerHTML = alertTextSpan.innerHTML + " again";
+        }
+      }
+      
+      return null;
+    }
+    
+    return data;
+  },
   actions: {
     createAccount() {
       "use strict";
       
       let modalPrefix = this.get('modalPrefix');
-      let obj = { data: { } };
-
-      obj.task = "CREATE_ACCOUNT";
-      obj.data.first = $(`#${modalPrefix}-first`)[0].value;
-      obj.data.last = $(`#${modalPrefix}-last`)[0].value;
-      obj.data.username = $(`#${modalPrefix}-email`)[0].value;
-      obj.data.password = $(`#${modalPrefix}-password`)[0].value;
-
-      let sameEmail = obj.data.username === $(`#${modalPrefix}-confirm-email`)[0].value;
-      let samePass = obj.data.password === $(`#${modalPrefix}-confirm-password`)[0].value;
-
-      if (!samePass || !sameEmail) {
-        if (!$(`#${modalPrefix}-error-alert`)[0]) {
-          $(`#${modalPrefix}-form`).prepend('<div id="create-account-error-alert" class="alert alert-danger alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="create-account-error-alert-text">Emails or Passwords do not match</span></div>');
-        }
-        else {
-          let alertTextSpan = $(`#${modalPrefix}-error-alert-text`)[0];
-          
-          if (alertTextSpan.innerHTML.indexOf("again") !== -1) {
-            alertTextSpan.innerHTML = alertTextSpan.innerHTML + ", and again";
-          }
-          else {
-            alertTextSpan.innerHTML = alertTextSpan.innerHTML + " again";
-          }
-        }
-        
+      let data = this._getFormData();
+      
+      if (Ember.isNone(data)) {
         return false;
       }
-
-      obj = JSON.stringify(obj);
-
+      
       (function(component) {
-        Ember.$.ajax({
+        let metadata = component.get('_metadata');
+        
+        $.ajax({
           type: 'POST',
           contentType: 'application/json',
-          url: `${component.get('metadata.endPoint')}login`,
-          data: obj
-        }).done(function() {
+          url: `${metadata.get('endPoint')}${metadata.get('namespace')}login`,
+          data: JSON.stringify({
+            task: "CREATE_ACCOUNT",
+            data: data
+          })
+        }).done(function(data) {
+          if (Ember.isPresent(data.reason)) {
+            component.get('_notify').alert(`${data.reason}`, {
+              radius: true,
+              closeAfter: 3 * 1000
+            });
+            
+            return false;
+          }
+          
           $(`#${modalPrefix}-modal`).modal('hide');
           
           let alert = $(`#${modalPrefix}-error-alert`)[0];
@@ -70,10 +94,10 @@ export default Ember.Component.extend({
           }
           
           component.get('_notify').success("Account created! You can now log in!", {
-            closeAfter: 3 * 1000,
-            radius: true
+            radius: true,
+            closeAfter: 3 * 1000
           });
-        }).fail(function(/* jqXHW, textStatus, err */) {
+        }).fail(function() {
           let alert = $(`#${modalPrefix}-error-alert`)[0];
           
           if (alert) {

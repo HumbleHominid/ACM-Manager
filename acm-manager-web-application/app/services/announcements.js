@@ -3,7 +3,7 @@ import Ember from 'ember';
 const { inject: { service } } = Ember;
 
 export default Ember.Service.extend({
-  metadata: service(),
+  _metadata: service('metadata'),
   session: service(),
   notify: service(),
   currentUser: service(),
@@ -19,7 +19,7 @@ export default Ember.Service.extend({
   load() {
     "use strict";
     
-    this.get('metadata').getMetadata('Announcements').then((data) => {
+    this.get('_metadata').getMetadata('Announcements').then((data) => {
       let metadata = data.metadata;
       let metadataTime = (metadata ? new Date(metadata.updateTime.replace(' ', 'T')) : null);
       
@@ -35,10 +35,12 @@ export default Ember.Service.extend({
     let jwt = (session.get('isAuthenticated') ? this.get('currentUser.token') : null);
     
     (function(service) {
+      let metadata = service.get('_metadata');
+      
       Ember.$.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: `${service.get('metadata.endPoint')}announcements`,
+        url: `${metadata.get('endPoint')}${metadata.get('namespace')}announcements`,
         data: JSON.stringify({
           task: "GET_ACTIVE",
           token: jwt

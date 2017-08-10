@@ -1,4 +1,4 @@
-<div id="create-account-modal" class="modal fade" tabindex="-1" role="dialog">
+<div id="{{modalPrefix}}-modal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -6,7 +6,7 @@
         <h4 class="modal-title">Create Account</h4>
       </div>
     
-      <form id="create-account-form" class="form-margin" onsubmit={{action 'createAccount'}}>
+      <form id="{{modalPrefix}}-form" class="form-margin" onsubmit={{action 'createAccount'}}>
         {{generic-form-field
           idPrefix=modalPrefix
           label="First Name"

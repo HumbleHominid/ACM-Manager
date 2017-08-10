@@ -3,54 +3,54 @@ import Ember from 'ember';
 const { $ } = Ember;
 
 export default Ember.Service.extend({
-  data: null,
+  _data: null,
   
   init() {
     "use strict";
     
     this._super(...arguments);
    
-    let domWindow = $(window);
+    let appSettings = $(window)["0"].AcmManagerWebApplication;
     
-    if (domWindow["0"].AcmManagerWebApplication) {
-      this.set('data', domWindow["0"].AcmManagerWebApplication.socialMedia);
+    if (appSettings) {
+      this.set('_data', appSettings.socialMedia);
     }
     else {
-      this.set('data', null);
+      this.set('_data', null);
     }
   },
-  discord: Ember.computed('data', function() {
+  discord: Ember.computed('_data', function() {
     "use strict";
     
-    let data = this.get('data');
+    let data = this.get('_data');
     
     return (data ? data.discord : null);
   }),
-  facebook: Ember.computed('data', function() {
+  facebook: Ember.computed('_data', function() {
     "use strict";
     
-    let data = this.get('data');
+    let data = this.get('_data');
     
     return (data ? data.facebook : null);
   }),
-  instagram: Ember.computed('data', function() {
+  instagram: Ember.computed('_data', function() {
     "use strict";
     
-    let data = this.get('data');
+    let data = this.get('_data');
     
     return (data ? data.instagram : null);
   }),
-  slack: Ember.computed('data', function() {
+  slack: Ember.computed('_data', function() {
     "use strict";
     
-    let data = this.get('data');
+    let data = this.get('_data');
     
     return (data ? data.slack : null);
   }),
-  twitter: Ember.computed('data', function() {
+  twitter: Ember.computed('_data', function() {
     "use strict";
     
-    let data = this.get('data');
+    let data = this.get('_data');
     
     return (data ? data.twitter : null);
   })

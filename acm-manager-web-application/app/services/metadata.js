@@ -6,16 +6,21 @@ export default Ember.Service.extend({
   notify: service(),
   
   _endPoint: null,
+  _namespace: null,
   
   init() {
     "use strict";
     
     this._super(...arguments);
     
-    let domWindow = $(window);
+    let appSettings = $(window)["0"].AcmManagerWebApplication;
     
-    if (domWindow["0"].AcmManagerWebApplication) {
-      this.set('_endPoint', domWindow["0"].AcmManagerWebApplication.endPoint);
+    if (appSettings) {
+      
+      this.setProperties({
+        _endPoint: appSettings.endPoint,
+        _namespace: appSettings.namespace
+      });
     }
   },
   getMetadata(tableName) {
@@ -25,7 +30,7 @@ export default Ember.Service.extend({
       return $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: `${service.get('metadata.endPoint')}metadata`,
+        url: `${service.get('_endPoint')}${service.get('_namespace')}metadata`,
         data: JSON.stringify({
           task: "GET_METADATA",
           data: {
@@ -46,5 +51,10 @@ export default Ember.Service.extend({
     "use strict";
     
     return this.get('_endPoint');
+  }),
+  namespace: Ember.computed('_namespace', function() {
+    "use strict";
+    
+    return this.get('_namespace');
   })
 });

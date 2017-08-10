@@ -44,10 +44,12 @@ export default Ember.Component.extend({
     "use strict";
     
     (function(component) {
+      let metadata = component.get('_metadata');
+      
       $.ajax({
         type: 'POST', 
         contentType: 'application/json',
-        url: `${component.get('_metadata.endPoint')}members`,
+        url: `${metadata.get('endPoint')}${metadata.get('namespace')}members`,
         data: JSON.stringify({
           task: 'LIST_MEMBERS',
           token: component.get('currentUser.token')
@@ -150,10 +152,12 @@ export default Ember.Component.extend({
       });
 
       (function(component) {
+        let metadata = component.get('_metadata');
+        
         $.ajax({
           type: 'POST',
           contentType: 'application/json',
-          url: `${component.get('_metadata.endPoint')}events`,
+          url: `${metadata.get('endPoint')}${metadata.get('namespace')}events`,
           data: JSON.stringify({
             task: 'CREATE_EVENT',
             token: component.get('currentUser.token'),

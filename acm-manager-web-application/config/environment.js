@@ -73,6 +73,7 @@ module.exports = function(environment) {
   
     ENV.rootURL = config.rootURL;
     ENV.APP.endPoint = config.endPoint;
+    ENV.APP.namespace = config.namespace;
     ENV.APP.socialMedia = config.socialMedia;
   }
   
@@ -81,6 +82,7 @@ module.exports = function(environment) {
     
     ENV.rootURL = config.rootURL;
     ENV.APP.endPoint = config.endPoint;
+    ENV.APP.namespace = config.namespace;
     ENV.APP.socialMedia = config.socialMedia;
     
     // ENV.APP.LOG_RESOLVER = true;

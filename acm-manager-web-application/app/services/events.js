@@ -4,7 +4,7 @@ const { inject: { service } } = Ember;
 
 export default Ember.Service.extend({
   session: service(),
-  metadata: service(),
+  _metadata: service('metadata'),
   currentUser: service(),
   
   _data: null,
@@ -39,7 +39,7 @@ export default Ember.Service.extend({
             name: event.eventType.name,
             events: [ ]
           };
-        }//if
+        }
         
         past[eventTypeId].events.push(event);
       });
@@ -69,7 +69,7 @@ export default Ember.Service.extend({
             name: event.eventType.name,
             events: [ ]
           };
-        }//if
+        }
         
         future[eventTypeId].events.push(event);
       });
@@ -132,7 +132,7 @@ export default Ember.Service.extend({
               name: event.eventType.name,
               events: [ ]
             };
-          }//if
+          }
           
           events.past[eventTypeId].events.push(event);
         }
@@ -147,7 +147,7 @@ export default Ember.Service.extend({
               name: event.eventType.name,
               events: [ ]
             };
-          }//if
+          }
           
           events.future[eventTypeId].events.push(event);
         }
@@ -166,7 +166,7 @@ export default Ember.Service.extend({
   load() {
     "use strict";
     
-    this.get('metadata').getMetadata('Events').then((data) => {
+    this.get('_metadata').getMetadata('Events').then((data) => {
       let metadata = data.metadata;
       let metadataTime = (metadata ? new Date(metadata.updateTime.replace(' ', 'T')) : null);
       
@@ -182,10 +182,12 @@ export default Ember.Service.extend({
     let jwt = (session.get('isAuthenticated') ? this.get('currentUser.token') : null);
     
     (function(service) {
+      let metadata = service.get('_metadata');
+      
       Ember.$.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: `${service.get('metadata.endPoint')}events`,
+        url: `${metadata.get('endPoint')}${metadata.get('namespace')}events`,
         data: JSON.stringify({
           task: "GET_LIST",
           token: jwt

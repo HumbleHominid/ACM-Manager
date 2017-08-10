@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
-const { inject: { service } } = Ember;
+const { inject: { service }, $ } = Ember;
 
 export default BaseAuthenticator.extend({
   _metadata: service('metadata'),
@@ -10,10 +10,12 @@ export default BaseAuthenticator.extend({
     "use strict";
     
     return new Ember.RSVP.Promise((resolve, reject) => {
-      Ember.$.ajax({
+      let metadata = this.get('_metadata');
+      
+      $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: `${this.get('_metadata.endPoint')}login`,
+        url: `${metadata.get('endPoint')}${metadata.get('namespace')}login`,
         data: JSON.stringify({
           task: options.task,
           token: options.jwt,
