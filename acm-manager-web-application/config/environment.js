@@ -78,7 +78,7 @@ module.exports = function(environment) {
   }
   
   if (environment === 'mfryer') {
-    let config = JSON.parse(fs.readFileSync("vendor/config/mfryer.json"));
+    let config = JSON.parse(fs.readFileSync("vendor/config/testing/mfryer.json"));
     
     ENV.rootURL = config.rootURL;
     ENV.APP.endPoint = config.endPoint;
