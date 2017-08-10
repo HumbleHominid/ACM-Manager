@@ -10,14 +10,9 @@ export default Ember.Component.extend({
   _metadata: service('metadata'),
   
   _requestTime: null,
-  memberList: null,
-  attendeeList: [
-    {
-      text: "Michael Fryer",
-      value: "0",
-      display: true
-    }
-  ],
+  displayAddEventType: false,
+  memberList: [ ],
+  attendeeList: [ ],
   modalPrefix: 'create-event',
   
   didRender() {
@@ -27,8 +22,12 @@ export default Ember.Component.extend({
     
     $(`#${modalPrefix}-modal`).on('shown.bs.modal', () => {
       $(`#${modalPrefix}-name`).focus();
+      
+      this._updateEventType();
     }).on('hidden.bs.modal', () => {
       $(`#${modalPrefix}-form`)[0].reset();
+      
+      this._updateEventType();
     });
   },
   init() {
@@ -36,7 +35,11 @@ export default Ember.Component.extend({
     
     this._super(...arguments);
     
-    this.set('members', null);
+    this.setProperties({
+      memberList: [ ],
+      attendeeList: [ ],
+      _requestTime: null
+    });
     
     this.on('session.store.sessionDataUpdated', (() => this._fetchMembers()) ());
   },
@@ -84,6 +87,13 @@ export default Ember.Component.extend({
     
     return members;
   },
+  _updateEventType() {
+    "use strict";
+    
+    let select = $(`#${this.get('modalPrefix')}-eventType`);
+    
+    this.set('displayAddEventType', parseInt(select[0].value) === -1);
+  },
   eventTypes: Ember.computed('events.types', function()  {
     "use strict";
     
@@ -102,8 +112,12 @@ export default Ember.Component.extend({
     return data;
   }),
   actions: {
-    formSubmit() {
+    formSubmit(e) {
       "use strict";
+      
+      if (!e.isTrusted) {
+        return;
+      }
       
       let modalPrefix = this.get('modalPrefix');
       
@@ -195,24 +209,39 @@ export default Ember.Component.extend({
 
       return false;
     },
-    selectChanged(e) {
+    selectEventTypeChanged(e) {
       "use strict";
       
-      if (e.isTrusted) {
-        let select = $(`#${this.get('modalPrefix')}-add-attendee`);
-        let attendees = this.get('attendeeList');
-        
-        for (let i = 0; i < attendees.length; i++) {
-          if (parseInt(attendees[i].value) === parseInt(select[0].value)) {
-            this.set(`attendeeList.${i}.display`, false);
-            
-            break;
-          }
+      if (!e.isTrusted) {
+        return;
+      }
+      
+      this._updateEventType();
+    },
+    addAttendeeChanged(e) {
+      "use strict";
+      
+      if (!e.isTrusted) {
+        return;
+      }
+      
+      let select = $(`#${this.get('modalPrefix')}-add-attendee`);
+      let attendees = this.get('attendeeList');
+      
+      for (let i = 0; i < attendees.length; i++) {
+        if (parseInt(attendees[i].value) === parseInt(select[0].value)) {
+          this.set(`attendeeList.${i}.display`, false);
+          
+          break;
         }
       }
     },
-    removeAttendee(index) {
+    removeAttendee(index, e) {
       "use strict";
+      
+      if (!e.isTrusted) {
+        return;
+      }
       
       this.set(`attendeeList.${index}.display`, true);
     }

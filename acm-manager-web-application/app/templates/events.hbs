@@ -14,12 +14,15 @@
     {{input id="events-searchbar" placeholder="Search" class="form-control"}}
   </div>
   
-  {{#if session.isAuthenticated}}
-    {{#if (is-admin currentUser.userType.user_type_id)}}
+  {{#if 'session.isAuthenticated'}}
+    {{!#if (is-admin currentUser.userType.user_type_id)}}
       <div class="form-group">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-modal">Add Event</button>
       </div>
-    {{/if}}
+      <div class="form-group">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-type-modal">Add Event Type</button>
+      </div>
+    {{!/if}}
   {{/if}}
 </form>
 
@@ -45,5 +48,6 @@
 </div>
 
 {{create-event-modal}}
+{{create-event-type-modal}}
 
 {{outlet}}
