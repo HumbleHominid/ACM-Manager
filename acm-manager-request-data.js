@@ -142,8 +142,7 @@ var attendee = {
 {
 "task": "CREATE_EVENT_TYPE",
     "data": {
-      "event_type_id": "13",
-        "name": "Updated",
+        "name": "New Event Type Name",
         "description": "A general idea",
         "defaultPoints": "1"
     }
