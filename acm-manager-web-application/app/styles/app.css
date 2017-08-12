@@ -78,3 +78,10 @@ body {
 .announcements-container {
   margin: 1%;
 }
+
+@media only screen
+and (max-width: 1200px) {
+  .mobile-banner {
+    display: none !important;
+  }
+}
