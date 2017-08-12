@@ -9,7 +9,7 @@ use \Firebase\JWT\JWT;
 define('ALGORITHM','HS512');
 
 class Login{
-
+  private $emailRegex = '/^[a-zA-Z]+[0-9]*@mtech\\.edu$/';
   private $domain = 'katie.mtech.edu/~acmuser';
   private $validatedUser = -1;
   private $currToken = '';
@@ -89,21 +89,34 @@ class Login{
   }
 
   public function createUser($user, $pass, $first, $last, $rememberMe){
-    include('dbStartup.php');
     $query = 'INSERT INTO Passwords(password,passwordTimeout) VALUES (?, NULL);';
     $query2 = 'INSERT INTO Users(password_id, user_type, fName, lName, email) VALUES (?, 1, ?, ?, ?);';
+    if($this->validateEmail($user)){ 
+      try{ 
+        $this->conn->modify($query, [password_hash($pass, PASSWORD_BCRYPT)]);   
+        $this->conn->modify($query2, [$this->conn->lastInsertId(), $first, $last, $user]); 
 
-    try{ 
-      $this->conn->modify($query, [password_hash($pass, PASSWORD_BCRYPT)]);   
-      $this->conn->modify($query2, [$this->conn->lastInsertId(), $first, $last, $user]); 
-      
-      $this->metadata->updateMetadata($this->endpoint); 
-      return $this->attemptLogin($user, $pass, $rememberMe);
-    }catch(Exception $e){
-      echo ["reason" => $e->getMessage()];
-      die();
+        $this->metadata->updateMetadata($this->endpoint); 
+        return ['status'=>'success']; 
+      }catch(Exception $e){
+        echo ["reason" => $e->getMessage()];
+        die();
+      }
+    }else{
+      return ['status'=>'failure'];
     }
   }
+  
+  private function validateEmail($email){
+    $valid = preg_match($this->emailRegex, $email); 
+    if($valid){
+      $query = 'SELECT COUNT(*) AS CNT FROM Users WHERE email = ?;';
+      $result = $this->conn->select($query, [$email]);
+      $valid = $result[0]['CNT'] == 0;
+    }
+    return $valid;
+  }
+
 
   public function getToken(){
     if($this->validatedUser > -1){

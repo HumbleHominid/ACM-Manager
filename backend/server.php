@@ -178,12 +178,9 @@ class Server{
       $first = $this->data['data']['first'];
       $last = $this->data['data']['last'];
       $result = $this->login->createUser($user, $pass, $first, $last, $rememberMe);
-      if($result){
-        $json = $this->response(array());
-        echo $json;
-      }else{
-        echo $this->response(['reason'=>'Error creating account.']);
-      }
+      $json = $this->response($result);
+      echo $json;
+
       header('HTTP/1.1 200 OK');
       break;
     case 'UPDATE_TOKEN':
