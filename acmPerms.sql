@@ -1,0 +1,2 @@
+GRANT SELECT, UPDATE, INSERT, DELETE ON acm.* TO 'acmuser'@'localhost';
+FLUSH PRIVILEGES;

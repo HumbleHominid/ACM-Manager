@@ -1,8 +1,13 @@
 <?php
 class Members{
   private $conn = NULL;
+  private $metadata = NULL;
+  private $endpoint = 'User';
+  
   function Members(){
     $this->conn = new DbConn();
+    require_once('metadata.php');
+    $this->metadata = new Metadata();
   }
 
   function getMember($userId){
@@ -44,6 +49,24 @@ class Members{
     }
     return array("memberList" => $members);
 
+  }
+  
+  public function recalculatePoints($userId){
+    
+    $query = "SELECT SUM(givenPoints) AS '0'
+              FROM User_Attendance
+              WHERE user_id = ?;";
+    $results = $this->conn->select($query, [$userId]);
+
+
+    $points = $results[0][0];
+
+    $update = "UPDATE Users
+               SET points = ?
+               WHERE user_id = ?;"; 
+    $this->conn->modify($update, [$points, $userId]);
+ 
+    $this->metadata->updateMetadata($this->endpoint); 
   }
 }
 ?>
