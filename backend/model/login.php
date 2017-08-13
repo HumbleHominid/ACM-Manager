@@ -9,7 +9,7 @@ use \Firebase\JWT\JWT;
 define('ALGORITHM','HS512');
 
 class Login{
-
+  private $emailRegex = '/^[a-zA-Z]+[0-9]*@mtech\\.edu$/';
   private $domain = 'katie.mtech.edu/~acmuser';
   private $validatedUser = -1;
   private $currToken = '';
@@ -19,13 +19,22 @@ class Login{
   private $email = '';
   private $user_type_id = 0;
   private $name = '';
+  private $rememberMe = false;
+
+  private $normalTimeout = 3600;
+  private $rememberTimeout = 1814400;
+
+  private $metadata = NULL;
+  private $endpoint = 'Login';
 
   function Login(){
 
     $this->conn = new DbConn;
+    require_once('metadata.php');
+    $this->metadata = new Metadata(); 
   }
 
-  function attemptLogin($user, $pass){
+  function attemptLogin($user, $pass, $rememberMe){
 
     $query = 'SELECT * FROM Users
     JOIN Passwords ON Users.password_id = Passwords.password_id
@@ -47,6 +56,7 @@ class Login{
         $this->email = $results[0]['email'];
         $this->user_type_id = $typeId;
         $this->type_name = $typeResults[0]['name'];
+        $this->rememberMe = $rememberMe;
 
         return TRUE;
       }
@@ -70,42 +80,46 @@ class Login{
       $userType = (array) $decodedData['user_type'];
       $this->user_type_id = $userType['user_type_id'];
       $this->type_name = $userType['name'];
-
+      $this->rememberMe = $decodedData['rememberMe'];
       return true;
     } catch (Exception $e) {
-      echo $e->getMessage();
+      //echo ["reason" =>$e->getMessage()];
       return false;
     }
   }
 
-  public function createUser($user, $pass, $first, $last){
-    include('dbStartup.php');
-    $query = 'INSERT INTO Passwords(password,passwordTimeout) VALUES (:pass, NULL);';
+  public function createUser($user, $pass, $first, $last, $rememberMe){
+    $query = 'INSERT INTO Passwords(password,passwordTimeout) VALUES (?, NULL);';
+    $query2 = 'INSERT INTO Users(password_id, user_type, fName, lName, email) VALUES (?, 1, ?, ?, ?);';
+    if($this->validateEmail($user)){ 
+      try{ 
+        $this->conn->modify($query, [password_hash($pass, PASSWORD_BCRYPT)]);   
+        $this->conn->modify($query2, [$this->conn->lastInsertId(), $first, $last, $user]); 
 
-    $query2 = 'INSERT INTO Users(password_id, user_type, fName, lName, email) VALUES (:id, 1,:first, :last, :user);';
-
-    try{
-      $statement = $db->prepare($query);
-      $statement->bindValue(':pass', password_hash($pass, PASSWORD_BCRYPT));
-      $statement->execute();
-
-      $statement2 = $db->prepare($query2);
-      $statement2->bindValue(':user', $user);
-      $statement2->bindValue(':first', $first);
-      $statement2->bindValue(':last', $last);
-      $statement2->bindValue(':id', $db->lastInsertId());
-      $statement2->execute();
-
-      return $this->attemptLogin($user, $pass);
-    }catch(Exception $e){
-      echo $e->getMessage();
-      die();
+        $this->metadata->updateMetadata($this->endpoint); 
+        return ['status'=>'success']; 
+      }catch(Exception $e){
+        echo ["reason" => $e->getMessage()];
+        die();
+      }
+    }else{
+      return ['status'=>'failure'];
     }
   }
+  
+  private function validateEmail($email){
+    $valid = preg_match($this->emailRegex, $email); 
+    if($valid){
+      $query = 'SELECT COUNT(*) AS CNT FROM Users WHERE email = ?;';
+      $result = $this->conn->select($query, [$email]);
+      $valid = $result[0]['CNT'] == 0;
+    }
+    return $valid;
+  }
+
 
   public function getToken(){
     if($this->validatedUser > -1){
-
       $query = 'SELECT * FROM Users
       WHERE user_id = ?;';
 
@@ -116,7 +130,7 @@ class Login{
       $typeId = $results[0]['user_type'];
       $userType = "SELECT * FROM User_Type WHERE user_type_id = ?;";
       $typeResults = $this->conn->select($userType, [$typeId]);
-
+      $timeout = $this->rememberMe ? $this->rememberTimeout : $this->normalTimeout;
       $tokenId    = base64_encode(mcrypt_create_iv(32));
 
       $data = array(
@@ -125,6 +139,7 @@ class Login{
           'lName' => $results[0]['lName'],
           'email' => $results[0]['email'],
           'user_id' => $results[0]['user_id'],
+          'rememberMe' => $this->rememberMe,
           'user_type' => array(
             'user_type_id' => $typeId,
             'name' => $typeResults[0]['name'],
@@ -135,7 +150,7 @@ class Login{
           'iss' => $this->domain,
           'aud' => $this->domain,
           'iat' => time(),
-          'exp' => time() + 3600,
+          'exp' => time() + $timeout,
           'nbf' => time()
         );
 
@@ -151,6 +166,7 @@ class Login{
           'lName' => $results[0]['lName'],
           'email' => $results[0]['email'],
           'user_id' => $results[0]['user_id'],
+          'points' => $results[0]['points'],
           'user_type' => array(
             'user_type_id' => $typeId,
             'name' => $typeResults[0]['name'],
@@ -169,6 +185,10 @@ class Login{
 
     function getUserID(){
       return $this->validatedUser;
+    }
+
+    function isOfficer(){
+      return $this->user_type_id > 1;
     }
   }
   ?>
