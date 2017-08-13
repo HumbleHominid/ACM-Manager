@@ -15,7 +15,7 @@ export default BaseAuthenticator.extend({
       $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: `${metadata.get('endPoint')}${metadata.get('namespace')}login`,
+        url: `${metadata.get('url')}login`,
         data: JSON.stringify({
           task: options.task,
           token: options.jwt,
@@ -45,14 +45,10 @@ export default BaseAuthenticator.extend({
   },
   restore(data) {
     "use strict";
-
-    let auth = this;
     
     return new Ember.RSVP.Promise((resolve, reject) => {
-      if (!Ember.isEmpty(data.jwt)) {
-        auth.get('session').set('user', data.user ? data.user : null);
-        
-        resolve({ jwt: data.jwt });
+      if (!Ember.isEmpty(data.jwt)) {        
+        resolve(data.user);
       }
       else {
         reject();

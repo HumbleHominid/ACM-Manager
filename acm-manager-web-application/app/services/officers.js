@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { inject: { service } } = Ember;
+const { inject: { service }, $ } = Ember;
 
 export default Ember.Service.extend({
   _metadata: service('metadata'),
@@ -69,34 +69,32 @@ export default Ember.Service.extend({
   _fetchOfficers() {
     "use strict";
     
-    (function(service) {
-      let metadata = service.get('_metadata');
-      
-      Ember.$.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: `${metadata.get('endPoint')}${metadata.get('namespace')}officers`,
-        data: JSON.stringify({
-          task: "GET_OFFICERS"
-        })
-      }).done(function(data) {
-        return Ember.$.getJSON('officerData.json').then(function(officerSettings) {
-          Object.keys(officerSettings).forEach(function(key) {
-            if (data[key]) {
-              data[key].settings = officerSettings[key];
-            }
-          });
-          
-          service.set('_data', data);
-          service.set('_requestTime', new Date());
+    let metadata = this.get('_metadata');
+    
+    $.ajax({
+      type: 'POST',
+      contentType: 'application/json',
+      url: `${metadata.get('url')}officers`,
+      data: JSON.stringify({
+        task: "GET_OFFICERS"
+      })
+    }).done((data) => {
+      return $.getJSON('officerData.json').then((officerSettings) => {
+        Object.keys(officerSettings).forEach(function(key) {
+          if (data[key]) {
+            data[key].settings = officerSettings[key];
+          }
         });
-      }).fail(function() {
-        service.get('notify').alert("Failed to pull officer information.", {
-          radius: true,
-          closeAfter: 3 * 1000
-        });
+        
+        this.set('_data', data);
+        this.set('_requestTime', new Date());
       });
-    }) (this);
+    }).fail(() => {
+      this.get('notify').alert("Failed to pull officer information.", {
+        radius: true,
+        closeAfter: 3 * 1000
+      });
+    });
   },
   clear() {
     "use strict";

@@ -1,49 +1,43 @@
-<div id="{{modalPrefix}}-modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Create Account</h4>
-      </div>
-    
-      <form id="{{modalPrefix}}-form" class="form-margin" onsubmit={{action 'createAccount'}}>
-        {{generic-form-field
-          idPrefix=modalPrefix
-          label="First Name"
-          formName="first"
-          placeholder="John"
-        }}
-        {{generic-form-field
-          idPrefix=modalPrefix
-          label="Last Name"
-          formName="last"
-          placeholder="Doe"
-        }}
-      
-        {{email-form-field
-          idPrefix=modalPrefix
-          help="Please use your mtech.edu email account"
-        }}
-        {{email-form-field
-          idPrefix=(concat modalPrefix '-confirm')
-          placeholder="Confirm Email"
-          label="Confirm Email"
-        }}
-        
-        {{password-form-field
-          idPrefix=modalPrefix
-        }}
-        {{password-form-field
-          idPrefix=(concat modalPrefix '-confirm')
-          placeholder="Confirm Password"
-          label="Confirm Password"
-          help=""
-        }}
+{{#generic-modal
+  modalPrefix=modalPrefix
+  first=first
+  title="Create Account"
+  formAction=(action 'createAccount')
+}}
+  {{generic-form-field
+    idPrefix=modalPrefix
+    label="First Name"
+    formName="first"
+    placeholder="John"
+  }}
+  {{generic-form-field
+    idPrefix=modalPrefix
+    label="Last Name"
+    formName="last"
+    placeholder="Doe"
+  }}
 
-        <div class="modal-footer">
-          {{modal-buttons}}
-        </div>
-      </form>
-    </div>
+  {{email-form-field
+    idPrefix=modalPrefix
+    help="Please use your mtech.edu email account"
+  }}
+  {{email-form-field
+    idPrefix=(concat modalPrefix '-confirm')
+    placeholder="Confirm Email"
+    label="Confirm Email"
+  }}
+  
+  {{password-form-field
+    idPrefix=modalPrefix
+  }}
+  {{password-form-field
+    idPrefix=(concat modalPrefix '-confirm')
+    placeholder="Confirm Password"
+    label="Confirm Password"
+    help=""
+  }}
+
+  <div class="modal-footer">
+    {{modal-buttons}}
   </div>
-</div>
+{{/generic-modal}}

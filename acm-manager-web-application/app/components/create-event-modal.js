@@ -13,7 +13,9 @@ export default Ember.Component.extend({
   displayAddEventType: false,
   memberList: [ ],
   attendeeList: [ ],
-  modalPrefix: 'create-event',
+  defaultPoints: 0,
+  modalPrefix: "create-event",
+  first: "name",
   
   didRender() {
     "use strict";
@@ -21,12 +23,8 @@ export default Ember.Component.extend({
     let modalPrefix = this.get('modalPrefix');
     
     $(`#${modalPrefix}-modal`).on('shown.bs.modal', () => {
-      $(`#${modalPrefix}-name`).focus();
-      
       this._updateEventType();
     }).on('hidden.bs.modal', () => {
-      $(`#${modalPrefix}-form`)[0].reset();
-      
       this._updateEventType();
     });
   },
@@ -35,42 +33,36 @@ export default Ember.Component.extend({
     
     this._super(...arguments);
     
-    this.setProperties({
-      memberList: [ ],
-      attendeeList: [ ],
-      _requestTime: null
-    });
+    this.set('_requestTime', null);
     
-    this.on('session.store.sessionDataUpdated', (() => this._fetchMembers()) ());
+    this.on('session.store.sessionDataUpdated', this._fetchMembers());
   },
   _fetchMembers() {
     "use strict";
     
-    (function(component) {
-      let metadata = component.get('_metadata');
+    let metadata = this.get('_metadata');
+    
+    $.ajax({
+      type: 'POST',
+      contentType: 'application/json',
+      url: `${metadata.get('url')}members`,
+      data: JSON.stringify({
+        task: 'LIST_MEMBERS',
+        token: this.get('currentUser.token')
+      })
+    }).done((data) => {
+      let list = this._makeList(data.memberList);
       
-      $.ajax({
-        type: 'POST', 
-        contentType: 'application/json',
-        url: `${metadata.get('endPoint')}${metadata.get('namespace')}members`,
-        data: JSON.stringify({
-          task: 'LIST_MEMBERS',
-          token: component.get('currentUser.token')
-        })
-      }).done(function(data) {
-        let list = component._makeList(data.memberList);
-        
-        component.setProperties({
-          memberList: list,
-          attendeeList: list
-        });
-      }).fail(function() {
-        component.get('_notify').alert("Failed to pull member list.", {
-          radius: true,
-          closeAfter: 3 * 1000
-        });
+      this.setProperties({
+        memberList: list,
+        attendeeList: list
       });
-    }) (this);
+    }).fail(() => {
+      this.get('_notify').alert("Failed to pull member list.", {
+        radius: true,
+        closeAfter: 3 * 1000
+      });
+    });
   },
   _makeList(members) {
     "use strict";
@@ -90,9 +82,13 @@ export default Ember.Component.extend({
   _updateEventType() {
     "use strict";
     
-    let select = $(`#${this.get('modalPrefix')}-eventType`);
+    let selectValue = $(`#${this.get('modalPrefix')}-eventType`)[0].value;
+    let eventTypes = this.get('events.types');
     
-    this.set('displayAddEventType', parseInt(select[0].value) === -1);
+    this.setProperties({
+      displayAddEventType: parseInt(selectValue) === -1,
+      defaultPoints: eventTypes ? eventTypes[selectValue].defaultPoints : 0
+    });
   },
   eventTypes: Ember.computed('events.types', function()  {
     "use strict";
@@ -112,7 +108,7 @@ export default Ember.Component.extend({
     return data;
   }),
   actions: {
-    formSubmit(e) {
+    createEvent(e) {
       "use strict";
       
       if (!e.isTrusted) {
@@ -164,48 +160,46 @@ export default Ember.Component.extend({
           formInformation.attendees.push(obj);
         }
       });
-
-      (function(component) {
-        let metadata = component.get('_metadata');
-        
-        $.ajax({
-          type: 'POST',
-          contentType: 'application/json',
-          url: `${metadata.get('endPoint')}${metadata.get('namespace')}events`,
-          data: JSON.stringify({
-            task: 'CREATE_EVENT',
-            token: component.get('currentUser.token'),
-            data: formInformation
-          })
-        }).done(function(data) {
-          if (Ember.isPresent(data.reason)) {
-            component.get('_notify').alert(`Event creation failed. ${data.reason}`, {
-              radius: true,
-              closeAfter: 3 * 1000
-            });
-            
-            return false;
-          }
-          
-          $(`#${modalPrefix}-modal`).modal('hide');
-          
-          component.get('events').load();
-          
-          let eventData = data.eventData;
-          let coordinator = eventData.coordinator;
-          let timeString = new Date(eventData.eventTime.replace(' ', 'T')).toString();
-          
-          component.get('_notify').success(`New event titled "${data.eventData.name}" with coordinator "${coordinator.fName} ${coordinator.lName}" created for ${timeString}.`, {
-            radius: true,
-            closeAfter: 10 * 1000
-          });
-        }).fail(function() {
-          component.get('_notify').alert("Event creation failed.", {
+      
+      let metadata = this.get('_metadata');
+      
+      $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: `${metadata.get('url')}events`,
+        data: JSON.stringify({
+          task: 'CREATE_EVENT',
+          token: this.get('currentUser.token'),
+          data: formInformation
+        })
+      }).done((data) => {
+        if (Ember.isPresent(data.reason)) {
+          this.get('_notify').alert(`Event creation failed. ${data.reason}`, {
             radius: true,
             closeAfter: 3 * 1000
           });
+          
+          return false;
+        }
+        
+        $(`#${modalPrefix}-modal`).modal('hide');
+        
+        this.get('events').load();
+        
+        let eventData = data.eventData;
+        let coordinator = eventData.coordinator;
+        let timeString = new Date(eventData.eventTime.replace(' ', 'T')).toString();
+        
+        this.get('_notify').success(`New event titled "${data.eventData.name}" with coordinator "${coordinator.fName} ${coordinator.lName}" created for ${timeString}.`, {
+          radius: true,
+          closeAfter: 10 * 1000
         });
-      }) (this);
+      }).fail(() => {
+        this.get('_notify').alert("Event creation failed.", {
+          radius: true,
+          closeAfter: 3 * 1000
+        });
+      });
 
       return false;
     },

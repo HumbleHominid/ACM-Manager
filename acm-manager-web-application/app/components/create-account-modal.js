@@ -6,19 +6,9 @@ export default Ember.Component.extend({
   _notify: service('notify'),
   _metadata: service('metadata'),
   
-  modalPrefix: 'create-account',
-  
-  didRender() {
-    "use strict";
-    
-    let modalPrefix = this.get('modalPrefix');
-    
-    $(`#${modalPrefix}-modal`).on('shown.bs.modal', () => {
-      $(`#${modalPrefix}-first`).focus();
-    }).on('hidden.bs.modal', () => {
-      $(`#${modalPrefix}-form`)[0].reset();
-    });
-  },
+  modalPrefix: "create-account",
+  first: "email",
+
   _getFormData() {
     "use strict";
       
@@ -64,52 +54,50 @@ export default Ember.Component.extend({
         return false;
       }
       
-      (function(component) {
-        let metadata = component.get('_metadata');
+      let metadata = this.get('_metadata');
+      
+      $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: `${metadata.get('url')}login`,
+        data: JSON.stringify({
+          task: "CREATE_ACCOUNT",
+          data: data
+        })
+      }).done((data) => {
+        if (Ember.isPresent(data.reason)) {
+          this.get('_notify').alert(`${data.reason}`, {
+            radius: true,
+            closeAfter: 3 * 1000
+          });
+          
+          return false;
+        }
         
-        $.ajax({
-          type: 'POST',
-          contentType: 'application/json',
-          url: `${metadata.get('endPoint')}${metadata.get('namespace')}login`,
-          data: JSON.stringify({
-            task: "CREATE_ACCOUNT",
-            data: data
-          })
-        }).done(function(data) {
-          if (Ember.isPresent(data.reason)) {
-            component.get('_notify').alert(`${data.reason}`, {
-              radius: true,
-              closeAfter: 3 * 1000
-            });
-            
-            return false;
-          }
-          
-          $(`#${modalPrefix}-modal`).modal('hide');
-          
-          let alert = $(`#${modalPrefix}-error-alert`)[0];
-          
-          if (alert) {
-            alert.remove();
-          }
-          
-          component.get('_notify').success("Account created! You can now log in!", {
-            radius: true,
-            closeAfter: 3 * 1000
-          });
-        }).fail(function() {
-          let alert = $(`#${modalPrefix}-error-alert`)[0];
-          
-          if (alert) {
-            alert.remove();
-          }
-          
-          component.get('_notify').alert("Failed to create an account.", {
-            radius: true,
-            closeAfter: 3 * 1000
-          });
+        $(`#${modalPrefix}-modal`).modal('hide');
+        
+        let alert = $(`#${modalPrefix}-error-alert`)[0];
+        
+        if (alert) {
+          alert.remove();
+        }
+        
+        this.get('_notify').success("Account created! You can now log in!", {
+          radius: true,
+          closeAfter: 3 * 1000
         });
-      }) (this);
+      }).fail(() => {
+        let alert = $(`#${modalPrefix}-error-alert`)[0];
+        
+        if (alert) {
+          alert.remove();
+        }
+        
+        this.get('_notify').alert("Failed to create an account.", {
+          radius: true,
+          closeAfter: 3 * 1000
+        });
+      });
       
       return false;
     }

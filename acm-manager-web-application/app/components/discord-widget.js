@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { inject: { service } } = Ember;
+const { inject: { service }, $ } = Ember;
 
 export default Ember.Component.extend({
   _notify: service('notify'),
@@ -15,22 +15,22 @@ export default Ember.Component.extend({
     
     this._super(...arguments);
     
-    setInterval((function(component) {
-      Ember.$.ajax({
+    setInterval((() => {
+      $.ajax({
         type: 'GET',
-        url: `https://discordapp.com/api/guilds/${component.get('_socialMedia.discord.serverId')}/widget.json`
+        url: `https://discordapp.com/api/guilds/${this.get('_socialMedia.discord.serverId')}/widget.json`
       }).done((response) => {
-        component.setProperties({
+        this.setProperties({
           onlineUsers: response.members.length,
           discordLink: response.instant_invite,
           discordServerName: response.name
         });
       }).fail(() => {
-        component.get('_notify').alert("Could not fetch information from discord", {
+        this.get('_notify').alert("Could not fetch information from discord", {
           radius: true,
           closeAfter: 3 * 1000
         });
       });
-    }) (this), 60 * 1000);
+    }) (), 60 * 1000);
   }
 });

@@ -1,20 +1,14 @@
-<div id="{{modalPrefix}}-modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Create Event</h4>
-      </div>
-      
-      <form id="{{modalPrefix}}-form" class="form-margin" onsubmit={{action 'formSubmit'}}>
-          {{event-type-form-field
-            prefix=modalPrefix
-          }}
-        
-        <div class="modal-footer">
-          {{modal-buttons}}
-        </div>
-      </form>
-    </div>
+{{#generic-modal
+  modalPrefix=modalPrefix
+  first=first
+  title="New Event Type"
+  formAction=(action 'createNewType')
+}}
+  {{event-type-form-field
+    prefix=modalPrefix
+  }}
+  
+  <div class="modal-footer">
+    {{modal-buttons}}
   </div>
-</div>
+{{/generic-modal}}

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { inject: { service } } = Ember;
+const { inject: { service }, $ } = Ember;
 
 export default Ember.Service.extend({
   session: service(),
@@ -181,28 +181,26 @@ export default Ember.Service.extend({
     let session = this.get('session');
     let jwt = (session.get('isAuthenticated') ? this.get('currentUser.token') : null);
     
-    (function(service) {
-      let metadata = service.get('_metadata');
+    let metadata = this.get('_metadata');
+    
+    $.ajax({
+      type: 'POST',
+      contentType: 'application/json',
+      url: `${metadata.get('url')}events`,
+      data: JSON.stringify({
+        task: "GET_LIST",
+        token: jwt
+      })
+    }).done((data) => {
+      let eventData = Ember.copy(data, true);
       
-      Ember.$.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: `${metadata.get('endPoint')}${metadata.get('namespace')}events`,
-        data: JSON.stringify({
-          task: "GET_LIST",
-          token: jwt
-        })
-      }).done(function(data) {
-        let eventData = Ember.copy(data, true);
-        
-        service.set('_data', eventData);
-      }).fail(function(/* jqXHW, textStatus, err */) {
-        service.get('notify').alert("Failed to pull events", {
-          radius: true,
-          closeAfter: 3 * 1000
-        });
+      this.set('_data', eventData);
+    }).fail((/* jqXHW, textStatus, err */) => {
+      this.get('notify').alert("Failed to pull events", {
+        radius: true,
+        closeAfter: 3 * 1000
       });
-    }) (this);
+    });
   },
   clear() {
     "use strict";

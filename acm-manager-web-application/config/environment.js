@@ -19,6 +19,7 @@ module.exports = function(environment) {
     },
     APP: {
       endPoint: "",
+      namespace: "",
       socialMedia: {
         discord: {
           display: false,

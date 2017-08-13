@@ -40,7 +40,7 @@ export default Ember.Service.extend({
       Ember.$.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: `${metadata.get('endPoint')}${metadata.get('namespace')}announcements`,
+        url: `${metadata.get('url')}announcements`,
         data: JSON.stringify({
           task: "GET_ACTIVE",
           token: jwt

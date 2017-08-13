@@ -1,125 +1,120 @@
-<div id="{{modalPrefix}}-modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Create Event</h4>
-      </div>
-      
-      <form id="{{modalPrefix}}-form" class="form-margin" onsubmit={{action 'formSubmit'}}>
-        {{generic-form-field
-          placeholder="Name of the event"
-          formName="name"
-          idPrefix=modalPrefix
-          label="Event Name"
-        }}
-        
-        {{select-form-field
-          idPrefix=modalPrefix
-          formName="coordinator"
-          label="Event Coordinator"
-          data=memberList
-        }}
-        
-        {{#generic-form-field
-          hasFeedback=true
-          formName="eventType"
-          label="Event Type"
-          idPrefix=modalPrefix
-        }}
-          <select class="form-control" id={{concat modalPrefix "-eventType"}} multiple={{if multiple "multiple" ""}} onchange={{action 'selectEventTypeChanged'}}>
-            {{#each-in eventTypes as |key value|}}
-              {{#if value.display}}
-                <option value={{value.value}}>{{value.text}}</option>
-              {{/if}}
-            {{/each-in}}
-            
-            <option value="-1">New Event Type</option>
-          </select>
-        {{/generic-form-field}}
-        
-        {{#if displayAddEventType}}
-          <h3>New Event Type</h3>
-          <span class="form-divider" />
-
-          <div class="form-margin">
-            {{event-type-form-field
-              prefix=(concat modalPrefix "-event-type")
-            }}
-          </div>
-          
-          <span class="form-divider" />
+{{#generic-modal
+  modalPrefix=modalPrefix
+  first=first
+  title="Create Event"
+  formAction=(action 'createEvent')
+}}
+  {{generic-form-field
+    placeholder="Name of the event"
+    formName="name"
+    idPrefix=modalPrefix
+    label="Event Name"
+  }}
+  
+  {{select-form-field
+    idPrefix=modalPrefix
+    formName="coordinator"
+    label="Event Coordinator"
+    data=memberList
+  }}
+  
+  {{#generic-form-field
+    hasFeedback=true
+    formName="eventType"
+    label="Event Type"
+    idPrefix=modalPrefix
+  }}
+    <select class="form-control" id={{concat modalPrefix "-eventType"}} multiple={{if multiple "multiple" ""}} onchange={{action 'selectEventTypeChanged'}}>
+      {{#each-in eventTypes as |key value|}}
+        {{#if value.display}}
+          <option value={{value.value}}>{{value.text}}</option>
         {{/if}}
-        
-        {{textarea-form-field
-          idPrefix=modalPrefix
-          formName="additionalInfo"
-          label="Additional Information"
-          placeholder="Additional information about the event"
-          required=false
-        }}
-        
-        {{generic-form-field
-          placeholder="Location event is being held"
-          label="Location"
-          idPrefix=modalPrefix
-          formName="location"
-        }}
-        
-        {{generic-form-field
-          type="datetime-local"
-          label="Date and Time"
-          idPrefix=modalPrefix
-          formName="eventTime"
-        }}
-        
-        {{generic-form-field
-          type="number"
-          value="0"
-          label="Points"
-          idPrefix=modalPrefix
-          formName="points"
-          step="0.25"
-          min="0"
-        }}
-        
-        <h3>Attendees</h3>
-        <span class="form-divider" />
-        
-        {{#each-in attendeeList as |key value|}}
-          {{#unless value.display}}
-            {{#attendee-form-field
-              attendeeName=value.text
-              attendeeId=value.value
-              prefix=modalPrefix
-            }}
-              <button type="button" class="btn btn-danger" {{action 'removeAttendee' key}}>Remove Attendee</button>
-            {{/attendee-form-field}}
-          {{/unless}}
-        {{/each-in}}
-        
-        {{#generic-form-field
-          hasFeedback=false
-          formName="add-attendee"
-          label="Select an attendee to add"
-          idPrefix=modalPrefix
-          required=false
-        }}
-          <select class="form-control" id={{concat modalPrefix "-add-attendee"}} multiple={{if multiple "multiple" ""}} onchange={{action 'addAttendeeChanged'}}>
-            <option value="-1">Select Attendee</option>
-            
-            {{#each-in attendeeList as |key value|}}
-              {{#if value.display}}
-                <option value={{value.value}}>{{value.text}}</option>
-              {{/if}}
-            {{/each-in}}
-          </select>
-        {{/generic-form-field}}
-        
-        <div class="modal-footer">
-          {{modal-buttons}}
-        </div>
-      </form>
+      {{/each-in}}
+      
+      <option value="-1">New Event Type</option>
+    </select>
+  {{/generic-form-field}}
+  
+  {{#if displayAddEventType}}
+    <h3>New Event Type</h3>
+    <span class="form-divider" />
+
+    <div class="form-margin">
+      {{event-type-form-field
+        prefix=(concat modalPrefix "-event-type")
+      }}
     </div>
+    
+    <span class="form-divider" />
+  {{/if}}
+  
+  {{textarea-form-field
+    idPrefix=modalPrefix
+    formName="additionalInfo"
+    label="Additional Information"
+    placeholder="Additional information about the event"
+    required=false
+  }}
+  
+  {{generic-form-field
+    placeholder="Location event is being held"
+    label="Location"
+    idPrefix=modalPrefix
+    formName="location"
+  }}
+  
+  {{generic-form-field
+    type="datetime-local"
+    label="Date and Time"
+    idPrefix=modalPrefix
+    formName="eventTime"
+  }}
+  
+  {{generic-form-field
+    type="number"
+    value=defaultPoints
+    label="Points"
+    idPrefix=modalPrefix
+    formName="points"
+    step="0.25"
+    min="0"
+  }}
+  
+  <h3>Attendees</h3>
+  <span class="form-divider" />
+  
+  {{#each-in attendeeList as |key value|}}
+    {{#unless value.display}}
+      {{#attendee-form-field
+        attendeeName=value.text
+        attendeeId=value.value
+        prefix=modalPrefix
+        points=defaultPoints
+      }}
+        <button type="button" class="btn btn-danger" {{action 'removeAttendee' key}}>Remove Attendee</button>
+      {{/attendee-form-field}}
+    {{/unless}}
+  {{/each-in}}
+  
+  {{#generic-form-field
+    hasFeedback=false
+    formName="add-attendee"
+    label="Select an attendee to add"
+    idPrefix=modalPrefix
+    required=false
+  }}
+    <select class="form-control" id={{concat modalPrefix "-add-attendee"}} multiple={{if multiple "multiple" ""}} onchange={{action 'addAttendeeChanged'}}>
+      <option value="-1">Select Attendee</option>
+      
+      {{#each-in attendeeList as |key value|}}
+        {{#if value.display}}
+          <option value={{value.value}}>{{value.text}}</option>
+        {{/if}}
+      {{/each-in}}
+    </select>
+  {{/generic-form-field}}
+  
+  <div class="modal-footer">
+    {{modal-buttons}}
   </div>
-</div>
+{{/generic-modal}}
