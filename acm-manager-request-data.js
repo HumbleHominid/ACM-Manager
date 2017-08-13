@@ -203,4 +203,55 @@ var attendee = {
     }
 }
 
+/********************************************************************
+ * ANNOUNCEMENTS - Send to katie.mtech.edu/~acmuser/backend/announcements
+ ********************************************************************/
+
+//Get actively shown announcemnets for given user
+//Varied response based on time and user level
+{
+	"task": "GET_ACTIVE"
+}
+
+//Creates an announcement.
+//Log-in with officer account required
+{
+	"task": "CREATE_ANNO",
+	"data": {
+		"message":"Creating ANNO",
+		"startTime":"2017-07-30 00:00:00",
+		"endTime":"2017-08-12 12:00:00",
+		"user_type":"0",
+		"creator_id":"5"
+	}
+}
+
+//Updates an announcement.
+//Log-in with officer account required
+{
+	"task": "UPDATE_ANNO",
+	"data": {
+		"anno_id": "4",  
+			"message":"UPDATING ANNO",
+			"startTime":"2017-07-30 00:00:00",
+			"endTime":"2017-08-12 12:00:00",
+			"user_type":"0",
+			"creator_id":"5"
+	}
+}
+
+
+//Deletes an announcement.
+//Log-in with officer account required
+{
+	"task": "UPDATE_ANNO",
+	"data": {
+		"anno_id": "4"  
+	}
+}
+
+
+
+
+
 

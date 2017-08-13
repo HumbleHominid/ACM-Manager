@@ -271,6 +271,32 @@ class Server{
         $results = $announcements->getAnnouncementsBar($this->login->getType());
         echo $this->response($results); 
         break;
+      case('UPDATE_ANNO'):
+        if($this->login->isOfficer()){
+          $results = $announcements->updateAnnouncement($this->data['data']);
+          echo $this->response($results);
+        }else{
+          echo $this->response(array('reason'=>'You are not an officer.'));
+        } 
+        break;
+      case('CREATE_ANNO'):
+        if($this->login->isOfficer()){
+          $results = $announcements->addAnnouncement($this->data['data']);
+          echo $this->response($results);
+        }else{
+          echo $this->response(array('reason'=>'You are not an officer.'));
+        } 
+        break;
+      case('DELETE_ANNO'):
+        if($this->login->isOfficer()){
+          $results = $announcements->deleteAnnouncement($this->data['data']['anno_id']);
+          echo $this->response($results);
+        }else{
+          echo $this->response(array('reason'=>'You are not an officer.'));
+        } 
+        break;
+      case('LIST_ALL'):
+        break; 
       default: 
         header('HTTP/1.1 400 Bad Request');
       break;
