@@ -1,11 +1,11 @@
 import Ember from 'ember';
 
-const { inject: { service } } = Ember;
+const { inject: { service }, $ } = Ember;
 
 export default Ember.Service.extend({
   _metadata: service('metadata'),
+  _notify: service('notify'),
   session: service(),
-  notify: service(),
   currentUser: service(),
   
   _data: null,
@@ -33,27 +33,23 @@ export default Ember.Service.extend({
     
     let session = this.get('session');
     let jwt = (session.get('isAuthenticated') ? this.get('currentUser.token') : null);
-    
-    (function(service) {
-      let metadata = service.get('_metadata');
       
-      Ember.$.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: `${metadata.get('url')}announcements`,
-        data: JSON.stringify({
-          task: "GET_ACTIVE",
-          token: jwt
-        })
-      }).done(function(data) {
-        service.set('_data', data);
-      }).fail(function() {
-        service.get('notify').alert("Could not fetch announcements.", {
-          closeAfter: 3 * 1000,
-          radius: true
-        });
+    $.ajax({
+      type: 'POST',
+      contentType: 'application/json',
+      url: `${this.get('_metadata.url')}announcements`,
+      data: JSON.stringify({
+        task: "GET_ACTIVE",
+        token: jwt
+      })
+    }).done((data) => {
+      this.set('_data', data);
+    }).fail(() => {
+      this.get('_notify').alert("Could not fetch announcements.", {
+        closeAfter: 3 * 1000,
+        radius: true
       });
-    }) (this);
+    });
   },
   data: Ember.computed('_data', function() {
     "use strict";
