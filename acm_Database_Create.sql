@@ -1,6 +1,6 @@
-USE tbrooks;
+USE acm;
 
-DELETE FROM Metadata;
+/*DELETE FROM Metadata;
 DROP TABLE IF EXISTS Metadata;
 
 DELETE FROM Announcements;
@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS User_Type;
 
 DELETE FROM Passwords;
 DROP TABLE IF EXISTS Passwords;
-
+*/
 
 CREATE TABLE Passwords (
   password_id int NOT NULL AUTO_INCREMENT,
