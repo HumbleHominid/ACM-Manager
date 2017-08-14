@@ -1,5 +1,3 @@
-USE acm;
-
 /*DELETE FROM Metadata;
 DROP TABLE IF EXISTS Metadata;
 
@@ -87,7 +85,7 @@ CREATE TABLE Fees (
   fee_id int NOT NULL AUTO_INCREMENT,
   name varchar(20) NOT NULL,
   description varchar(140) NOT NULL,
-  dueDate timestamp,
+  dueDate datetime,
   fee double, 
   fee_type_id tinyint NOT NULL,
   FOREIGN KEY(fee_type_id) REFERENCES Fee_Type(fee_type_id),
@@ -111,7 +109,7 @@ CREATE TABLE Events (
   name varchar(30) NOT NULL,
   additionalInfo text,
   location varchar(50),
-  eventTime timestamp NOT NULL,
+  eventTime datetime NOT NULL,
   points double NOT NULL,
   audience tinyint NOT NULL,
   FOREIGN KEY(audience) REFERENCES User_Type(user_type_id),
