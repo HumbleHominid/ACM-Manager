@@ -21,7 +21,7 @@ cache:
 
 before_install:
   - cp backend/model/key.php.smp backend/model/key.php
-  - cp backend/model/dbStartup.php.smp backend/model/dbStartup.php.smp
+  - cp backend/model/dbStartup.php.smp backend/model/dbStartup.php
   - cd acm-manager-web-application 
   - npm config set spin false
   - npm install -g bower
