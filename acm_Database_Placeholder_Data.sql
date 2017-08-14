@@ -77,4 +77,4 @@ INSERT INTO Metadata(endpoint, updateTime) VALUES ('Members', NOW());
 INSERT INTO Metadata(endpoint, updateTime) VALUES ('Fees', NOW());
 INSERT INTO Metadata(endpoint, updateTime) VALUES ('Officers', NOW());
 INSERT INTO Metadata(endpoint, updateTime) VALUES ('Files', NOW());
-INSERT INTO Metadata(endpoint, updateTime) VALUES ('Announcments', NOW());
+INSERT INTO Metadata(endpoint, updateTime) VALUES ('Announcements', NOW());

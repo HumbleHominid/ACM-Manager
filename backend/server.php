@@ -137,7 +137,13 @@ class Server{
       echo $json;
       break;
     case 'LIST_MEMBERS':
-      $info = $member->listMembers();
+      if($this->login->isOfficer()){
+        $info = $member->listMembers();
+      }else if($this->login->isLoggedIn()){
+        $info = $member->getMember($this->login->getUserID());
+      }else{
+        $info = ['reason'=>'You cannot lookup user data while not logged in.'];
+      }
       $json = $this->response($info);
       echo $json;
       break;
@@ -178,12 +184,9 @@ class Server{
       $first = $this->data['data']['first'];
       $last = $this->data['data']['last'];
       $result = $this->login->createUser($user, $pass, $first, $last, $rememberMe);
-      if($result){
-        $json = $this->response(array());
-        echo $json;
-      }else{
-        echo $this->response(['reason'=>'Error creating account.']);
-      }
+      $json = $this->response($result);
+      echo $json;
+
       header('HTTP/1.1 200 OK');
       break;
     case 'UPDATE_TOKEN':
@@ -267,13 +270,42 @@ class Server{
     $task = $this->data['task'];
      include('model/members.php');
     $members = new Members;
+    include('model/events.php');
+    $events = new Events($this->login, $members);
+
     include('model/announcements.php');
-    $announcements = new Announcements($members);
+    $announcements = new Announcements($members, $events);
     switch($task){
       case('GET_ACTIVE'):
         $results = $announcements->getAnnouncementsBar($this->login->getType());
         echo $this->response($results); 
         break;
+      case('UPDATE_ANNO'):
+        if($this->login->isOfficer()){
+          $results = $announcements->updateAnnouncement($this->data['data']);
+          echo $this->response($results);
+        }else{
+          echo $this->response(array('reason'=>'You are not an officer.'));
+        } 
+        break;
+      case('CREATE_ANNO'):
+        if($this->login->isOfficer()){
+          $results = $announcements->addAnnouncement($this->data['data']);
+          echo $this->response($results);
+        }else{
+          echo $this->response(array('reason'=>'You are not an officer.'));
+        } 
+        break;
+      case('DELETE_ANNO'):
+        if($this->login->isOfficer()){
+          $results = $announcements->deleteAnnouncement($this->data['data']['anno_id']);
+          echo $this->response($results);
+        }else{
+          echo $this->response(array('reason'=>'You are not an officer.'));
+        } 
+        break;
+      case('LIST_ALL'):
+        break; 
       default: 
         header('HTTP/1.1 400 Bad Request');
       break;

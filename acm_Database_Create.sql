@@ -113,6 +113,8 @@ CREATE TABLE Events (
   location varchar(50),
   eventTime timestamp NOT NULL,
   points double NOT NULL,
+  audience tinyint NOT NULL,
+  FOREIGN KEY(audience) REFERENCES User_Type(user_type_id),
   FOREIGN KEY(coordinator) REFERENCES Users(user_id),
   FOREIGN KEY(eventType) REFERENCES Event_Type(event_type_id),
   PRIMARY KEY(event_id)
