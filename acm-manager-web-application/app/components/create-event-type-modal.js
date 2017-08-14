@@ -21,7 +21,6 @@ export default Ember.Component.extend({
       }
       
       let modalPrefix = this.get('modalPrefix');
-      let metadata = this.get('_metadata');
       
       let data = {
         name: $(`#${modalPrefix}-name`)[0].value,
@@ -32,7 +31,7 @@ export default Ember.Component.extend({
       $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: `${metadata.get('url')}events`,
+        url: `${this.get('_metadata.url')}events`,
         data: JSON.stringify({
           task: 'CREATE_EVENT_TYPE',
           token: this.get('currentUser.token'),

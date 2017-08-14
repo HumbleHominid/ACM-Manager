@@ -10,12 +10,10 @@ export default BaseAuthenticator.extend({
     "use strict";
     
     return new Ember.RSVP.Promise((resolve, reject) => {
-      let metadata = this.get('_metadata');
-      
       $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: `${metadata.get('url')}login`,
+        url: `${this.get('_metadata.url')}login`,
         data: JSON.stringify({
           task: options.task,
           token: options.jwt,

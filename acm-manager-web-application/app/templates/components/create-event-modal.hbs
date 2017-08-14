@@ -2,7 +2,7 @@
   modalPrefix=modalPrefix
   first=first
   title="Create Event"
-  formAction=(action 'createEvent')
+  formAction=(action 'submitForm')
 }}
   {{generic-form-field
     placeholder="Name of the event"
@@ -31,7 +31,7 @@
         {{/if}}
       {{/each-in}}
       
-      <option value="-1">New Event Type</option>
+      <option value="-1">Create New Event Type</option>
     </select>
   {{/generic-form-field}}
   
