@@ -1,5 +1,51 @@
-<div class="footer__container">
-  <p class="footer__text"><span class="glyphicon glyphicon-copyright-mark" /> Michael Fryer and Trevor Brooks</p>
+<div class="row">
+  {{!-- Left Side --}}
+  <div class="col-xs-12 col-md-6">
+    <a href="https://github.com/HumbleHominid/ACM-Manager" target="_blank">Source</a> available on <em>GitHub</em>.
+    
+    {{#if session.isAuthenticated}}
+      {{#if socialMedia.discord.display}}
+        {{discord-widget}}
+      {{/if}}
+      
+      {{#with socialMedia.slack as |slack|}}
+        {{#if slack.display}}
+          <a href={{slack.inviteUrl}} target="_blank">Link</a> to <em>Slack</em>
+        {{/if}}
+      {{/with}}
+    {{/if}}
+  </div>
+  
+  {{!-- This is for spacing when stacked --}}
+  <div class="visible-xs-block visible-sm-block col-xs-12">
+    <br>
+  </div>
+  
+  {{!-- Right Side --}}
+  <div class="col-xs-12 col-md-6">
+    Site Map:<br>
+    {{link-to 'Home' 'home'}}<br>
+    {{link-to 'Events' 'events'}}<br>
+    {{link-to 'Officers' 'officers'}}<br>
+    
+    {{#if session.isAuthenticated}}
+      {{link-to 'Files' 'files'}}<br>
+      {{link-to 'Account' 'account' (query-params user_id=currentUser.id)}}<br>
+      
+      {{#if (is-admin currentUser.userType.user_type_id)}}
+        {{link-to 'Fees' 'fees'}}<br>
+      {{/if}}
+    {{/if}}
+    
+    <br>
+    {{#scroll-top
+      animate='400' as |clickAction|
+    }}
+      <a href="#" {{action clickAction}}>Back to Top</a>
+    {{/scroll-top}}
+  </div>
 </div>
+    
+<p class="footer__text"><span class="glyphicon glyphicon-copyright-mark" /> Michael Fryer and Trevor Brooks</p>
 
 {{yield}}

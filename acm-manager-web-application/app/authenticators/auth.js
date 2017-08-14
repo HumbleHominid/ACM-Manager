@@ -1,57 +1,54 @@
 import Ember from 'ember';
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
-const { inject: { service } } = Ember;
+const { inject: { service }, $ } = Ember;
 
 export default BaseAuthenticator.extend({
-  session: service(),
-  metadata: service(),
+  _metadata: service('metadata'),
 
   authenticate(options) {
     "use strict";
     
-    let auth = this;
-    
     return new Ember.RSVP.Promise((resolve, reject) => {
-        Ember.$.ajax({
-          type: 'POST',
-          contentType: 'application/json',
-          url: `${this.get('metadata.endPoint')}login`,
-          data: JSON.stringify({
-            task: options.task,
-            token: options.jwt,
-            data: {
-              username: options.username,
-              password: options.password,
-              rememberMe: options.rememberMe
-            }
-          })
-        }).done((response) => {
-          if (response.user) {
-            auth.get('session').set('user', response.user);
-            
-            resolve({ jwt: response.user.jwt });
+      let metadata = this.get('_metadata');
+      
+      $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: `${metadata.get('url')}login`,
+        data: JSON.stringify({
+          task: options.task,
+          token: options.jwt,
+          data: {
+            username: options.username,
+            password: options.password,
+            rememberMe: options.rememberMe
           }
-          else {
-            reject();
+        })
+      }).done((response) => {
+        if (response.user) {
+          if (options.jwt) {
+            response.user.jwt = options.jwt;
           }
-        }).fail((xhr/* , status, error */) => {
-          var response = xhr.responseText;
+          
+          resolve(response.user);
+        }
+        else {
+          reject();
+        }
+      }).fail((xhr/* , status, error */) => {
+        var response = xhr.responseText;
 
-          reject(response);
-        });
+        reject(response);
       });
+    });
   },
   restore(data) {
     "use strict";
-console.log(data)
-    let auth = this;
     
     return new Ember.RSVP.Promise((resolve, reject) => {
-      if (!Ember.isEmpty(data.jwt)) {
-        auth.get('session').set('user', data.user ? data.user : null);
-        
-        resolve({ jwt: data.jwt });
+      if (!Ember.isEmpty(data.jwt)) {        
+        resolve(data.user);
       }
       else {
         reject();

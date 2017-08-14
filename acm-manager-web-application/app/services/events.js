@@ -1,10 +1,11 @@
 import Ember from 'ember';
 
-const { inject: { service } } = Ember;
+const { inject: { service }, $ } = Ember;
 
 export default Ember.Service.extend({
   session: service(),
-  metadata: service(),
+  _metadata: service('metadata'),
+  currentUser: service(),
   
   _data: null,
   _requestTime: null,
@@ -38,7 +39,7 @@ export default Ember.Service.extend({
             name: event.eventType.name,
             events: [ ]
           };
-        }//if
+        }
         
         past[eventTypeId].events.push(event);
       });
@@ -68,13 +69,20 @@ export default Ember.Service.extend({
             name: event.eventType.name,
             events: [ ]
           };
-        }//if
+        }
         
         future[eventTypeId].events.push(event);
       });
     }
     
     return future;
+  }),
+  types: Ember.computed('_data', function() {
+    "use strict";
+    
+    let data = this.get('_data');
+    
+    return (data ? data.eventTypes : null);
   }),
   search(query) {
     "use strict";
@@ -124,7 +132,7 @@ export default Ember.Service.extend({
               name: event.eventType.name,
               events: [ ]
             };
-          }//if
+          }
           
           events.past[eventTypeId].events.push(event);
         }
@@ -139,7 +147,7 @@ export default Ember.Service.extend({
               name: event.eventType.name,
               events: [ ]
             };
-          }//if
+          }
           
           events.future[eventTypeId].events.push(event);
         }
@@ -158,7 +166,7 @@ export default Ember.Service.extend({
   load() {
     "use strict";
     
-    this.get('metadata').getMetadata('Events').then((data) => {
+    this.get('_metadata').getMetadata('Events').then((data) => {
       let metadata = data.metadata;
       let metadataTime = (metadata ? new Date(metadata.updateTime.replace(' ', 'T')) : null);
       
@@ -171,25 +179,28 @@ export default Ember.Service.extend({
     "use strict";
     
     let session = this.get('session');
-    let jwt = (session.get('data.authenticated') ? session.get('data.authenticated.user.jwt') : null);
+    let jwt = (session.get('isAuthenticated') ? this.get('currentUser.token') : null);
     
-    (function(service) {
-      Ember.$.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: `${service.get('metadata.endPoint')}events`,
-        data: JSON.stringify({
-          task: "GET_LIST",
-          token: jwt
-        })
-      }).done(function(data) {
-        let eventData = Ember.copy(data, true);
-        
-        service.set('_data', eventData);
-      }).fail(function(/* jqXHW, textStatus, err */) {
-        //fail
+    let metadata = this.get('_metadata');
+    
+    $.ajax({
+      type: 'POST',
+      contentType: 'application/json',
+      url: `${metadata.get('url')}events`,
+      data: JSON.stringify({
+        task: "GET_LIST",
+        token: jwt
+      })
+    }).done((data) => {
+      let eventData = Ember.copy(data, true);
+      
+      this.set('_data', eventData);
+    }).fail((/* jqXHW, textStatus, err */) => {
+      this.get('notify').alert("Failed to pull events", {
+        radius: true,
+        closeAfter: 3 * 1000
       });
-    }) (this);
+    });
   },
   clear() {
     "use strict";
@@ -198,10 +209,5 @@ export default Ember.Service.extend({
       _data: null,
       _requestTime: null
     });
-  },
-  read() {
-    "use strict";
-    
-    return this.get('_data');
   }
 });

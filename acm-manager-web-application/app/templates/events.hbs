@@ -1,9 +1,10 @@
 <div class="page-header">
   <h1>Events</h1>
 </div>
-<form class="form-inline" oninput={{action 'search'}}>
+
+<form class="form-inline" oninput={{action 'search'}} onsubmit={{action 'formSubmit'}}>
   <div class="form-group">
-    <p class="form-control-static">Filter View:</p>
+    <p class="form-control-static"><strong>Filter View:</strong></p>
     <div class="btn-group" role="group" aria-label="">
       <button disabled={{if filterTime "disabled" ""}} type="button" class="btn btn-default" {{action 'filterTime'}}>Time</button>
       <button disabled={{if filterType "disabled" ""}} type="button" class="btn btn-default" {{action 'filterType'}}>Type</button>
@@ -12,11 +13,17 @@
   <div class="form-group">
     {{input id="events-searchbar" placeholder="Search" class="form-control"}}
   </div>
-  <div class="form-group">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-modal">Add Event</button>
-  </div>
+  
+  {{#if (is-admin (get currentUser.userType "user_type_id"))}}
+    <div class="form-group">
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-modal">Add Event</button>
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-type-modal">Add Event Type</button>
+    </div>
+  {{/if}}
 </form>
+
 <br><br>
+
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   {{event-list-route
     filterType=filterType
@@ -37,5 +44,6 @@
 </div>
 
 {{create-event-modal}}
+{{create-event-type-modal}}
 
 {{outlet}}

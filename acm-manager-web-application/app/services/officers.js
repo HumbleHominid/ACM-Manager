@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
-const { inject: { service } } = Ember;
+const { inject: { service }, $ } = Ember;
 
 export default Ember.Service.extend({
-  metadata: service(),
+  _metadata: service('metadata'),
   notify: service(),
   
   _data: null,
@@ -57,7 +57,7 @@ export default Ember.Service.extend({
   load() {
     "use strict";
     
-    this.get('metadata').getMetadata('Officers').then((data) => {
+    this.get('_metadata').getMetadata('Officers').then((data) => {
       let metadata = data.metadata;
       let metadataTime = (metadata ? new Date(metadata.updateTime.replace(' ', 'T')) : null);
       
@@ -69,32 +69,32 @@ export default Ember.Service.extend({
   _fetchOfficers() {
     "use strict";
     
-    (function(service) {
-      Ember.$.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: `${service.get('metadata.endPoint')}officers`,
-        data: JSON.stringify({
-          task: "GET_OFFICERS"
-        })
-      }).done(function(data) {
-        return Ember.$.getJSON('officerData.json').then(function(officerSettings) {
-          Object.keys(officerSettings).forEach(function(key) {
-            if (data[key]) {
-              data[key].settings = officerSettings[key];
-            }
-          });
-          
-          service.set('_data', data);
-          service.set('_requestTime', new Date());
+    let metadata = this.get('_metadata');
+    
+    $.ajax({
+      type: 'POST',
+      contentType: 'application/json',
+      url: `${metadata.get('url')}officers`,
+      data: JSON.stringify({
+        task: "GET_OFFICERS"
+      })
+    }).done((data) => {
+      return $.getJSON('officerData.json').then((officerSettings) => {
+        Object.keys(officerSettings).forEach(function(key) {
+          if (data[key]) {
+            data[key].settings = officerSettings[key];
+          }
         });
-      }).fail(function() {
-        service.get('notify').alert("Failed to pull officer information.", {
-          radius: true,
-          closeAfter: 3000
-        });
+        
+        this.set('_data', data);
+        this.set('_requestTime', new Date());
       });
-    }) (this);
+    }).fail(() => {
+      this.get('notify').alert("Failed to pull officer information.", {
+        radius: true,
+        closeAfter: 3 * 1000
+      });
+    });
   },
   clear() {
     "use strict";

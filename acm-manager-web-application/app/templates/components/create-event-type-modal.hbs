@@ -1,0 +1,14 @@
+{{#generic-modal
+  modalPrefix=modalPrefix
+  first=first
+  title="New Event Type"
+  formAction=(action 'createNewType')
+}}
+  {{event-type-form-field
+    prefix=modalPrefix
+  }}
+  
+  <div class="modal-footer">
+    {{modal-buttons}}
+  </div>
+{{/generic-modal}}

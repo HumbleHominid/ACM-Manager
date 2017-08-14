@@ -1,0 +1,23 @@
+{{generic-form-field
+  idPrefix=prefix
+  formName="name"
+  label="Name"
+  placeholder="Name of the event type"
+}}
+
+{{textarea-form-field
+  idPrefix=prefix
+  formName="description"
+  label="Description"
+  placeholder="Description of the event type"
+}}
+
+{{generic-form-field
+  type="number"
+  idPrefix=prefix
+  formName="points"
+  label="Default points for the event type"
+  min="0"
+  value="0"
+  step="0.25"
+}}

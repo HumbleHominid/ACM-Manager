@@ -50,11 +50,6 @@
             </li>
           {{/if}}
         {{/if}}
-        <li role="presentation">
-          <a href="https://github.com/HumbleHominid/ACM-Manager" target="_blank">
-              <span class="glyphicon glyphicon-console" aria-hidden="true"><span class="navbar-glyph-text"> Source</span></span>
-          </a>
-        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {{#if currentUser.token}}
@@ -84,9 +79,3 @@
     </div>
   </div>
 </nav>
-
-{{log-in-modal loginCallback=loginCallback}}
-{{create-account-modal}}
-{{contact-us-modal}}
-{{add-user-modal}}
-{{remove-user-modal}}

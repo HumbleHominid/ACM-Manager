@@ -14,4 +14,5 @@ export default Ember.Mixin.create({
   min: null,
   max: null,
   step: 1,
+  class: "form-control"
 });

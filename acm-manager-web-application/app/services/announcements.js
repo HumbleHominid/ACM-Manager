@@ -1,11 +1,12 @@
 import Ember from 'ember';
 
-const { inject: { service } } = Ember;
+const { inject: { service }, $ } = Ember;
 
 export default Ember.Service.extend({
-  metadata: service(),
+  _metadata: service('metadata'),
+  _notify: service('notify'),
   session: service(),
-  notify: service(),
+  currentUser: service(),
   
   _data: null,
   _requestTime: null,
@@ -18,7 +19,7 @@ export default Ember.Service.extend({
   load() {
     "use strict";
     
-    this.get('metadata').getMetadata('Announcements').then((data) => {
+    this.get('_metadata').getMetadata('Announcements').then((data) => {
       let metadata = data.metadata;
       let metadataTime = (metadata ? new Date(metadata.updateTime.replace(' ', 'T')) : null);
       
@@ -31,26 +32,24 @@ export default Ember.Service.extend({
     "use strict";
     
     let session = this.get('session');
-    let jwt = (session.get('data.authenticated') ? session.get('data.authenticated.user.jwt') : null);
-    
-    (function(service) {
-      Ember.$.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: `${service.get('metadata.endPoint')}announcements`,
-        data: JSON.stringify({
-          task: "GET_ACTIVE",
-          token: jwt
-        })
-      }).done(function(data) {
-        service.set('_data', data);
-      }).fail(function() {
-        service.get('notify').alert("Could not fetch announcements.", {
-          closeAfter: 5000,
-          radius: true
-        });
+    let jwt = (session.get('isAuthenticated') ? this.get('currentUser.token') : null);
+      
+    $.ajax({
+      type: 'POST',
+      contentType: 'application/json',
+      url: `${this.get('_metadata.url')}announcements`,
+      data: JSON.stringify({
+        task: "GET_ACTIVE",
+        token: jwt
+      })
+    }).done((data) => {
+      this.set('_data', data);
+    }).fail(() => {
+      this.get('_notify').alert("Could not fetch announcements.", {
+        closeAfter: 3 * 1000,
+        radius: true
       });
-    }) (this);
+    });
   },
   data: Ember.computed('_data', function() {
     "use strict";

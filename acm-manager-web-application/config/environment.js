@@ -18,7 +18,28 @@ module.exports = function(environment) {
       }
     },
     APP: {
-      endPoint: ""
+      endPoint: "",
+      namespace: "",
+      socialMedia: {
+        discord: {
+          display: false,
+          serverId: ""
+        },
+        facebook: {
+          display: false
+        },
+        instagram: {
+          display: false
+        },
+        slack: {
+          display: false,
+          inviteUrl: ""
+        },
+        twitter: {
+          display: false,
+          twitterHandle: ""
+        }
+      }
     }
   };
 
@@ -53,13 +74,17 @@ module.exports = function(environment) {
   
     ENV.rootURL = config.rootURL;
     ENV.APP.endPoint = config.endPoint;
+    ENV.APP.namespace = config.namespace;
+    ENV.APP.socialMedia = config.socialMedia;
   }
   
   if (environment === 'mfryer') {
-    let config = JSON.parse(fs.readFileSync("vendor/config/mfryer.json"));
+    let config = JSON.parse(fs.readFileSync("vendor/config/testing/mfryer.json"));
     
     ENV.rootURL = config.rootURL;
     ENV.APP.endPoint = config.endPoint;
+    ENV.APP.namespace = config.namespace;
+    ENV.APP.socialMedia = config.socialMedia;
     
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;

@@ -1,0 +1,18 @@
+{{#if data}}
+  {{#generic-form-field
+    hasFeedback=hasFeedback
+    formName=formName
+    label=label
+    help=help
+    idPrefix=idPrefix
+    required=required
+  }}
+    <select class="form-control" id={{concat idPrefix "-" formName}} required={{if required "required" ""}} multiple={{if multiple "multiple" ""}}>
+      {{#each-in data as |key value|}}
+        {{#if value.display}}
+          <option value={{value.value}}>{{value.text}}</option>
+        {{/if}}
+      {{/each-in}}
+    </select>
+  {{/generic-form-field}}
+{{/if}}

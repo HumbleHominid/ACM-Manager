@@ -1,78 +1,103 @@
 import Ember from 'ember';
 
+const { inject: { service }, $ } = Ember;
+
 export default Ember.Component.extend({
-  notify: Ember.inject.service(),
+  _notify: service('notify'),
+  _metadata: service('metadata'),
   
+  modalPrefix: "create-account",
+  first: "email",
+
+  _getFormData() {
+    "use strict";
+      
+    let modalPrefix = this.get('modalPrefix');
+    let data = {  };
+
+    data.first = $(`#${modalPrefix}-first`)[0].value;
+    data.last = $(`#${modalPrefix}-last`)[0].value;
+    data.username = $(`#${modalPrefix}-email`)[0].value;
+    data.password = $(`#${modalPrefix}-password`)[0].value;
+
+    let sameEmail = data.username === $(`#${modalPrefix}-confirm-email`)[0].value;
+    let samePass = data.password === $(`#${modalPrefix}-confirm-password`)[0].value;
+
+    if (!samePass || !sameEmail) {
+      if (!$(`#${modalPrefix}-error-alert`)[0]) {
+        $(`#${modalPrefix}-form`).prepend('<div id="${modalPrefix}-error-alert" class="alert alert-danger alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="${modalPrefix}-error-alert-text">Emails or Passwords do not match</span></div>');
+      }
+      else {
+        let alertTextSpan = $(`#${modalPrefix}-error-alert-text`)[0];
+        
+        if (alertTextSpan.innerHTML.indexOf("again") !== -1) {
+          alertTextSpan.innerHTML = alertTextSpan.innerHTML + ", and again";
+        }
+        else {
+          alertTextSpan.innerHTML = alertTextSpan.innerHTML + " again";
+        }
+      }
+      
+      return null;
+    }
+    
+    return data;
+  },
   actions: {
     createAccount() {
       "use strict";
       
-      let obj = { data: { } };
-
-      obj.task = "CREATE_ACCOUNT";
-      obj.data.first = this.$("#create-account-first-name")[0].value;
-      obj.data.last = this.$("#create-account-last-name")[0].value;
-      obj.data.username = this.$("#create-account-email")[0].value;
-      obj.data.password = this.$("#create-account-password")[0].value;
-
-      let sameEmail = obj.data.username === this.$("#create-account-confirm-email")[0].value;
-      let samePass = obj.data.password === this.$("#create-account-confirm-password")[0].value;
-
-      if (!samePass || !sameEmail) {
-        if (!this.$("#create-account-error-alert")[0]) {
-          this.$("form").prepend('<div id="create-account-error-alert" class="alert alert-danger alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="create-account-error-alert-text">Emails or Passwords do not match</span></div>');
-        }
-        else {
-          let alertTextSpan = this.$("#create-account-error-alert-text")[0];
-          
-          if (alertTextSpan.innerHTML.indexOf("again") !== -1) {
-            alertTextSpan.innerHTML = alertTextSpan.innerHTML + ", and again";
-          }
-          else {
-            alertTextSpan.innerHTML = alertTextSpan.innerHTML + " again";
-          }
-        }
-        
+      let modalPrefix = this.get('modalPrefix');
+      let data = this._getFormData();
+      
+      if (Ember.isNone(data)) {
         return false;
       }
-
-      obj = JSON.stringify(obj);
-
-      (function(component) {
-        Ember.$.ajax({
-          type: 'PUT',
-          contentType: 'application/json',
-          url: component.get('metadata.endPoint') + 'login',
-          data: obj
-        }).done(function() {
-          component.$("#create-account-form")[0].reset();
-          
-          component.$("#create-account-modal").modal('hide');
-          
-          if (component.$("#create-account-error-alert")[0]) {
-            component.$("#create-account-error-alert")[0].remove();
-          }
-          
-          component.get('notify').success("Account created! You can now log in!", {
-            closeAfter: 3000,
-            radius: true
+      
+      let metadata = this.get('_metadata');
+      
+      $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: `${metadata.get('url')}login`,
+        data: JSON.stringify({
+          task: "CREATE_ACCOUNT",
+          data: data
+        })
+      }).done((data) => {
+        if (Ember.isPresent(data.reason)) {
+          this.get('_notify').alert(`${data.reason}`, {
+            radius: true,
+            closeAfter: 3 * 1000
           });
-        }).fail(function(/* jqXHW, textStatus, err */) {
-          if (!component.$("#create-account-submit-error-alert")[0]) {
-            component.$("form").prepend('<div id="create-account-submit-error-alert" class="alert alert-danger alert-dismissable fade in form-margin"><button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button><span id="create-account-submit-error-alert-text">There was an error creating your account at this time.</span></div>');
-          }
-          else {
-            let alertTextSpan = component.$("#create-account-submit-error-alert-text")[0];
-            
-            if (alertTextSpan.innerHTML.indexOf("again") !== -1) {
-              alertTextSpan.innerHTML = alertTextSpan.innerHTML + ", and again";
-            }
-            else {
-              alertTextSpan.innerHTML = alertTextSpan.innerHTML + " again";
-            }
-          }
+          
+          return false;
+        }
+        
+        $(`#${modalPrefix}-modal`).modal('hide');
+        
+        let alert = $(`#${modalPrefix}-error-alert`)[0];
+        
+        if (alert) {
+          alert.remove();
+        }
+        
+        this.get('_notify').success("Account created! You can now log in!", {
+          radius: true,
+          closeAfter: 3 * 1000
         });
-      }) (this);
+      }).fail(() => {
+        let alert = $(`#${modalPrefix}-error-alert`)[0];
+        
+        if (alert) {
+          alert.remove();
+        }
+        
+        this.get('_notify').alert("Failed to create an account.", {
+          radius: true,
+          closeAfter: 3 * 1000
+        });
+      });
       
       return false;
     }

@@ -1,39 +1,34 @@
-<div id="log-in-modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Log In</h4>
-      </div>
-      
-      <form id="log-in-form" class="form-margin" onsubmit={{action 'authenticate'}}>
-        {{email-form-field
-          hasFeedback=false
-          idPrefix="log-in"
-        }}
-        
-        {{password-form-field
-          hasFeedback=false
-          idPrefix="log-in"
-          pattern=".+"
-          help=""
-        }}
-        
-        <div class="form-group">
-          {{input
-            type="checkbox"
-            class="pointer"
-            id="log-in-checkbox"
-          }}
-          Remember Me
-        </div>
-        
-        <div class="modal-footer">
-          {{#modal-buttons}}
-            <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#create-account-modal">Create Account</button>
-          {{/modal-buttons}}
-        </div>
-      </form>
-    </div>
+{{#generic-modal
+  modalPrefix=modalPrefix
+  first=first
+  title="Log In"
+  formAction=(action 'authenticate')
+}}
+  {{email-form-field
+    hasFeedback=false
+    idPrefix=modalPrefix
+  }}
+  
+  {{password-form-field
+    hasFeedback=false
+    idPrefix=modalPrefix
+    pattern=".+"
+    help=""
+  }}
+  
+  {{generic-form-field
+    hasFeedback=false
+    idPrefix=modalPrefix
+    required=false
+    type="checkbox"
+    formName="checkbox"
+    class="pointer"
+    label="Remember Me"
+  }}
+  
+  <div class="modal-footer">
+    {{#modal-buttons}}
+      <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#create-account-modal">Create Account</button>
+    {{/modal-buttons}}
   </div>
-</div>
+{{/generic-modal}}

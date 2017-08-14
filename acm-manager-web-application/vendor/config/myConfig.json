@@ -1,0 +1,57 @@
+// Replace this file with `config.json` with the following properties to 
+// configure your application
+{
+  // End point for http requests. ends in a `/`
+  "endPoint": "https://mywebsite/",
+  
+  // Namespace for http requests. ends in a `/` or leave blank
+  "namespace": "api/",
+  
+  // Configuration for ember server. If you are not in the root of your web
+  // server this is required
+  "rootURL": "/",
+  
+  // Configuration for your social media integration. Set `display` to false for
+  // any integrations you do not want to have displayed on your website
+  "socialMedia": {
+    
+    // https://discordapp.com/
+    // Note that this requires the server to have the widget setting enabled
+    "discord": {
+      "display": false,
+      
+      // This can be found by turning developer mode on in the settings and
+      // then right clicking a server and selecting the `copy ID` option.
+      // Server id is used so the application can fetch information from
+      // discord's servers to display the server name, fetch an invite, and
+      // display online users
+      "serverId": "myId"
+    },
+    
+    // https://www.facebook.com/
+    "facebook": {
+      "display": false
+    },
+    
+    // https://www.instagram.com/
+    "instagram": {
+      "display": false
+    },
+    
+    // https://slack.com/
+    "slack": {
+      "display": false,
+      
+      // Invite url for your slack server
+      "inviteUrl": "https://join.slack.com/t/myurl"
+    },
+    
+    // https://twitter.com/
+    "twitter": {
+      "display": false,
+      
+      // this is the `@handle`. The `@` is not required here
+      "twitterHandle": "myHandle"
+    }
+  }
+}
