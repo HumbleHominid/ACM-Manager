@@ -1,4 +1,4 @@
-DELETE FROM User_Attendance;
+/*DELETE FROM User_Attendance;
 DROP TABLE IF EXISTS User_Attendance;
 
 DELETE FROM Event_Files;
@@ -30,7 +30,7 @@ DROP TABLE IF EXISTS User_Type;
 
 DELETE FROM Passwords;
 DROP TABLE IF EXISTS Passwords;
-
+*/
 CREATE TABLE Passwords (
   password_id int NOT NULL AUTO_INCREMENT,
   password varchar(255) NOT NULL,
@@ -138,4 +138,19 @@ CREATE TABLE User_Attendance (
 	FOREIGN KEY(event_id) REFERENCES Events(event_id)
 );
 
+CREATE TABLE Metadata(
+  endpoint VARCHAR(20),
+  updateTime DATETIME
+);
 
+CREATE TABLE Announcements(
+anno_id INT NOT NULL AUTO_INCREMENT, 
+message VARCHAR(140) NOT NULL,
+startTime DATETIME NOT NULL,
+endTime DATETIME NOT NULL,
+user_type tinyint NOT NULL,
+creator_id int NOT NULL,
+FOREIGN KEY(user_type) REFERENCES User_Type(user_type_id),
+FOREIGN KEY (creator_id) REFERENCES Users(user_id),
+PRIMARY KEY(anno_id)
+);
