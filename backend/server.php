@@ -137,7 +137,13 @@ class Server{
       echo $json;
       break;
     case 'LIST_MEMBERS':
-      $info = $member->listMembers();
+      if($this->login->isOfficer()){
+        $info = $member->listMembers();
+      }else if($this->login->isLoggedIn()){
+        $info = $member->getMember($this->login->getUserID());
+      }else{
+        $info = ['reason'=>'You cannot lookup user data while not logged in.'];
+      }
       $json = $this->response($info);
       echo $json;
       break;
@@ -264,8 +270,11 @@ class Server{
     $task = $this->data['task'];
      include('model/members.php');
     $members = new Members;
+    include('model/events.php');
+    $events = new Events($this->login, $members);
+
     include('model/announcements.php');
-    $announcements = new Announcements($members);
+    $announcements = new Announcements($members, $events);
     switch($task){
       case('GET_ACTIVE'):
         $results = $announcements->getAnnouncementsBar($this->login->getType());

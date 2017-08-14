@@ -7,12 +7,15 @@ class Announcements{
   private $endpoint = 'Announcements';
   private $members = NULL;
   private $metadata = NULL;
+  private $events = NULL;
 
-  function Announcements($members){
+  function Announcements($members, $events){
     $this->conn = new DbConn();
     $this->members = $members;
+    $this->events = $events;
     require_once('metadata.php');
     $this->metadata = new Metadata();
+
 
   }
   
@@ -60,17 +63,9 @@ class Announcements{
       . $startComparisonOp . 'NOW() AND endTime' . $endComparisonOp . 'NOW() AND ? >= user_type;';
     return $this->conn->select($query, [$user_type_id]); 
   }
-
-  //TODO: Come back and add in user type to query.
-  function getAutomaticAnnouncments($user_type_id){
-    $autoAnnos = array();
-    $query = "SELECT * FROM Events WHERE eventTime <= NOW() + INTERVAL $this->autoLeadDays DAY AND NOW() < eventTime;";
-    $events = $this->conn->select($query);
-    foreach($events as $event){
-      array_push($autoAnnos, ['event_id'=>$event['event_id'], 'message'=>"Come join us for {$event['name']} at {$event['eventTime']}."]);
-    }
-    return ['autoAnnos'=>$autoAnnos];
-
+  
+  function getAutomaticAnnouncments($user_type_id){ 
+    return ['autoAnnos'=>$this->events->getEventsInDateRange($user_type_id, $this->autoLeadDays, 0)];
   }
   
   function updateAnnouncement($data){

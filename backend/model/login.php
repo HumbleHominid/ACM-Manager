@@ -190,5 +190,9 @@ class Login{
     function isOfficer(){
       return $this->user_type_id > 1;
     }
+    
+    function isLoggedIn(){
+      return $this->validatedUser > -1;
+    }
   }
   ?>

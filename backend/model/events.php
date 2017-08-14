@@ -23,15 +23,17 @@ class Events{
     //Get past
     $pastQuery = 'SELECT event_id FROM Events
       WHERE eventTime < NOW()
+      AND audience <= ?
       ORDER BY eventTime;'; 
-    $pastResults = $this->conn->select($pastQuery);
+    $pastResults = $this->conn->select($pastQuery, [$this->login->getType()]);
 
 
     //Get future
     $futureQuery = 'SELECT event_id FROM Events
       WHERE eventTime > NOW()
+      AND audience <= ?
       ORDER BY eventTime;'; 
-    $futureResults = $this->conn->select($futureQuery);
+    $futureResults = $this->conn->select($futureQuery, [$this->login->getType()]);
 
 
     $pastArr = array();
@@ -48,27 +50,29 @@ class Events{
   }
 
   function getEvent($eventID){
-
-
     $query = 'SELECT * FROM Events
       WHERE event_id = ?;';
     $results = $this->conn->select($query, [$eventID]); 
 
     if(count($results) === 1){
-      $event = array(
-        "event_id" => $results[0]['event_id'],
-        "coordinator" => $this->members->getMember($results[0]['coordinator']),
-        "eventType" => $this->getEventType($results[0]['eventType']),
-        "name" => $results[0]['name'],
-        "additionalInfo" => $results[0]['additionalInfo'],
-        "location" => $results[0]['location'],
-        "eventTime" => $results[0]['eventTime'],
-        "points" => $results[0]['points'],
-        "attendance" => $this->getAttendanceObject($eventID),
-        "files" => $this->files->getEventFiles($results[0]['event_id'])
-      );
-
-      return $event;
+      if($results[0]['audience'] <= $this->login->getType()){
+        $event = array(
+          "event_id" => $results[0]['event_id'],
+          "coordinator" => $this->members->getMember($results[0]['coordinator']),
+          "eventType" => $this->getEventType($results[0]['eventType']),
+          "name" => $results[0]['name'],
+          "additionalInfo" => $results[0]['additionalInfo'],
+          "location" => $results[0]['location'],
+          "eventTime" => $results[0]['eventTime'],
+          "points" => $results[0]['points'],
+          "audience" => $results[0]['audience'],
+          "attendance" => $this->getAttendanceObject($eventID),
+          "files" => $this->files->getEventFiles($results[0]['event_id'])
+        );
+        return $event;
+      }else{
+        return ['reason'=>'You do not have permission to see this event.'];
+      }
     }
     return FALSE;
   }
@@ -82,13 +86,14 @@ class Events{
     array_push($values, $data['location']);
     array_push($values, $data['eventTime']);
     array_push($values, $data['points']);
+    array_push($values, $data['audience']);
     return $values;
   }
 
   function createEvent($data){
     $query = 'INSERT INTO Events(coordinator, eventType, name, 
-                                additionalInfo, location, eventTime, points)
-                                VALUES(?,?,?,?,?,?,?);';
+                                additionalInfo, location, eventTime, points, audience)
+                                VALUES(?,?,?,?,?,?,?,?);';
     $values = $this->pushEventInfoToArray($data);
     $this->conn->modify($query, $values);
 
@@ -102,7 +107,8 @@ class Events{
     $query = 'UPDATE Events 
               SET coordinator = ?, eventType = ?, name = ?, 
               additionalInfo = ?, location = ?, 
-              eventTime = ?, points = ?
+              eventTime = ?, points = ?,
+              audience = ?
               WHERE event_id = ?';
                  
     $values = $this->pushEventInfoToArray($data);
@@ -133,6 +139,18 @@ class Events{
     array_push($values, $data['description']);
     array_push($values, $data['defaultPoints']);
     return $values;
+  }
+
+  function getEventsInDateRange($user_type_id, $daysFromNowStart, $daysFromNowEnd){
+    $query = "SELECT event_id FROM Events WHERE eventTime <= NOW() + INTERVAL $daysFromNowStart DAY AND NOW() < eventTime + INTERVAL $daysFromNowEnd DAY AND audience <= ?;";
+    $events = $this->conn->select($query, [$user_type_id]);
+    $eventArr = array();
+    foreach($events as $event){
+      $newEvent = $this->getEvent($event['event_id']);
+      $newEvent['message'] = "Come join us for {$newEvent['name']} at {$newEvent['eventTime']}.";
+      array_push($eventArr, $newEvent);
+    }
+    return $eventArr;
   }
 
 /********************************************************************
