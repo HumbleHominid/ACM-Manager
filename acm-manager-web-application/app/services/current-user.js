@@ -32,5 +32,12 @@ export default Ember.Service.extend({
     let user = this.get('_session.data.authenticated');
     
     return (user ? user.user_type : "");
+  }),
+  data: Ember.computed('_session.data.authenticated', function() {
+    "use strict";
+    
+    let user = this.get('_session.data.authenticated');
+    
+    return (user ? user : null);
   })
 });
