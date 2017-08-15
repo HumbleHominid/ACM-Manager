@@ -11,8 +11,8 @@ export default Ember.Component.extend({
   
   _requestTime: null,
   displayAddEventType: false,
-  memberList: [ ],
-  attendeeList: [ ],
+  memberList: null,
+  attendeeList: null,
   defaultPoints: 0,
   modalPrefix: "create-event",
   first: "name",
@@ -24,6 +24,7 @@ export default Ember.Component.extend({
     
     $(`#${modalPrefix}-modal`).on('shown.bs.modal', () => {
       this._updateEventType();
+      this._fetchMembers();
     }).on('hidden.bs.modal', () => {
       this._updateEventType();
     });
@@ -35,11 +36,16 @@ export default Ember.Component.extend({
     
     this.set('_requestTime', null);
     
-    this.on('session.store.sessionDataUpdated', (this._fetchMembers()) ());
+    this.on('session.invalidationSucceeded', () => {
+      this.setProperties({
+        memberList: null,
+        attendeeList: null
+      });
+    });
   },
   _fetchMembers() {
     "use strict";
-    
+    console.log('FECTHING MEMBERS')
     let metadata = this.get('_metadata');
     
     $.ajax({
@@ -52,7 +58,7 @@ export default Ember.Component.extend({
       })
     }).done((data) => {
       let list = this._makeList(data.memberList);
-      
+      console.log(data, this.get('currentUser.data'))
       this.setProperties({
         memberList: list,
         attendeeList: list
@@ -129,7 +135,16 @@ export default Ember.Component.extend({
           data: data
         })
       }).done((response) => {
-        resolve(response);
+        if (Ember.isPresent(data.reason)) {
+          this.get('_notify').alert(`Event type creation failed. ${data.reason}`, {
+            radius: true,
+            closeAfter: 3 * 1000
+          });
+          
+          reject();
+        }
+        
+        resolve(response.EventData);
       }).fail(() => {
         reject();
       });
@@ -235,8 +250,8 @@ export default Ember.Component.extend({
       let eventType = $(`#${modalPrefix}-eventType`)[0].value;
       
       if (parseInt(eventType) === -1) {
-        this._createEventType().then((data) => {
-          this._createEvent(data.EventType.event_type_id);
+        this._createEventType().then((data) => {console.log(data)
+          this._createEvent(data.event_type_id);
         }).catch(() => {
           this.get('_notify').alert("Failed to create the event type.", {
             radius: true,
