@@ -25,13 +25,13 @@
     idPrefix=modalPrefix
   }}
     <select class="form-control" id={{concat modalPrefix "-eventType"}} multiple={{if multiple "multiple" ""}} onchange={{action 'selectEventTypeChanged'}}>
+      <option value="-1">Create New Event Type</option>
+      
       {{#each-in eventTypes as |key value|}}
         {{#if value.display}}
           <option value={{value.value}}>{{value.text}}</option>
         {{/if}}
       {{/each-in}}
-      
-      <option value="-1">Create New Event Type</option>
     </select>
   {{/generic-form-field}}
   
@@ -47,6 +47,24 @@
     
     <span class="form-divider" />
   {{/if}}
+  
+  {{#generic-form-field
+    hasFeedback=true
+    formName="audience"
+    label="Audience Level"
+    help="All levels above what is selected will also be able to see this event."
+    idPrefix=modalPrefix
+  }}
+    <select class="form-control" id={{concat modalPrefix "-audience"}} multiple={{if multiple "multiple" ""}}>
+      <option value="0">Visitor</option>
+      <option value="1">Member</option>
+      <option value="2">Treasurer</option>
+      <option value="3">Secretary</option>
+      <option value="4">Vice President</option>
+      <option value="5">President</option>
+      <option value="8">Advisor</option>
+    </select>
+  {{/generic-form-field}}
   
   {{textarea-form-field
     idPrefix=modalPrefix

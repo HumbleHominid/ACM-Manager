@@ -17,12 +17,12 @@ export default Ember.Component.extend({
   modalPrefix: "create-event",
   first: "name",
   
-  didRender() {
+  didInsertElement() {
     "use strict";
     
     let modalPrefix = this.get('modalPrefix');
     
-    $(`#${modalPrefix}-modal`).on('shown.bs.modal', () => {
+    $(`#${modalPrefix}-modal`).on('show.bs.modal', () => {
       this._updateEventType();
       this._fetchMembers();
     }).on('hidden.bs.modal', () => {
@@ -45,7 +45,7 @@ export default Ember.Component.extend({
   },
   _fetchMembers() {
     "use strict";
-    console.log('FECTHING MEMBERS')
+    
     let metadata = this.get('_metadata');
     
     $.ajax({
@@ -58,7 +58,7 @@ export default Ember.Component.extend({
       })
     }).done((data) => {
       let list = this._makeList(data.memberList);
-      console.log(data, this.get('currentUser.data'))
+      
       this.setProperties({
         memberList: list,
         attendeeList: list
@@ -76,7 +76,7 @@ export default Ember.Component.extend({
     if (Ember.isArray(members)) {
       members.forEach(function(member, index) {
         members[index] = {
-          text: `${member.fName} ${member.lName}`,
+          text: `${member.lName}, ${member.fName}`,
           value: member.user_id,
           display: true
         };
@@ -90,7 +90,7 @@ export default Ember.Component.extend({
     
     let selectValue = $(`#${this.get('modalPrefix')}-eventType`)[0].value;
     let eventTypes = this.get('events.types');
-    console.log(selectValue)
+    
     this.setProperties({
       displayAddEventType: parseInt(selectValue) === -1,
       defaultPoints: parseInt(selectValue) === -1 ? 0 : eventTypes[selectValue].defaultPoints
@@ -109,6 +109,8 @@ export default Ember.Component.extend({
           display: true
         };
       });
+      
+      data.sort();
     }
     
     return data;
@@ -144,7 +146,7 @@ export default Ember.Component.extend({
           reject();
         }
         
-        resolve(response.EventData);
+        resolve(response.EventType);
       }).fail(() => {
         reject();
       });
@@ -156,7 +158,8 @@ export default Ember.Component.extend({
     let modalPrefix = this.get('modalPrefix');
     
     let coordinator = $(`#${modalPrefix}-coordinator`)[0];
-    let eventType = eventTypeId ? eventTypeId : $(`#${modalPrefix}-eventType`)[0];
+    let eventType = $(`#${modalPrefix}-eventType`)[0];
+    let audience = $(`#${modalPrefix}-audience`)[0];
     let name = $(`#${modalPrefix}-name`)[0];
     let additionalInfo = $(`#${modalPrefix}-additionalInfo`)[0];
     let location = $(`#${modalPrefix}-location`)[0];
@@ -174,7 +177,8 @@ export default Ember.Component.extend({
     
     let formInformation = {
       coordinator: coordinator.value,
-      eventType: eventType.value,
+      eventType: eventTypeId ? eventTypeId : eventType.value,
+      audience: audience.value,
       name: name.value,
       additionalInfo: additionalInfo.value,
       location: location.value,
@@ -182,9 +186,8 @@ export default Ember.Component.extend({
       points: points.value,
       attendees: [ ]
     };
-    let attendees = this.get('attendeeList');
     
-    attendees.forEach(function(attendee) {
+    this.get('attendeeList').forEach(function(attendee) {
       if (!attendee.display) {
         let attendeePoints = $(`#${modalPrefix}-attendee-points-${attendee.value}`)[0];
         let attendeeInfo = $(`#${modalPrefix}-attendee-info-${attendee.value}`)[0];
@@ -199,12 +202,10 @@ export default Ember.Component.extend({
       }
     });
     
-    let metadata = this.get('_metadata');
-    
     $.ajax({
       type: 'POST',
       contentType: 'application/json',
-      url: `${metadata.get('url')}events`,
+      url: `${this.get('_metadata.url')}events`,
       data: JSON.stringify({
         task: 'CREATE_EVENT',
         token: this.get('currentUser.token'),
@@ -250,7 +251,7 @@ export default Ember.Component.extend({
       let eventType = $(`#${modalPrefix}-eventType`)[0].value;
       
       if (parseInt(eventType) === -1) {
-        this._createEventType().then((data) => {console.log(data)
+        this._createEventType().then((data) => {
           this._createEvent(data.event_type_id);
         }).catch(() => {
           this.get('_notify').alert("Failed to create the event type.", {

@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   modalPrefix: 'generic',
   first: '',
   
-  didRender() {
+  didInsertElement() {
     "use strict";
     
     let modalPrefix = this.get('modalPrefix');
