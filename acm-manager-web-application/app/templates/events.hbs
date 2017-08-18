@@ -14,7 +14,7 @@
     {{input id="events-searchbar" placeholder="Search" class="form-control"}}
   </div>
   
-  {{#if '(is-admin (get currentUser.userType "user_type_id"))'}}
+  {{#if (is-admin (get currentUser.userType "user_type_id"))}}
     <div class="form-group">
       <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-event-modal">Add Event</button>
       <div class="btn-group" role="group">
@@ -46,7 +46,9 @@
   }}
 </div>
 
-{{create-event-modal}}
-{{create-event-type-modal}}
+{{#if (is-admin (get currentUser.userType "user_type_id"))}}
+  {{create-event-modal}}
+  {{create-event-type-modal}}
+{{/if}}
 
 {{outlet}}

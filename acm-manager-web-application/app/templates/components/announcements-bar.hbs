@@ -16,3 +16,9 @@
     </dl>
   </div>
 {{/if}}
+
+{{#if (is-admin (get currentUser.userType "user_type_id"))}}
+  <button class="btn btn-success" role="button" data-toggle="modal" data-target="#create-announcement-modal">Add Announcement</button>
+
+  {{create-announcement-modal}}
+{{/if}}

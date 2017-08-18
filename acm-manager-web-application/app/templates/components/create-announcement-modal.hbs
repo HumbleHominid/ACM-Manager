@@ -1,0 +1,49 @@
+{{#generic-modal
+  modalPrefix=modalPrefix
+  first=first
+  title="Create Announcement"
+  formAction=(action 'createAnnoncement')
+}}
+  {{generic-form-field
+    idPrefix=modalPrefix
+    label="Annoncement Message"
+    formName="message"
+    placeholder="Your message here"
+  }}
+  
+  {{generic-form-field
+    type="datetime-local"
+    label="Starting Date and Time for Annoucnement"
+    idPrefix=modalPrefix
+    formName="startTime"
+  }}
+  
+  {{generic-form-field
+    type="datetime-local"
+    label="Ending Date and Time for Annoucnement"
+    idPrefix=modalPrefix
+    formName="endTime"
+  }}
+  
+  {{#generic-form-field
+    hasFeedback=true
+    formName="audience"
+    label="Audience Level"
+    help="All levels above what is selected will also be able to see this event."
+    idPrefix=modalPrefix
+  }}
+    <select class="form-control" id={{concat modalPrefix "-audience"}} multiple={{if multiple "multiple" ""}}>
+      <option value="0">Visitor</option>
+      <option value="1">Member</option>
+      <option value="2">Treasurer</option>
+      <option value="3">Secretary</option>
+      <option value="4">Vice President</option>
+      <option value="5">President</option>
+      <option value="8">Advisor</option>
+    </select>
+  {{/generic-form-field}}
+
+  <div class="modal-footer">
+    {{modal-buttons}}
+  </div>
+{{/generic-modal}}

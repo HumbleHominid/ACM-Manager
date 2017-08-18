@@ -13,7 +13,7 @@ export default Ember.Component.extend({
     "use strict";
       
     let modalPrefix = this.get('modalPrefix');
-    let data = {  };
+    let data = { };
 
     data.first = $(`#${modalPrefix}-first`)[0].value;
     data.last = $(`#${modalPrefix}-last`)[0].value;

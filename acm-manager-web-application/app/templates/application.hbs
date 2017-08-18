@@ -1,16 +1,17 @@
 {{nav-bar logoutCallback=(action 'logout') currentPath=currentPath}}
 
-<div class="visible-lg-block announcements-container mobile-banner">
-  <div class="alert alert-info alert-dismissible fade in" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <p class="lead"><strong>Check us out on mobile!</strong><span class="glyphicon glyphicon-phone" /></p>
+<div class="announcements-container">
+  <div class="visible-lg-block mobile-banner">
+    <div class="alert alert-info alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <p class="lead"><strong>Check us out on mobile!</strong><span class="glyphicon glyphicon-phone" /></p>
+    </div>
   </div>
+
+  {{announcements-bar}}
 </div>
-
-{{announcements-bar}}
-
 {{event-side-bar}}
 
 <div class="content-container">
@@ -21,6 +22,9 @@
 
 {{ember-notify messageStyle='bootstrap'}}
 
-{{log-in-modal loginCallback=(action 'login')}}
-{{create-account-modal}}
+{{#unless session.isAuthenticated}}
+  {{log-in-modal loginCallback=(action 'login')}}
+  {{create-account-modal}}
+{{/unless}}
+
 {{contact-us-modal}}

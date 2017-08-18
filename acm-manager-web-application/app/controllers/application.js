@@ -4,7 +4,7 @@ const { inject: { service } } = Ember;
 
 export default Ember.Controller.extend({
   _notify: service('notify'),
-  _session: service('session'),
+  session: service(),
   _currentUser: service('currentUser'),
   _events: service('events'),
   _announcements: service('announcements'),
@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
   _loginWithToken: function(jwt) {
     "use strict";
     
-    this.get('_session').authenticate('authenticator:auth', {
+    this.get('session').authenticate('authenticator:auth', {
       jwt: jwt,
       task: 'UPDATE_TOKEN'
     }).then(() => {
@@ -20,7 +20,7 @@ export default Ember.Controller.extend({
     }).catch((/* reason */) => {
       this._invalidSessionMessage();
       
-      let store = this.get('_session.store');
+      let store = this.get('session.store');
       
       store.clear().then(() => {
         store.persist(null);
@@ -56,7 +56,7 @@ export default Ember.Controller.extend({
     
     this._super(...arguments);
     
-    let session = this.get('_session');
+    let session = this.get('session');
     let store = session.get('store');
     
     if (store) {
@@ -84,7 +84,7 @@ export default Ember.Controller.extend({
       
       this._updateData();
       
-      let session = this.get('_session');
+      let session = this.get('session');
       let user = session.get('data.authenticated');
 
       session.get('store').persist(user);
@@ -94,7 +94,7 @@ export default Ember.Controller.extend({
     logout() {
       "use strict";
       
-      let session = this.get('_session');
+      let session = this.get('session');
       let store = session.get('store');
       
       session.invalidate().then(() => {
