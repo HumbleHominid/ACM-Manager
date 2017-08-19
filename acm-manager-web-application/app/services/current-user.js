@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
   data: null,
+  fees: null,
 
   id: Ember.computed('data', function() {
     let user = this.get('data');
@@ -27,9 +28,13 @@ export default Ember.Service.extend({
     this._super(...arguments);
 
     this.set('data', null);
+    this.set('fees',null);
   },
   load(user) {
     this.set('data', user);
+  },
+  loadFees(fees){
+    this.set('fees', fees);
   },
   clear() {
     this.set('data', null);

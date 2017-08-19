@@ -3,9 +3,50 @@
 </div>
 
 <div>
-  <strong>Name: </strong> {{currentUser.name}}<br>
-  <strong>Position: </strong>{{currentUser.userType.name}}<br>
-  <strong>Email: </strong>{{currentUser.data.email}}
+  <img src="./images/{{currentUser.data.imgSrs}}" alt="User Image" class="img-{{currentUser.data.imgStyle}} officer-image pull-left" onerror="this.src='./assets/user.png'"><br>
+  <strong>Name: </strong> {{currentUser.name}}, <em>{{currentUser.userType.name}}</em><br>
+  <strong>Email: </strong>{{currentUser.data.email}}<br>
+  <strong>Points: </strong> {{currentUser.data.points}}
+</div>
+
+<br><br><br><br>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-danger">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <strong>Unpaid</strong>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        {{#each-in currentUser.fees.unpaid as |key value|}}
+          {{#if value}}
+            <strong>Fee Name:</strong> {{value.fee.feeType.name}} <br> <strong>Cost:</strong> ${{value.fee.fee}} <br> <strong>Description:</strong> {{value.fee.description}} <br> <strong>Due Date:</strong> {{value.fee.dueDate}} <br> <strong>Fee Type:</strong> {{value.fee.feeType.description}} <br> <strong>Additional Info:</strong> {{value.additionalInfo}}<br>
+          {{/if}}
+        {{/each-in}}
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-success">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <strong> Paid</strong>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        {{#each-in currentUser.fees.paid as |key value|}}
+          {{#if value}}
+            <strong>Fee Name:</strong> {{value.fee.feeType.name}} <br> <strong>Cost:</strong> ${{value.fee.fee}} <br> <strong>Description:</strong> {{value.fee.description}} <br> <strong>Due Date:</strong> {{value.fee.dueDate}} <br> <strong>Fee Type:</strong> {{value.fee.feeType.description}} <br> <strong>Additional Info:</strong> {{value.additionalInfo}}<br>
+          {{/if}}
+        {{/each-in}}
+      </div>
+    </div>
+  </div>
 </div>
 
 {{outlet}}
