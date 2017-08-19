@@ -12,7 +12,7 @@ export default Ember.Component.extend({
   first: "message",
   
   actions: {
-    createAnnoncement() {
+    createAnnouncement() {
       "use strict";
       
       let currentUser = this.get('currentUser');

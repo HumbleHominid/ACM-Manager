@@ -1,14 +1,15 @@
 {{#generic-modal
   modalPrefix=modalPrefix
   first=first
-  title="Create Announcement"
-  formAction=(action 'createAnnouncement')
-}}
+  title="Edit Announcement"
+  formAction=(action 'editAnnouncement')
+}}{{log annonData}}
   {{generic-form-field
     idPrefix=modalPrefix
     label="Annoncement Message"
     formName="message"
     placeholder="Your message here"
+    value=annonData.message
   }}
   
   {{generic-form-field
@@ -16,6 +17,7 @@
     label="Starting Date and Time for Annoucnement"
     idPrefix=modalPrefix
     formName="startTime"
+    value=annonData.startTime
   }}
   
   {{generic-form-field
@@ -23,6 +25,7 @@
     label="Ending Date and Time for Annoucnement"
     idPrefix=modalPrefix
     formName="endTime"
+    value=annonData.endTime
   }}
   
   {{#generic-form-field
@@ -31,6 +34,7 @@
     label="Audience Level"
     help="All levels above what is selected will also be able to see this event."
     idPrefix=modalPrefix
+    value=null
   }}
     <select class="form-control" id={{concat modalPrefix "-audience"}} multiple={{if multiple "multiple" ""}}>
       <option value="0">Visitor</option>

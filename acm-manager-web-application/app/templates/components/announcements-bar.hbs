@@ -6,15 +6,24 @@
     <p class="unselectable pointer lead" data-toggle="collapse" data-target=".announcement-list-container"><strong>New Announcements</strong> <small>Click to expand/collapse</small> <span class="badge">{{if announcements.count announcements.count '0'}}</span></p>
     <dl class="dl-horizontal announcement-list-container collapse {{if (is-one announcements.count) "in"}}" aria-expanded={{if (is-one announcements.count) "true" "false"}}>
       {{#each-in announcements.data.currentAnnos as |key value|}}
-        <dt>Important</dt>
-        <dd>{{value.message}}</dd>
+        {{announcement-object
+          editClickedCallback=(action 'showEditModal')
+          data=value
+        }}
       {{/each-in}}
       {{#each-in announcements.data.autoAnnos as |key value|}}
-        <dt>{{if value.event_type value.event_type.name "Important"}}</dt>
-        <dd>{{value.message}}</dd>
+        {{announcement-object
+          editClickedCallback=(action 'showEditModal')
+          data=value
+          showEdit=false
+        }}
       {{/each-in}}
     </dl>
   </div>
+  
+  {{edit-announcement-modal
+    annonData=annonData
+  }}
 {{/if}}
 
 {{#if (is-admin (get currentUser.userType "user_type_id"))}}
