@@ -55,6 +55,7 @@
     help="All levels above what is selected will also be able to see this event."
     idPrefix=modalPrefix
   }}
+  {{!-- Make this not hard coded --}}
     <select class="form-control" id={{concat modalPrefix "-audience"}} multiple={{if multiple "multiple" ""}}>
       <option value="0">Visitor</option>
       <option value="1">Member</option>

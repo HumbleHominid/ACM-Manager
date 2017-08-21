@@ -19,31 +19,31 @@
     
     <div class="collapse navbar-collapse no-scrollbar" id="mta-navbar" aria-expanded="true" data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
       <ul class="nav navbar-nav">
-        <li class={{if (is-active-route currentPath 'home') "active" ""}} role="presentation">
+        <li class={{if (is-equal currentPath 'home') "active" ""}} role="presentation">
           {{#link-to "home"}}
               <span class="glyphicon glyphicon-home" aria-hidden="true"><span class="navbar-glyph-text"> Home</span></span>
             {{/link-to}}
         </li>
-        <li class={{if (is-active-route currentPath 'events') "active" ""}} role="presentation">
+        <li class={{if (is-equal currentPath 'events') "active" ""}} role="presentation">
           {{#link-to "events"}}
               <span class="glyphicon glyphicon-calendar" aria-hidden="true"><span class="navbar-glyph-text"> Events</span></span>
           {{/link-to}}
         </li>
-        <li class={{if (is-active-route currentPath 'officers') "active" ""}} role="presentation">
+        <li class={{if (is-equal currentPath 'officers') "active" ""}} role="presentation">
           {{#link-to "officers"}}
               <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"><span class="navbar-glyph-text"> Officers</span></span>
           {{/link-to}}
         </li>
 
         {{#if currentUser.token}}
-          <li class={{if (is-active-route currentPath 'files') "active" ""}} role="presentation">
+          <li class={{if (is-equal currentPath 'files') "active" ""}} role="presentation">
             {{#link-to "files"}}
                 <span class="glyphicon glyphicon-file" aria-hidden="true"><span class="navbar-glyph-text"> Files</span></span>
             {{/link-to}}
           </li>
 
           {{#if (is-admin currentUser.userType.user_type_id)}}
-            <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
+            <li class={{if (is-equal currentPath 'fees') "active" ""}} role="presentation">
               {{#link-to "fees"}}
                   <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"><span class="navbar-glyph-text"> Fees</span></span>
               {{/link-to}}

@@ -5,6 +5,7 @@ const { $ } = Ember;
 export default Ember.Component.extend({
   modalPrefix: 'generic',
   first: '',
+  reset: true,
   
   didInsertElement() {
     "use strict";

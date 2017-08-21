@@ -73,6 +73,11 @@ export default Ember.Controller.extend({
       "use strict";
       
       return false;
+    },
+    editButtonSelected() {
+      "use strict";
+      
+      console.log("Edit button selected.");
     }
   }
 });

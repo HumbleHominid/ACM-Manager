@@ -9,6 +9,13 @@ export default Ember.Component.extend({
   
   annonData: null,
   
+  didInsertElement() {
+    "use strict";
+    
+    $(`#edit-announcement-modal`).on('hidden.bs.modal', () => {
+      this.set('annonData', null);
+    });
+  },
   actions: {
     showEditModal(data) {
       "use strict";
