@@ -20,7 +20,7 @@ export default Ember.Component.extend({
     showEditModal(data) {
       "use strict";
       
-      this.set('annonData', data);
+      this.set('annonData', Ember.copy(data, true));
       
       $(`#edit-announcement-modal`).modal();
     }
