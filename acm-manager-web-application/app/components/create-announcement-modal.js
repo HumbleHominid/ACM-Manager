@@ -49,10 +49,10 @@ export default Ember.Component.extend({
         
         $(`#${modalPrefix}-modal`).modal('hide');
         
-        let annoData = data.annoData;
-        let startTime = new Date(annoData.startTime.replace(' ', 'T')).toString();
+        let annonData = data.annoData;
+        let startTime = new Date(annonData.startTime.replace(' ', 'T')).toString();
         
-        this.get('_notify').success(`New announcement created with message: "${annoData.message}". To start at ${startTime}.`, {
+        this.get('_notify').success(`New announcement created with message: "${annonData.message}". To start at ${startTime}.`, {
           radius: true,
           closeAfter: 3 * 1000
         });
