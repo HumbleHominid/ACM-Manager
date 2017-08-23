@@ -1,6 +1,5 @@
 import Ember from 'ember';
-
-const { $ } = Ember;
+import ENV from 'acm-manager-web-application/config/environment';
 
 export default Ember.Service.extend({
   _data: null,
@@ -10,7 +9,7 @@ export default Ember.Service.extend({
     
     this._super(...arguments);
    
-    let appSettings = $(window)["0"].AcmManagerWebApplication;
+    let appSettings = ENV.APP;
     
     if (appSettings) {
       this.set('_data', appSettings.socialMedia);

@@ -22,13 +22,17 @@ export default Ember.Service.extend({
     
     let data = this.get('_data');
     
-    return (data ? data.eventData.past : null);
+    return data && data.eventData ? data.eventData.past : null;
   }),
   pastTyped: Ember.computed('_data', function() {
     "use strict";
     
     let past = { };
-    let pastEvents = this.get('_data.eventData.past');
+    let pastEvents = this.get('past');
+    
+    if (Ember.isNone(pastEvents)) {
+      return null;
+    }
     
     if (Ember.isPresent(pastEvents)) {
       pastEvents.forEach(function(event) {
@@ -52,13 +56,17 @@ export default Ember.Service.extend({
     
     let data = this.get('_data');
     
-    return (data ? data.eventData.future : null);
+    return data && data.eventData ? data.eventData.future : null;
   }),
   futureTyped: Ember.computed('_data', function() {
     "use strict";
     
     let future = { };
-    let futureEvents = this.get('_data.eventData.future');
+    let futureEvents = this.get('future');
+    
+    if (Ember.isNone(futureEvents)) {
+      return null;
+    }
     
     if (Ember.isPresent(futureEvents)) {
       futureEvents.forEach(function(event) {
@@ -195,7 +203,7 @@ export default Ember.Service.extend({
       let eventData = Ember.copy(data, true);
       
       this.set('_data', eventData);
-    }).fail((/* jqXHW, textStatus, err */) => {
+    }).fail(() => {
       this.get('notify').alert("Failed to pull events", {
         radius: true,
         closeAfter: 3 * 1000

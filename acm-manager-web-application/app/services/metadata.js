@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'acm-manager-web-application/config/environment';
 
 const { inject: { service }, $ } = Ember;
 
@@ -13,7 +14,7 @@ export default Ember.Service.extend({
     
     this._super(...arguments);
     
-    let appSettings = $(window)["0"].AcmManagerWebApplication;
+    let appSettings = ENV.APP;
     
     if (appSettings) {
       this.setProperties({
@@ -37,7 +38,7 @@ export default Ember.Service.extend({
       })
     }).done((data) => {
       return data;
-    }).fail((/* jqXHW, textStatus, err */) => {
+    }).fail(() => {
       this.get('notify').alert(`Failed to fetch metadata for ${tableName}.`, {
         radius: true,
         closeAfter: 3 * 1000

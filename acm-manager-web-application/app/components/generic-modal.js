@@ -15,7 +15,11 @@ export default Ember.Component.extend({
     $(`#${modalPrefix}-modal`).on('shown.bs.modal', () => {
       $(`#${modalPrefix}-${this.get('first')}`).focus();
     }).on('hidden.bs.modal', () => {
-      $(`#${modalPrefix}-form`)[0].reset();
+      let el = $(`#${modalPrefix}-form`)[0];
+      
+      if (el) {
+        el.reset();
+      }
     });
   },
   actions: {

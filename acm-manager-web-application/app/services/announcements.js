@@ -63,7 +63,7 @@ export default Ember.Service.extend({
     
     let data = this.get('_data');
 
-    return data ? data.autoAnnos.length + data.currentAnnos.length : 0;
+    return data && data.autoAnnos && data.currentAnnos ? data.autoAnnos.length + data.currentAnnos.length : 0;
   }),
   clear() {
     "use strict";
