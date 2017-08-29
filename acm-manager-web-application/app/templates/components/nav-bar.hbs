@@ -51,6 +51,15 @@
           {{/if}}
         {{/if}}
       </ul>
+{{!--       {{#if currentUser.token}}
+        {{#if (is-admin currentUser.userType.user_type_id)}} --}}
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              {{input id="user-searchbar" placeholder="Search for a user" class="form-control"}}
+            </div>
+          </form>
+{{!--         {{/if}}
+      {{/if}} --}}
       <ul class="nav navbar-nav navbar-right">
         {{#if currentUser.token}}
           <li role="presentation" {{action logoutCallback}}>

@@ -48,7 +48,9 @@ export default Ember.Service.extend({
     
     return (user ? user : null);
   }),
-  loadFees(fees){
+  loadFees(fees) {
+    "use strict";
+    
     this.set('_fees', fees);
   }
 });
