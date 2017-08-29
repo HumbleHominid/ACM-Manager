@@ -4,7 +4,15 @@ const { inject: { service } } = Ember;
 
 export default Ember.Service.extend({
   _session: service('session'),
+  _fees: null,
   
+  init() {
+    "use strict";
+    
+    this._super(...arguments);
+    
+    this.set('_fees', null);
+  },
   id: Ember.computed('_session.data.authenticated', function() {
     "use strict";
     
@@ -39,5 +47,8 @@ export default Ember.Service.extend({
     let user = this.get('_session.data.authenticated');
     
     return (user ? user : null);
-  })
+  }),
+  loadFees(fees){
+    this.set('_fees', fees);
+  }
 });

@@ -77,7 +77,7 @@ module.exports = function(environment) {
     ENV.APP.namespace = config.namespace;
     ENV.APP.socialMedia = config.socialMedia;
   }
-  
+
   if (environment === 'mfryer') {
     let config = JSON.parse(fs.readFileSync("vendor/config/testing/mfryer.json"));
     
@@ -91,6 +91,10 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+  }
+
+  if (environment === 'cmcclure') {
+    ENV.rootURL = '/~cmcclure/ACM-Manager/';
   }
 
   return ENV;
