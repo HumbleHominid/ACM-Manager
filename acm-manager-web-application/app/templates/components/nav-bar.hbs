@@ -53,11 +53,11 @@
       </ul>
 {{!--       {{#if currentUser.token}}
         {{#if (is-admin currentUser.userType.user_type_id)}} --}}
-          <form class="navbar-form navbar-left">
+          <form class="navbar-form navbar-left" oninput={{action 'searchMembers'}} onsubmit={{action 'formSubmit'}}>
             <div class="form-group">
               {{input id="user-searchbar" placeholder="Search for a user" class="form-control"}}
             </div>
-          </form>
+          </form>{{log members.data}}
 {{!--         {{/if}}
       {{/if}} --}}
       <ul class="nav navbar-nav navbar-right">
@@ -79,11 +79,11 @@
             {{/link-to}}
           </li>
         {{/if}}
-        <li role="presentation" data-toggle="modal" data-target="#contact-us-modal">
+{{!--         <li role="presentation" data-toggle="modal" data-target="#contact-us-modal">
           {{#link-to currentPath}}
               <span class="glyphicon glyphicon-envelope" aria-hidden="true"><span class="navbar-glyph-text"> Contact Us</span></span>
           {{/link-to}}
-        </li>
+        </li> --}}
       </ul>
     </div>
   </div>
