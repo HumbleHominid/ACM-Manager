@@ -1,1 +1,7 @@
 *.swp
+.config
+_files
+model/dbStartup.php
+model/key.php
+phpunit-5.7.phar
+

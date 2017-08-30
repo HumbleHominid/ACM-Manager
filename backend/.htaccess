@@ -4,7 +4,7 @@ RewriteEngine on
 
 RewriteBase /~tbrooks/ACM-Manager/backend
 
-RewriteCond %{REQUEST_URI} ^/~tbrooks/ACM-Manager/backend/_files
+RewriteCond %{REQUEST_URI} ^/~tbrooks/ACM-Manager/backend/(_files|.config)
 RewriteRule ^(.*) server.php [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f

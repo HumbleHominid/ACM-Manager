@@ -1,0 +1,29 @@
+{
+  "server":{
+    "hostname": "",
+    "relativePath": ""
+  },
+  "database":{
+    "host": "",
+    "database": "",
+    "username": "",
+    "password": ""
+  }
+  "members": {
+    "passwordRegex": "",
+    "emailRegex": ""
+  },
+  "files" : {
+    "folderName": "_folder"
+  },
+  "login": {
+    "noRememberTokenTime": "",
+    "rememberTokenTime": "",
+    "verificationTimeout": "",
+    "allowedLoginAttempts": ""
+  }
+  "emailConfig":{
+    "fromEmail" : "",
+    "fromName": ""
+  }
+}
