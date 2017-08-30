@@ -236,7 +236,7 @@ class Server{
     $files = new Files($this->login, $members);
     switch($task){
     case 'GET_FILE_INFO':
-      $fileID = $this->data['data']['fileID'];
+      $fileID = $this->data['data']['file_id'];
       $files->getFile($fileID);
       break;
     case 'DOWNLOAD_FILE':
