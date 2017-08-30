@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 class Server{
 
-  private $relAddress = '/~acmuser/backend/';
+  private $relAddress = '/~tbrooks/ACM-Manager/backend/';
   private $login;
   private $data;
 
@@ -59,7 +59,6 @@ class Server{
       $this->announcements();
       break;
     default:
-      echo $object;
       header('HTTP/1.1 400 Bad Request');
       break;
 
@@ -147,6 +146,11 @@ class Server{
       $json = $this->response($info);
       echo $json;
       break;
+    case 'LIST_USER_TYPES':
+      $list = $member->listUserTypes();
+      $json = $this->response($list);
+      echo $json;
+      break;
     default:
       header('HTTP/1.1 400 Bad Request');
       break;
@@ -226,7 +230,19 @@ class Server{
 
   private function files(){
     $task = $this->data['task'];
+     include('model/members.php');
+    $members = new Members;
+    include('model/files.php'); 
+    $files = new Files($this->login, $members);
     switch($task){
+    case 'GET_FILE_INFO':
+      $fileID = $this->data['data']['fileID'];
+      $files->getFile($fileID);
+      break;
+    case 'DOWNLOAD_FILE':
+      $file_id = $this->data['data']['file_id'];
+      $files->downloadFile($file_id);
+      break;
     default:
     header('HTTP/1.1 400 Bad Request');
     break;

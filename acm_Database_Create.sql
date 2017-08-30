@@ -57,7 +57,7 @@ CREATE TABLE Event_Type (
   event_type_id tinyint NOT NULL AUTO_INCREMENT,
   name varchar(20) NOT NULL,
   description varchar(50),
-  defaultPoints double,
+  defaultPoints double NOT NULL DEFAULT 0,
   PRIMARY KEY(event_type_id)
 );
 

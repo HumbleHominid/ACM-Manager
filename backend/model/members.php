@@ -25,11 +25,7 @@ class Members{
         'fName'=> $results[0]['fName'],
         'lName'=> $results[0]['lName'],
         'email'=> $results[0]['email'],
-        'user_type' => array(
-          'user_type_id' => $typeId,
-          'name' => $typeResults[0]['name'],
-          'description' => $typeResults[0]['description']
-        )
+        'user_type' => $this->getFormattedUserType($typeResults[0]) 
       );
       return $data;
     }else{
@@ -48,6 +44,24 @@ class Members{
     return array("memberList" => $members);
   }
   
+  function listUserTypes(){
+    $query = 'SELECT * FROM User_Type ORDER BY user_type_id';
+    $types = $this->conn->select($query);
+    $typeList = array();
+    foreach($types as $type){
+      array_push($typeList, $this->getFormattedUserType($type));
+    }
+    return ['user_types' => $typeList];
+  }
+
+  function getFormattedUserType($typeResult){
+    return array(
+          'user_type_id' => $typeResult['user_type_id'],
+          'name' => $typeResult['name'],
+          'description' => $typeResult['description']
+        );
+  }
+    
   public function recalculatePoints($userId){
     $query = "SELECT SUM(givenPoints) AS '0'
               FROM User_Attendance
