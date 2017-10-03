@@ -2,10 +2,12 @@
 
 RewriteEngine on
 
+RewriteBase /~tbrooks/ACM-Manager/backend
 
-RewriteBase /~acmuser/backend
+RewriteCond %{REQUEST_URI} ^/~tbrooks/ACM-Manager/backend/_files
+RewriteRule ^(.*) server.php [L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*) /~acmuser/backend/server.php [L]
-
+RewriteCond %{REQUEST_FILENAME} !-d 
+RewriteRule ^(.*) server.php [L]
 </IfModule>

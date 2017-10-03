@@ -1,4 +1,10 @@
-/*DELETE FROM User_Attendance;
+/*DELETE FROM Metadata;
+DROP TABLE IF EXISTS Metadata;
+
+DELETE FROM Announcements;
+DROP TABLE IF EXISTS Announcements;
+
+DELETE FROM User_Attendance;
 DROP TABLE IF EXISTS User_Attendance;
 
 DELETE FROM Event_Files;
@@ -31,6 +37,7 @@ DROP TABLE IF EXISTS User_Type;
 DELETE FROM Passwords;
 DROP TABLE IF EXISTS Passwords;
 */
+
 CREATE TABLE Passwords (
   password_id int NOT NULL AUTO_INCREMENT,
   password varchar(255) NOT NULL,
@@ -50,7 +57,7 @@ CREATE TABLE Event_Type (
   event_type_id tinyint NOT NULL AUTO_INCREMENT,
   name varchar(20) NOT NULL,
   description varchar(50),
-  defaultPoints double,
+  defaultPoints double NOT NULL DEFAULT 0,
   PRIMARY KEY(event_type_id)
 );
 
@@ -78,7 +85,7 @@ CREATE TABLE Fees (
   fee_id int NOT NULL AUTO_INCREMENT,
   name varchar(20) NOT NULL,
   description varchar(140) NOT NULL,
-  dueDate timestamp,
+  dueDate datetime,
   fee double, 
   fee_type_id tinyint NOT NULL,
   FOREIGN KEY(fee_type_id) REFERENCES Fee_Type(fee_type_id),
@@ -102,8 +109,10 @@ CREATE TABLE Events (
   name varchar(30) NOT NULL,
   additionalInfo text,
   location varchar(50),
-  eventTime timestamp NOT NULL,
+  eventTime datetime NOT NULL,
   points double NOT NULL,
+  audience tinyint NOT NULL,
+  FOREIGN KEY(audience) REFERENCES User_Type(user_type_id),
   FOREIGN KEY(coordinator) REFERENCES Users(user_id),
   FOREIGN KEY(eventType) REFERENCES Event_Type(event_type_id),
   PRIMARY KEY(event_id)

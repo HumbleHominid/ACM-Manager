@@ -6,10 +6,17 @@ class Announcements{
   private $autoLeadDays = 3;
   private $endpoint = 'Announcements';
   private $members = NULL;
+  private $metadata = NULL;
+  private $events = NULL;
 
-  function Announcements($members){
+  function Announcements($members, $events){
     $this->conn = new DbConn();
     $this->members = $members;
+    $this->events = $events;
+    require_once('metadata.php');
+    $this->metadata = new Metadata();
+
+
   }
   
   private function getAnnouncement($anno_id){
@@ -40,7 +47,6 @@ class Announcements{
       array_push($currentAnnos, $this->getAnnouncement($id['anno_id']));
     } 
     return ['currentAnnos'=>$currentAnnos];  
-
   }
 
   function getFutureAnnouncements($user_type_id){
@@ -57,28 +63,46 @@ class Announcements{
       . $startComparisonOp . 'NOW() AND endTime' . $endComparisonOp . 'NOW() AND ? >= user_type;';
     return $this->conn->select($query, [$user_type_id]); 
   }
-
-  function getAutomaticAnnouncments($user_type_id){
-    $autoAnnos = array();
-    $query = "SELECT * FROM Events WHERE eventTime <= NOW() + INTERVAL $this->autoLeadDays DAY AND NOW() < eventTime;";
-    $events = $this->conn->select($query);
-    /*foreach($ids as $id){
-      array_push($autoAnnos, $getAnnouncement($id));
-    } */
-    return ['autoAnnos'=>$autoAnnos];
-
+  
+  function getAutomaticAnnouncments($user_type_id){ 
+    return ['autoAnnos'=>$this->events->getEventsInDateRange($user_type_id, $this->autoLeadDays, 0)];
   }
   
   function updateAnnouncement($data){
-    $this->conn->modify('UPDATE Announcements)');         
+    $query = 'UPDATE Announcements SET message = ?, startTime = ?, 
+        endTime = ?, user_type = ?, creator_id = ? WHERE anno_id = ?';
+    $updateData = $this->pushAnnouncementDataToArray($data);
+    array_push($updateData, $data['anno_id']);
+    $this->conn->modify($query, $updateData);
+    $this->metadata->updateMetadata($this->endpoint); 
+    return ['annoData'=>$this->getAnnouncement($data['anno_id'])];
   }
   
   function addAnnouncement($data){
-  
+    $query = 'INSERT INTO Announcements(message, startTime, endTime, user_type, creator_id) 
+      VALUES(?,?,?,?,?)';  
+    $insertData = $this->pushAnnouncementDataToArray($data);
+    $this->conn->modify($query, $insertData);
+    $this->metadata->updateMetadata($this->endpoint); 
+    $anno_id = $this->conn->lastInsertId(); 
+    return ['annoData'=>$this->getAnnouncement($anno_id)];
+  }
+
+  private function pushAnnouncementDataToArray($data){
+    $annoData = array();
+    array_push($annoData, $data['message']);
+    array_push($annoData, $data['startTime']);
+    array_push($annoData, $data['endTime']);
+    array_push($annoData, $data['user_type']);
+    array_push($annoData, $data['creator_id']);
+    return $annoData;
   }
 
   function deleteAnnouncement($anno_id){
-  
+    $query = 'DELETE FROM Announcements WHERE anno_id = ?;';
+    $result = $this->conn->modify($query, [$anno_id]);
+    $this->metadata->updateMetadata($this->endpoint); 
+    return ['status'=>$result];
   }
 
   function getAnnouncementsBar($user_type_id){

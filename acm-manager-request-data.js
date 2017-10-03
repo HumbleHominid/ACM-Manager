@@ -62,6 +62,10 @@
   "task": "LIST_MEMBERS",
 }
 
+//Get a list of user types.
+{
+  "task" : "LIST_USER_TYPES"
+}
 
 /********************************************************************
  *OFFICERS - Send to katie.mtech.edu/~acmuser/backend/officers
@@ -173,6 +177,27 @@ var attendee = {
  *FILES
  ********************************************************************/
 
+//Get file info from db for a file id
+//Due to audience restrictions, response my return a 'reason' 
+//This can happen for bad id's or not high enough permissions
+{
+  "task": "GET_FILE_INFO",
+  "data": {
+    'file_id': '2'
+  }
+}
+
+//Sends a file buffer back with the file contents.
+//Should start download on client side.
+//Due to audience restrictions, response my return a 'reason' 
+//This can happen for bad id's or not high enough permissions
+{
+  "task": "DOWNLOAD_FILE",
+  "data":{
+    "file_id": "2"
+  }
+}
+
 
 /********************************************************************
  *FEES - Send to katie.mtech.edu/~acmuser/backend/fees
@@ -202,5 +227,56 @@ var attendee = {
       "endpoint": ""
     }
 }
+
+/********************************************************************
+ * ANNOUNCEMENTS - Send to katie.mtech.edu/~acmuser/backend/announcements
+ ********************************************************************/
+
+//Get actively shown announcemnets for given user
+//Varied response based on time and user level
+{
+	"task": "GET_ACTIVE"
+}
+
+//Creates an announcement.
+//Log-in with officer account required
+{
+	"task": "CREATE_ANNO",
+	"data": {
+		"message":"Creating ANNO",
+		"startTime":"2017-07-30 00:00:00",
+		"endTime":"2017-08-12 12:00:00",
+		"user_type":"0",
+		"creator_id":"5"
+	}
+}
+
+//Updates an announcement.
+//Log-in with officer account required
+{
+	"task": "UPDATE_ANNO",
+	"data": {
+		"anno_id": "4",  
+			"message":"UPDATING ANNO",
+			"startTime":"2017-07-30 00:00:00",
+			"endTime":"2017-08-12 12:00:00",
+			"user_type":"0",
+			"creator_id":"5"
+	}
+}
+
+
+//Deletes an announcement.
+//Log-in with officer account required
+{
+	"task": "UPDATE_ANNO",
+	"data": {
+		"anno_id": "4"  
+	}
+}
+
+
+
+
 
 

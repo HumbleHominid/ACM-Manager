@@ -5,14 +5,22 @@ dist: trusty
 language: node_js
 node_js:
   - "6"
+
+#php:
+#  - '5.4'
+#  - '5.5'
+#  - '5.6'
+#  - '7.0'
+#  - '7.1'
+
 env:
   matrix:
     - EMBER_VERSION=default
 matrix:
   fast_finish: true
 
-services:
-  - mysql
+#services:
+#- mysql
 
 cache:
   directories:
@@ -20,17 +28,19 @@ cache:
     - bower_components
 
 before_install:
+  #  - cp backend/model/key.php.smp backend/model/key.php
+  #- cp backend/model/dbStartup.php.smp backend/model/dbStartup.php
   - cd acm-manager-web-application 
   - npm config set spin false
   - npm install -g bower
   - bower --version
-  - mysql -e 'CREATE DATABASE acm;'
+    #- mysql -e 'CREATE DATABASE acm;'
 
 install:
   - npm install
   - bower install
-  - mysql acm < ../acm_Database_Create.sql
-  - mysql acm < ../acm_Database_Placeholder_Data.sql
+    #- mysql acm < ../acm_Database_Create.sql
+    #- mysql acm < ../acm_Database_Placeholder_Data.sql
 
 script:
   - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot

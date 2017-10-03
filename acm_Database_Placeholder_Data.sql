@@ -1,3 +1,4 @@
+-- User Type data.
 INSERT INTO User_Type (name, description)
 VALUES ('Member', 'Club Member');
 
@@ -13,6 +14,16 @@ VALUES ('Vice President', 'Vice President');
 INSERT INTO User_Type (name, description)
 VALUES ('President', 'President');
 
+INSERT INTO User_Type (name, description)
+VALUES ('Advisor', 'Faculty Advisor');
+
+INSERT INTO User_Type (name, description)
+VALUES ('Visitor', 'General visitor to app.');
+
+UPDATE User_Type SET user_type_id = 0 WHERE name = 'Visitor';
+
+
+-- Fee type samples
 INSERT INTO Fee_Type (name, description)
 VALUES ('Dues', 'Yearly dues. $10');
 
@@ -21,6 +32,9 @@ VALUES ('T-Shirt', 'Yearly T-shirt');
 
 INSERT INTO Fee_Type (name, description)
 VALUES ('Pizza', 'Money for pizza');
+
+
+-- Event Type samples.
 
 INSERT INTO Event_Type (name, description, defaultPoints)
 VALUES ('Meeting', 'General club meetings for all members', 1);
@@ -55,9 +69,12 @@ VALUES ('Board Meeting', 'Board Meeting for Officers', 1);
 INSERT INTO Event_Type (name, description, defaultPoints)
 VALUES ('Study Group', 'Time for students to help each other with homework', 1);
 
+
+-- Metadata for endpoints.
 INSERT INTO Metadata(endpoint, updateTime) VALUES ('Events', NOW());
 INSERT INTO Metadata(endpoint, updateTime) VALUES ('Login', NOW());
 INSERT INTO Metadata(endpoint, updateTime) VALUES ('Members', NOW());
 INSERT INTO Metadata(endpoint, updateTime) VALUES ('Fees', NOW());
 INSERT INTO Metadata(endpoint, updateTime) VALUES ('Officers', NOW());
 INSERT INTO Metadata(endpoint, updateTime) VALUES ('Files', NOW());
+INSERT INTO Metadata(endpoint, updateTime) VALUES ('Announcements', NOW());

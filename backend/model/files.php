@@ -4,6 +4,8 @@ class Files{
   private $login = NULL;
   private $members = NULL;
   private $conn = NULL;
+  //naming this as 'files' will cause issues with htaccess
+  private $folder = '_files';
 
   function Files($login, $members){
 
@@ -29,6 +31,18 @@ class Files{
       );
     }else{
       return FALSE;
+    }
+  }
+
+  function downloadFile($file_id){
+     $query = 'SELECT * FROM Files
+    WHERE file_id = ? AND audience <= ?;';
+    $results = $this->conn->select($query, [$file_id, $this->login->getType()]);
+
+    if(count($results) === 1){
+      $filename = $results[0]['fileName'];
+      header("Content-disposition: attachment;filename=$filename");
+      readfile($this->folder.'/'.$filename);   
     }
   }
 

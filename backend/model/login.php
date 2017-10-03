@@ -10,7 +10,8 @@ define('ALGORITHM','HS512');
 
 class Login{
   private $emailRegex = '/^[a-zA-Z]+[0-9]*@mtech\\.edu$/';
-  private $domain = 'katie.mtech.edu/~acmuser';
+  private $passwordRegex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,}).*$/";
+  private $domain = 'acm.cs.mtech.edu';
   private $validatedUser = -1;
   private $currToken = '';
   private $conn = NULL;
@@ -91,7 +92,7 @@ class Login{
   public function createUser($user, $pass, $first, $last, $rememberMe){
     $query = 'INSERT INTO Passwords(password,passwordTimeout) VALUES (?, NULL);';
     $query2 = 'INSERT INTO Users(password_id, user_type, fName, lName, email) VALUES (?, 1, ?, ?, ?);';
-    if($this->validateEmail($user)){ 
+    if($this->validateEmail($user) && $this->validatePassword($pass)){ 
       try{ 
         $this->conn->modify($query, [password_hash($pass, PASSWORD_BCRYPT)]);   
         $this->conn->modify($query2, [$this->conn->lastInsertId(), $first, $last, $user]); 
@@ -117,7 +118,10 @@ class Login{
     return $valid;
   }
 
-
+  private function validatePassword($pass){
+    $valid = preg_match($this->passwordRegex, $pass); 
+    return $valid;
+  }
   public function getToken(){
     if($this->validatedUser > -1){
       $query = 'SELECT * FROM Users
@@ -189,6 +193,10 @@ class Login{
 
     function isOfficer(){
       return $this->user_type_id > 1;
+    }
+    
+    function isLoggedIn(){
+      return $this->validatedUser > -1;
     }
   }
   ?>
