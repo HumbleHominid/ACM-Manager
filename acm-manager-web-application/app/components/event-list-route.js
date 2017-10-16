@@ -8,5 +8,13 @@ export default Ember.Component.extend({
   data: null,
   expanded: false,
   
-  tagName: ''
+  tagName: '',
+  
+  actions: {
+    editSelected() {
+      "use strict";
+      
+      this.get('editButtonSelected') ();
+    }
+  }
 });

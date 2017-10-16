@@ -59,7 +59,7 @@ var eventObj = {
   event_id: 0,
   //replaced using users table
   coordinator: userObj,
-  
+
   //replaced using event type table
   eventType: eventTypeObj,
   name: "",
@@ -73,7 +73,7 @@ var eventObj = {
       userObj
     ]
   },
-  
+
   //Only return files that the user can see.
   files: [
     {

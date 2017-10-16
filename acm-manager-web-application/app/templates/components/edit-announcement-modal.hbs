@@ -1,0 +1,52 @@
+{{#generic-modal
+  modalPrefix=modalPrefix
+  first=first
+  title="Edit Announcement"
+  formAction=(action 'editAnnouncement')
+}}
+  {{generic-form-field
+    idPrefix=modalPrefix
+    label="Announcement Message"
+    formName="message"
+    placeholder="Your message here"
+    value=annonData.message
+  }}
+  
+  {{generic-form-field
+    type="datetime-local"
+    label="Starting Date and Time for Announcement"
+    idPrefix=modalPrefix
+    formName="startTime"
+    value=startTime
+  }}
+  
+  {{generic-form-field
+    type="datetime-local"
+    label="Ending Date and Time for Announcement"
+    idPrefix=modalPrefix
+    formName="endTime"
+    value=endTime
+  }}
+  
+  {{#generic-form-field
+    hasFeedback=true
+    formName="audience"
+    label="Audience Level"
+    help="All levels above what is selected will also be able to see this event."
+    idPrefix=modalPrefix
+  }}
+    <select class="form-control" id={{concat modalPrefix "-audience"}} multiple={{if multiple "multiple" ""}}>
+      <option selected={{if (is-equal annonData.user_type "0") "selected" ""}} value="0">Visitor</option>
+      <option selected={{if (is-equal annonData.user_type "1") "selected" ""}} value="1">Member</option>
+      <option selected={{if (is-equal annonData.user_type "2") "selected" ""}} value="2">Treasurer</option>
+      <option selected={{if (is-equal annonData.user_type "3") "selected" ""}} value="3">Secretary</option>
+      <option selected={{if (is-equal annonData.user_type "4") "selected" ""}} value="4">Vice President</option>
+      <option selected={{if (is-equal annonData.user_type "5") "selected" ""}} value="5">President</option>
+      <option selected={{if (is-equal annonData.user_type "8") "selected" ""}} value="8">Advisor</option>
+    </select>
+  {{/generic-form-field}}
+
+  <div class="modal-footer">
+    {{modal-buttons}}
+  </div>
+{{/generic-modal}}

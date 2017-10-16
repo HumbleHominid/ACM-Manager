@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{event-list-item}}`);
 
-  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Name Type Location Date Time Points Expand/Collapse Coordinator () Additional Info Attendance');
+  assert.equal(this.$().text().trim().replace(/\s+/gi, ' '), 'Name Type Location Date Time Points Expand/Collapse Coordinator , Additional Info Attendance');
 });

@@ -1,4 +1,6 @@
-import GenericModal from './generic-modal';
+import Ember from 'ember';
 
-export default GenericModal.extend({
+export default Ember.Component.extend({
+  modalPrefix: "contact-us",
+  first: "first"
 });

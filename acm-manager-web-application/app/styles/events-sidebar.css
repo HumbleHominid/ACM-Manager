@@ -23,7 +23,7 @@ and (max-width: 1200px) {
 @media only screen
 and (min-width: 1200px) {
   .upcoming-events-localized {
-    position: fixed;
+    position: absolute;
 
     right: 1%;
 

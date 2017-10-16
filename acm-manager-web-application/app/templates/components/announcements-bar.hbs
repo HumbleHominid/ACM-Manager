@@ -1,0 +1,34 @@
+{{#if announcements.count}}
+  <div class="alert alert-info alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <p class="unselectable pointer lead" data-toggle="collapse" data-target=".announcement-list-container"><strong>New Announcements</strong> <small>Click to expand/collapse</small> <span class="badge">{{if announcements.count announcements.count '0'}}</span></p>
+    <dl class="dl-horizontal announcement-list-container collapse {{if (is-one announcements.count) "in"}}" aria-expanded={{if (is-one announcements.count) "true" "false"}}>
+      {{#each-in announcements.data.currentAnnos as |key value|}}
+        {{announcement-object
+          editClickedCallback=(action 'showEditModal')
+          data=value
+        }}
+      {{/each-in}}
+      {{#each-in announcements.data.autoAnnos as |key value|}}
+        {{announcement-object
+          editClickedCallback=(action 'showEditModal')
+          data=value
+          showEdit=false
+        }}
+      {{/each-in}}
+    </dl>
+  </div>
+  
+  {{edit-announcement-modal
+    annonData=annonData
+    reset=false
+  }}
+{{/if}}
+
+{{#if (is-admin (get currentUser.userType "user_type_id"))}}
+  <button class="btn btn-success" role="button" data-toggle="modal" data-target="#create-announcement-modal">Add Announcement</button>
+
+  {{create-announcement-modal}}
+{{/if}}

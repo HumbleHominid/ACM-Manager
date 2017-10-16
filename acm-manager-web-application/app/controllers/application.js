@@ -3,102 +3,108 @@ import Ember from 'ember';
 const { inject: { service } } = Ember;
 
 export default Ember.Controller.extend({
-  notify: service(),
+  _notify: service('notify'),
   session: service(),
-  currentUser: service(),
-  events: service(),
-  
-  loginWithToken: function(jwt) {
-    (function(controller) {
-      controller.get('session').authenticate('authenticator:auth', {
-        task: "UPDATE_TOKEN",
-        jwt: jwt
-      }).then(function() {
-        controller.send('login');
-      }).catch(function(/* reason */) {
-        controller.get('session.store').clear();
-        
-        controller.invalidSessionMessage();
-      });
-    }) (this);
-  },
-  getEvents: function() {
-    let jwt = this.get('session.data.authenticated.user.jwt');
-    let eventRequestObj = { task: "GET_LIST", token: jwt };
+  _currentUser: service('currentUser'),
+  _events: service('events'),
+  _announcements: service('announcements'),
     
-    eventRequestObj = JSON.stringify(eventRequestObj);
+  _loginWithToken: function(jwt) {
+    "use strict";
     
-    (function(controller) {
-      Ember.$.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: 'https://katie.mtech.edu/~acmuser/backend/events',
-        data: eventRequestObj
-      }).done(function(data) {
-        let eventData = Ember.copy(data, true);
-        
-        controller.get('events').load(eventData);
-      }).fail(function(/* jqXHW, textStatus, err */) {
-        //fail
+    this.get('session').authenticate('authenticator:auth', {
+      jwt: jwt,
+      task: 'UPDATE_TOKEN'
+    }).then(() => {
+      this._welcomeBackMessage();
+    }).catch((/* reason */) => {
+      this._invalidSessionMessage();
+      
+      let store = this.get('session.store');
+      
+      store.clear().then(() => {
+        store.persist(null);
       });
-    }) (this);
+    });
   },
-  welcomeBackMessage: function() {
-    this.get('notify').success("Welcome back " + this.get('currentUser.name') + "!", {
-      closeAfter: 3000,
+  _welcomeBackMessage: function() {
+    "use strict";
+    
+    this.get('_notify').success(`Welcome back ${this.get('_currentUser.name')}!`, {
+      closeAfter: 3 * 1000,
       radius: true
     });
   },
-  byeMessage: function() {
-    this.get('notify').warning("Bye!", {
-      closeAfter: 3000,
+  _byeMessage: function() {
+    "use strict";
+    
+    this.get('_notify').warning("Bye!", {
+      closeAfter: 3 * 1000,
       radius: true
     });
   },
-  invalidSessionMessage: function() {
-    this.get('notify').warning("Session has been invalidated. Please log in again.", {
-      closeAfter: 3000,
+  _invalidSessionMessage: function() {
+    "use strict";
+    
+    this.get('_notify').warning("Session has been invalidated. Please log in again.", {
+      closeAfter: 3 * 1000,
       radius: true
     });
   },
   init() {
+    "use strict";
+    
     this._super(...arguments);
     
-    if (this.get('session.store')) {
-      this.get('session.store').restore().then((user) => {
-        if (user.jwt) {
-          this.loginWithToken(user.jwt);
+    let session = this.get('session');
+    let store = session.get('store');
+    
+    if (store) {
+      store.restore().then((data) => {
+        if (Ember.isPresent(data.jwt)) {
+          this._loginWithToken(data.jwt);
         }
       }).catch(() => {
-        this.get('session.store').clear();
-        
-        this.invalidSessionMessage();
+        this._invalidSessionMessage();
       }).finally(() => {
-        this.getEvents();
+        this.get('_events').load();
+        this.get('_announcements').load();
       });
     }
   },
+  _updateData() {
+    "use strict";
+    
+    this.get('_events').load();
+    this.get('_announcements').load();
+  },
   actions: {
     login() {
-      let user = this.get('session.data.authenticated.user');
+      "use strict";
       
-      this.get('session.store').persist(user);
+      this._updateData();
       
-      this.get('currentUser').load(user);
+      let session = this.get('session');
+      let user = session.get('data.authenticated');
 
-      this.getEvents();
-      this.welcomeBackMessage();
+      session.get('store').persist(user);
+      
+      this._welcomeBackMessage();
     },
     logout() {
-      this.get('session.store').clear();
+      "use strict";
       
-      this.get('currentUser').clear();
+      let session = this.get('session');
+      let store = session.get('store');
       
-      this.getEvents();
-      this.byeMessage();
-    },
-    invalidateSession: function() {
-      this.get('session').invalidate();
+      session.invalidate().then(() => {
+        store.clear().then(() => {
+          store.persist(null);
+        });
+      });
+      
+      this._updateData();
+      this._byeMessage();
     }
   }
 });

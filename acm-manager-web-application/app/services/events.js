@@ -1,56 +1,101 @@
 import Ember from 'ember';
 
+const { inject: { service }, $ } = Ember;
+
 export default Ember.Service.extend({
-  data: null,
+  session: service(),
+  _metadata: service('metadata'),
+  currentUser: service(),
   
-  past: Ember.computed('data', function() {
-    let data = this.get('data');
+  _data: null,
+  _requestTime: null,
+  
+  data: Ember.computed('_data', function() {
+    "use strict";
     
-    return (data ? data.eventData.past : null);
+    let data = this.get('_data');
+    
+    return data ? data : null;
   }),
-  pastTyped: Ember.computed('data', function() {
-    let past = { };
+  past: Ember.computed('_data', function() {
+    "use strict";
     
-    this.get('data.eventData.past').forEach(function(event) {
-      let eventTypeId = event.eventType.event_type_id;
-      
-      if (!(eventTypeId in past)) {
-        past[eventTypeId] = {
-          name: event.eventType.name,
-          events: [ ]
-        };
-      }//if
-      
-      past[eventTypeId].events.push(event);
-    });
+    let data = this.get('_data');
+    
+    return data && data.eventData ? data.eventData.past : null;
+  }),
+  pastTyped: Ember.computed('_data', function() {
+    "use strict";
+    
+    let past = { };
+    let pastEvents = this.get('past');
+    
+    if (Ember.isNone(pastEvents)) {
+      return null;
+    }
+    
+    if (Ember.isPresent(pastEvents)) {
+      pastEvents.forEach(function(event) {
+        let eventTypeId = event.eventType.event_type_id;
+        
+        if (!(eventTypeId in past)) {
+          past[eventTypeId] = {
+            name: event.eventType.name,
+            events: [ ]
+          };
+        }
+        
+        past[eventTypeId].events.push(event);
+      });
+    }
     
     return past;
   }),
-  future: Ember.computed('data', function() {
-    let data = this.get('data');
+  future: Ember.computed('_data', function() {
+    "use strict";
     
-    return (data ? data.eventData.future : null);
+    let data = this.get('_data');
+    
+    return data && data.eventData ? data.eventData.future : null;
   }),
-  futureTyped: Ember.computed('data', function() {
-    let future = { };
+  futureTyped: Ember.computed('_data', function() {
+    "use strict";
     
-    this.get('data.eventData.future').forEach(function(event) {
-      let eventTypeId = event.eventType.event_type_id;
-      
-      if (!(eventTypeId in future)) {
-        future[eventTypeId] = {
-          name: event.eventType.name,
-          events: [ ]
-        };
-      }//if
-      
-      future[eventTypeId].events.push(event);
-    });
+    let future = { };
+    let futureEvents = this.get('future');
+    
+    if (Ember.isNone(futureEvents)) {
+      return null;
+    }
+    
+    if (Ember.isPresent(futureEvents)) {
+      futureEvents.forEach(function(event) {
+        let eventTypeId = event.eventType.event_type_id;
+        
+        if (!(eventTypeId in future)) {
+          future[eventTypeId] = {
+            name: event.eventType.name,
+            events: [ ]
+          };
+        }
+        
+        future[eventTypeId].events.push(event);
+      });
+    }
     
     return future;
   }),
+  types: Ember.computed('_data', function() {
+    "use strict";
+    
+    let data = this.get('_data');
+    
+    return (data ? data.eventTypes : null);
+  }),
   search(query) {
-    let data = this.get('data');
+    "use strict";
+    
+    let data = this.get('_data');
     
     if (data) {
       let re = new RegExp(query, 'gi');
@@ -75,7 +120,9 @@ export default Ember.Service.extend({
     }
   },
   searchTyped(query) {
-    let data = this.get('data');
+    "use strict";
+    
+    let data = this.get('_data');
     
     if (data) {
       let re = new RegExp(query, 'gi');
@@ -93,7 +140,7 @@ export default Ember.Service.extend({
               name: event.eventType.name,
               events: [ ]
             };
-          }//if
+          }
           
           events.past[eventTypeId].events.push(event);
         }
@@ -108,7 +155,7 @@ export default Ember.Service.extend({
               name: event.eventType.name,
               events: [ ]
             };
-          }//if
+          }
           
           events.future[eventTypeId].events.push(event);
         }
@@ -118,17 +165,57 @@ export default Ember.Service.extend({
     }
   },
   init() {
+    "use strict";
+    
     this._super(...arguments);
     
-    this.set('data', null);
+    this.clear();
   },
-  load(data) {
-    this.set('data', data);
+  load() {
+    "use strict";
+    
+    this.get('_metadata').getMetadata('Events').then((data) => {
+      let metadata = data.metadata;
+      let metadataTime = (metadata ? new Date(metadata.updateTime.replace(' ', 'T')) : null);
+      
+      if (Ember.compare(metadataTime, this.get('_requestTime')) >= 0) {
+        this._fetchEvents();
+      }
+    });
+  },
+  _fetchEvents() {
+    "use strict";
+    
+    let session = this.get('session');
+    let jwt = (session.get('isAuthenticated') ? this.get('currentUser.token') : null);
+    
+    let metadata = this.get('_metadata');
+    
+    $.ajax({
+      type: 'POST',
+      contentType: 'application/json',
+      url: `${metadata.get('url')}events`,
+      data: JSON.stringify({
+        task: "GET_LIST",
+        token: jwt
+      })
+    }).done((data) => {
+      let eventData = Ember.copy(data, true);
+      
+      this.set('_data', eventData);
+    }).fail(() => {
+      this.get('notify').alert("Failed to pull events", {
+        radius: true,
+        closeAfter: 3 * 1000
+      });
+    });
   },
   clear() {
-    this.set('data', null);
-  },
-  read() {
-    return this.get('data');
+    "use strict";
+    
+    this.setProperties({
+      _data: null,
+      _requestTime: null
+    });
   }
 });

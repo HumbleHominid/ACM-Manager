@@ -7,13 +7,15 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  "use strict";
+
   this.route('home');
   this.route('account', { qureyParams: [ "user_id" ] });
-  this.route('event_details');
   this.route('events');
   this.route('files');
   this.route('officers');
   this.route('fees');
+  this.route('not-found', { path : '/*path' });
 });
 
 export default Router;

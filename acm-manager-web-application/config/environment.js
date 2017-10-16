@@ -1,4 +1,5 @@
 /* jshint node: true */
+var fs = require('fs');
 
 module.exports = function(environment) {
   var ENV = {
@@ -16,16 +17,37 @@ module.exports = function(environment) {
         Date: false
       }
     },
-
     APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
+      endPoint: "",
+      namespace: "",
+      socialMedia: {
+        discord: {
+          display: false,
+          serverId: ""
+        },
+        facebook: {
+          display: false
+        },
+        instagram: {
+          display: false
+        },
+        slack: {
+          display: false,
+          inviteUrl: ""
+        },
+        twitter: {
+          display: false,
+          twitterHandle: ""
+        }
+      }
     }
   };
 
-  ENV['simple-auth'] = {
-    store: 'simple-auth-session-store:cookie',
-    routeAfterAuthentication: '/home'
+  ENV['ember-simple-auth'] = {
+    baseURL: 'home',
+    authenticationRoute: 'home',
+    routeAfterAuthentication: 'home',
+    routeIfAlreadyAuthenticated: 'home'
   };
 
   if (environment === 'development') {
@@ -48,17 +70,31 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.rootURL = '/~acmuser/';
-  }
+    let config = JSON.parse(fs.readFileSync("vendor/config/config.json"));
   
+    ENV.rootURL = config.rootURL;
+    ENV.APP.endPoint = config.endPoint;
+    ENV.APP.namespace = config.namespace;
+    ENV.APP.socialMedia = config.socialMedia;
+  }
+
   if (environment === 'mfryer') {
-    ENV.rootURL = '/~mfryer/ACM-Manager/';
+    let config = JSON.parse(fs.readFileSync("vendor/config/testing/mfryer.json"));
+    
+    ENV.rootURL = config.rootURL;
+    ENV.APP.endPoint = config.endPoint;
+    ENV.APP.namespace = config.namespace;
+    ENV.APP.socialMedia = config.socialMedia;
     
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+  }
+
+  if (environment === 'cmcclure') {
+    ENV.rootURL = '/~cmcclure/ACM-Manager/';
   }
 
   return ENV;

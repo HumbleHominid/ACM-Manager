@@ -1,6 +1,0 @@
-<label for="{{idPrefix}}-{{formName}}" class="control-label">Last Name</label>
-{{input class="form-control" id=(string-append idPrefix "-" formName) placeholder="Doe" value=value required=(if required "required" "") pattern=pattern}}
-{{#if hasFeedback}}
-  <span id="{{idPrefix}}-{{formName}}_span" class="glyphicon form-control-feedback" aria-hidden="true" />
-{{/if}}
-<span class="help-block">{{help}}</span>

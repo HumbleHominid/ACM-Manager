@@ -1,25 +1,19 @@
 import Ember from 'ember';
-import OAuth2PasswordGrantAuthenticator from 'ember-simple-auth/authenticators/oauth2-password-grant';
+import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
-export default OAuth2PasswordGrantAuthenticator.extend({
-  session: Ember.inject.service(),
+const { inject: { service }, $ } = Ember;
 
-  restore: function(data) {
-    return new Ember.RSVP.Promise(function(resolve, reject) {
-      if (!Ember.isEmpty(data.token)) {
-        resolve(data);
-      }
-      else {
-        reject();
-      }
-    });
-  },
-  authenticate: function(options) {
+export default BaseAuthenticator.extend({
+  _metadata: service('metadata'),
+
+  authenticate(options) {
+    "use strict";
+    
     return new Ember.RSVP.Promise((resolve, reject) => {
-      Ember.$.ajax({
+      $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: 'https://katie.mtech.edu/~acmuser/backend/login',
+        url: `${this.get('_metadata.url')}login`,
         data: JSON.stringify({
           task: options.task,
           token: options.jwt,
@@ -30,19 +24,33 @@ export default OAuth2PasswordGrantAuthenticator.extend({
           }
         })
       }).done((response) => {
-        Ember.run(() => {
-          resolve({ user: response.user });
-        });
+        if (response.user) {
+          if (options.jwt) {
+            response.user.jwt = options.jwt;
+          }
+          
+          resolve(response.user);
+        }
+        else {
+          reject();
+        }
       }).fail((xhr/* , status, error */) => {
         var response = xhr.responseText;
 
-        Ember.run(() => {
-          reject(response);
-        });
+        reject(response);
       });
     });
   },
-  invalidate(/* data */) {
-    return Ember.RSVP.resolve();
+  restore(data) {
+    "use strict";
+    
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      if (!Ember.isEmpty(data.jwt)) {        
+        resolve(data.user);
+      }
+      else {
+        reject();
+      }
+    });
   }
 });

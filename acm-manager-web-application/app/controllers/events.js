@@ -1,17 +1,21 @@
 import Ember from 'ember';
 
-const { inject: { service } } = Ember;
+const { inject: { service }, $ } = Ember;
 
 export default Ember.Controller.extend({
+  session: service(),
   events: service(),
+  currentUser: service(),
   
   filterTime: true,
   filterType: false,
   filterSearch: false,
   
-  eventData: Ember.computed('filterTime', 'filterType', 'filterSearch', 'events.data', function() {
+  eventData: Ember.computed('filterTime', 'filterType', 'filterSearch', 'events._data', function() {
+    "use strict";
+    
     if (this.get('filterSearch')) {
-      let query = Ember.$('#events-searchbar')[0].value;
+      let query = $('#events-searchbar')[0].value;
       
       if (this.get('filterTime')) {
         return this.get('events').search(query);
@@ -38,19 +42,25 @@ export default Ember.Controller.extend({
   }),
   actions: {
     filterTime() {
+      "use strict";
+      
       this.setProperties({
         filterTime: true,
         filterType: false
       });
     },
     filterType() {
+      "use strict";
+      
       this.setProperties({
         filterTime: false,
         filterType: true
       });
     },
     search() {
-      let query = Ember.$('#events-searchbar')[0].value;
+      "use strict";
+      
+      let query = $('#events-searchbar')[0].value;
       
       if (query.length > 2) {
         this.set('filterSearch', true);
@@ -58,6 +68,16 @@ export default Ember.Controller.extend({
       else {
         this.set('filterSearch', false);
       }
+    },
+    formSubmit() {
+      "use strict";
+      
+      return false;
+    },
+    editButtonSelected() {
+      "use strict";
+      
+      console.log("Edit button selected.");
     }
   }
 });

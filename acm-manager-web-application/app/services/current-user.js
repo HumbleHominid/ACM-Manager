@@ -1,40 +1,56 @@
 import Ember from 'ember';
 
+const { inject: { service } } = Ember;
+
 export default Ember.Service.extend({
-  data: null,
+  _session: service('session'),
+  _fees: null,
   
-  id: Ember.computed('data', function() {
-    let user = this.get('data');
+  init() {
+    "use strict";
+    
+    this._super(...arguments);
+    
+    this.set('_fees', null);
+  },
+  id: Ember.computed('_session.data.authenticated', function() {
+    "use strict";
+    
+    let user = this.get('_session.data.authenticated');
     
     return (user ? user.user_id : -1);
   }),
-  name: Ember.computed('data', function() {
-    let user = this.get('data');
+  name: Ember.computed('_session.data.authenticated', function() {
+    "use strict";
     
-    return (user ? user.fName + " " + user.lName : "");
+    let user = this.get('_session.data.authenticated');
+    
+    return (user ? `${user.fName} ${user.lName}` : "");
   }),
-  token: Ember.computed('data', function() {
-    let user = this.get('data');
+  token: Ember.computed('_session.data.authenticated', function() {
+    "use strict";
+    
+    let user = this.get('_session.data.authenticated');
     
     return (user ? user.jwt : "");
   }),
-  userType: Ember.computed('data', function() {
-    let user = this.get('data');
+  userType: Ember.computed('_session.data.authenticated', function() {
+    "use strict";
+    
+    let user = this.get('_session.data.authenticated');
     
     return (user ? user.user_type : "");
   }),
-  init() {
-    this._super(...arguments);
+  data: Ember.computed('_session.data.authenticated', function() {
+    "use strict";
     
-    this.set('data', null);
-  },
-  load(user) {
-    this.set('data', user);
-  },
-  clear() {
-    this.set('data', null);
-  },
-  read() {
-    return this.get('data');
+    let user = this.get('_session.data.authenticated');
+    
+    return (user ? user : null);
+  }),
+  loadFees(fees) {
+    "use strict";
+    
+    this.set('_fees', fees);
   }
 });

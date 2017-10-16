@@ -1,12 +1,29 @@
 <h4 class="list-group-item-heading">{{data.title}}</h4>
 
 <dl class="list-group-item-text {{if horizontal 'dl-horizontal'}}">
-  <dt>Name</dt><dd>{{data.name}}</dd>
-  <dt>Type</dt><dd>{{data.eventType.name}}</dd>
-  <dt>Location</dt><dd>{{data.location}}</dd>
-  <dt>Date</dt><dd>{{date}}</dd>
-  <dt>Time</dt><dd>{{time}}</dd>
-  <dt>Points</dt><dd>{{data.points}}</dd>
+  {{#if (is-present data.name)}}
+    <dt>Name</dt><dd>{{data.name}}</dd>
+  {{/if}}
+  
+  {{#if (is-present data.eventType.name)}}
+    <dt>Type</dt><dd>{{data.eventType.name}}</dd>
+  {{/if}}
+  
+  {{#if (is-present data.location)}}
+    <dt>Location</dt><dd>{{data.location}}</dd>
+  {{/if}}
+  
+  {{#if (is-present date)}}
+    <dt>Date</dt><dd>{{date}}</dd>
+  {{/if}}
+  
+  {{#if (is-present time)}}
+    <dt>Time</dt><dd>{{time}}</dd>
+  {{/if}}
+  
+  {{#if (is-present data.points)}}
+    <dt>Points</dt><dd>{{data.points}}</dd>
+  {{/if}}
   
   {{#if collapsable}}
     <p class="unselectable pointer bg-info" data-toggle="collapse" data-target="#list-item-{{data.event_id}}-{{suffix}}" aria-expanded="false">
@@ -15,16 +32,26 @@
   {{/if}}
   
   <dl id="list-item-{{data.event_id}}-{{suffix}}" class="{{if collapsable 'collapse'}}" aria-expanded="false">
-    <dt>Coordinator</dt><dd>{{data.coordinator.fName}} {{data.coordinator.lName}} ({{data.coordinator.email}})</dd>
-    <dt>Additional Info</dt><dd>{{data.additionalInfo}}</dd>
-    <dt>Attendance</dt><dd>{{data.attendance.amount}}</dd>
+    {{#if (is-present data.coordinator)}}
+      <dt>Coordinator</dt><dd>{{data.coordinator.fName}} {{data.coordinator.lName}}, <a href="mailto:{{data.coordinator.email}}">{{data.coordinator.email}}</a></dd>
+    {{/if}}
+    
+    {{#if (is-present data.additionalInfo)}}
+      <dt>Additional Info</dt><dd>{{data.additionalInfo}}</dd>
+    {{/if}}
+    
+    {{#if (is-present data.attendance.amount)}}
+      <dt>Attendance</dt><dd>{{data.attendance.amount}}</dd>
+    {{/if}}
+    
     {{#if data.attendance.attendees}}
       <dt>Attendees</dt><dd>
       {{#each-in data.attendance.attendees as |key value|}}
-        {{value.fName}} {{value.lName}}<br>
+        {{value.fName}} {{value.lName}}, <br>
       {{/each-in}}
       </dd>
     {{/if}}
+    
     {{#if data.files}}
       <dt>Files</dt>
       <ul class="list-group">

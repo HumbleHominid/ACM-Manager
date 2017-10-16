@@ -5,6 +5,8 @@
 @import 'navbar.css';
 @import 'events-sidebar.css';
 @import 'jumbotron.css';
+@import 'announcements-bar.css';
+@import 'discord-widget.css';
 
 .form-margin {
   margin: -webkit-calc(5px + 1%);
@@ -16,11 +18,15 @@
   resize: vertical;
 }
 
-.footer__container {
+.container-footer {
   bottom: 1%;
 
   text-align: center;
-  width: 100%
+  
+  margin-right: 30%;
+  margin-left: 30%;
+
+  width: 40%;
 }
 
 .footer__text {
@@ -79,9 +85,12 @@ body {
   margin: 1%;
 }
 
-@media only screen
-and (max-width: 1200px) {
-  .mobile-banner {
-    display: none !important;
-  }
+.form-divider {
+  border-top: 1px solid #e5e5e5;
+  
+  width: 100%!important;
+  
+  display: block;
+  
+  padding-bottom: 15px;
 }

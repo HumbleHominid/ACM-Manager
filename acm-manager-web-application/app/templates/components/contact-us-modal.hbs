@@ -1,23 +1,36 @@
-<div id="contact-us-modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Contact Us</h4>
-      </div>
-    
-      <form id="contact-us-form" class="form-margin">
-        {{f-name-form-field required=false idPrefix="contact-us"}}
-        {{l-name-form-field required=false idPrefix="contact-us"}}
-      
-        {{email-form-field idPrefix="contact-us" placeholder="Your Email" pattern="^.+@.+\..+$"}}
-        
-        {{textarea-form-field idPrefix="contact-us" placeholder="Your Message"}}
-        
-        <div class="modal-footer">
-          {{modal-buttons submit="Send"}}
-        </div>
-      </form>
-    </div>
+{{#generic-modal
+  modalPrefix=modalPrefix
+  first=first
+  title="Create Account"
+}}
+  {{generic-form-field
+    required=false
+    idPrefix=modalPrefix
+    label="First Name"
+    formName="first"
+    placeholder="John"
+  }}
+  {{generic-form-field
+    required=false
+    idPrefix=modalPrefix
+    label="Last Name"
+    formName="last"
+    placeholder="Doe"
+  }}
+
+  {{email-form-field
+    idPrefix=modalPrefix
+    placeholder="Your email"
+    pattern="^.+@.+\..+$"
+  }}
+  
+  {{textarea-form-field
+    idPrefix=modalPrefix
+    placeholder="Your Message"
+  }}
+
+  <div class="modal-footer">
+    {{modal-buttons}}
   </div>
-</div>
+{{/generic-modal}}
+

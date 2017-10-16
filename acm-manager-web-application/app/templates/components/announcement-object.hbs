@@ -1,0 +1,8 @@
+<dt>{{if data.event_type data.event_type.name title}}</dt>
+<dd>{{if data.message data.message message}}
+  {{#if (is-admin (get currentUser.userType "user_type_id"))}}
+    {{#if showEdit}}
+      <button type="button" class="btn btn-warning btn-xs pull-right" {{action 'editClicked' data}}>Edit</button>
+    {{/if}}
+  {{/if}}
+</dd>

@@ -19,43 +19,47 @@
     
     <div class="collapse navbar-collapse no-scrollbar" id="mta-navbar" aria-expanded="true" data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
       <ul class="nav navbar-nav">
-        <li class={{if (is-active-route currentPath 'home') "active" ""}} role="presentation">
+        <li class={{if (is-equal currentPath 'home') "active" ""}} role="presentation">
           {{#link-to "home"}}
               <span class="glyphicon glyphicon-home" aria-hidden="true"><span class="navbar-glyph-text"> Home</span></span>
             {{/link-to}}
         </li>
-        <li class={{if (is-active-route currentPath 'events') "active" ""}} role="presentation">
+        <li class={{if (is-equal currentPath 'events') "active" ""}} role="presentation">
           {{#link-to "events"}}
               <span class="glyphicon glyphicon-calendar" aria-hidden="true"><span class="navbar-glyph-text"> Events</span></span>
           {{/link-to}}
         </li>
-        <li class={{if (is-active-route currentPath 'officers') "active" ""}} role="presentation">
+        <li class={{if (is-equal currentPath 'officers') "active" ""}} role="presentation">
           {{#link-to "officers"}}
               <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"><span class="navbar-glyph-text"> Officers</span></span>
           {{/link-to}}
         </li>
 
         {{#if currentUser.token}}
-          <li class={{if (is-active-route currentPath 'files') "active" ""}} role="presentation">
+          <li class={{if (is-equal currentPath 'files') "active" ""}} role="presentation">
             {{#link-to "files"}}
                 <span class="glyphicon glyphicon-file" aria-hidden="true"><span class="navbar-glyph-text"> Files</span></span>
             {{/link-to}}
           </li>
 
           {{#if (is-admin currentUser.userType.user_type_id)}}
-            <li class={{if (is-active-route currentPath 'fees') "active" ""}} role="presentation">
+            <li class={{if (is-equal currentPath 'fees') "active" ""}} role="presentation">
               {{#link-to "fees"}}
                   <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"><span class="navbar-glyph-text"> Fees</span></span>
               {{/link-to}}
             </li>
           {{/if}}
         {{/if}}
-        <li role="presentation">
-          <a href="https://github.com/HumbleHominid/ACM-Manager" target="_blank">
-              <span class="glyphicon glyphicon-console" aria-hidden="true"><span class="navbar-glyph-text"> Source</span></span>
-          </a>
-        </li>
       </ul>
+{{!--       {{#if currentUser.token}}
+        {{#if (is-admin currentUser.userType.user_type_id)}} --}}
+          <form class="navbar-form navbar-left" oninput={{action 'searchMembers'}} onsubmit={{action 'formSubmit'}}>
+            <div class="form-group">
+              {{input id="user-searchbar" placeholder="Search for a user" class="form-control"}}
+            </div>
+          </form>{{log members.data}}
+{{!--         {{/if}}
+      {{/if}} --}}
       <ul class="nav navbar-nav navbar-right">
         {{#if currentUser.token}}
           <li role="presentation" {{action logoutCallback}}>
@@ -75,18 +79,12 @@
             {{/link-to}}
           </li>
         {{/if}}
-        <li role="presentation" data-toggle="modal" data-target="#contact-us-modal">
+{{!--         <li role="presentation" data-toggle="modal" data-target="#contact-us-modal">
           {{#link-to currentPath}}
               <span class="glyphicon glyphicon-envelope" aria-hidden="true"><span class="navbar-glyph-text"> Contact Us</span></span>
           {{/link-to}}
-        </li>
+        </li> --}}
       </ul>
     </div>
   </div>
 </nav>
-
-{{log-in-modal loginCallback=loginCallback}}
-{{create-account-modal}}
-{{contact-us-modal}}
-{{add-user-modal}}
-{{remove-user-modal}}
