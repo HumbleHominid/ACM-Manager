@@ -16,7 +16,7 @@
         {{/link-to}}
       {{/if}}
     </div>
-    
+
     <div class="collapse navbar-collapse no-scrollbar" id="mta-navbar" aria-expanded="true" data-toggle={{if smallScreen "collapse" ""}} data-target="#mta-navbar">
       <ul class="nav navbar-nav">
         <li class={{if (is-equal currentPath 'home') "active" ""}} role="presentation">
@@ -32,6 +32,11 @@
         <li class={{if (is-equal currentPath 'officers') "active" ""}} role="presentation">
           {{#link-to "officers"}}
               <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"><span class="navbar-glyph-text"> Officers</span></span>
+          {{/link-to}}
+        </li>
+        <li class={{if (is-equal currentPath 'contests') "active" ""}} role="presentation">
+          {{#link-to "contests"}}
+              <span class="glyphicon glyphicon-king" aria-hidden="true"><span class="navbar-glyph-text"> Contests</span></span>
           {{/link-to}}
         </li>
 
@@ -51,15 +56,15 @@
           {{/if}}
         {{/if}}
       </ul>
-{{!--       {{#if currentUser.token}}
-        {{#if (is-admin currentUser.userType.user_type_id)}} --}}
+      {{#if currentUser.token}}
+        {{#if (is-admin currentUser.userType.user_type_id)}}
           <form class="navbar-form navbar-left" oninput={{action 'searchMembers'}} onsubmit={{action 'formSubmit'}}>
             <div class="form-group">
               {{input id="user-searchbar" placeholder="Search for a user" class="form-control"}}
             </div>
           </form>{{log members.data}}
-{{!--         {{/if}}
-      {{/if}} --}}
+        {{/if}}
+      {{/if}}
       <ul class="nav navbar-nav navbar-right">
         {{#if currentUser.token}}
           <li role="presentation" {{action logoutCallback}}>

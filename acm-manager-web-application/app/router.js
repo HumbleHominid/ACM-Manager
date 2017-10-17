@@ -15,6 +15,7 @@ Router.map(function() {
   this.route('files');
   this.route('officers');
   this.route('fees');
+  this.route('contests');
   this.route('not-found', { path : '/*path' });
 });
 
